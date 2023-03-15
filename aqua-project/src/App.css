@@ -1,0 +1,147 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+*{
+  margin: 0%;
+  padding: 0%;
+  box-sizing: border-box;
+  font-family: arial;
+  font-size: 14px;
+}
+:root{
+  --main-color:#FAFAFA;
+  --second-color:#2EBDDA;
+  --third-color:#1C7A6A;
+  --main-text-color:#3F3F3F;
+  --second-text-color:#e4e4e4;
+  --main-font-family:arial;
+  --font-size:16px;   
+}
+.nav_bar-container{
+  width: 100%;
+  height: 84px;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  padding:1em;
+  border-bottom: 1px solid var(--third-color);
+  box-shadow: 0px 5px 1em  rgba(72, 72, 72, 0.119);
+} 
+.nb-logo h1{
+  font-size: 24px;
+  letter-spacing: 2px;
+  color: var(--third-color);
+  font-weight: 700;
+  cursor: pointer;
+}
+.nav-links{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content:flex-start;
+  align-items: flex-start;
+  list-style: none;
+}
+.nav-links li{
+  padding:0 1em
+}
+.nav-links a{
+  text-decoration: none;
+  margin: 0 5px;
+  font-size: 16px;
+  color: var(--main-text-color);
+
+}
+#active-link{
+  font-weight: 600;
+}
+.nav-links .iconify{
+  color: #3F3F3F;
+  height: 18px;
+  width: 18px;
+}
+.nav-buttons{
+display: flex;
+justify-content: center;
+align-items: center;
+border: 1px solid var(--third-color);
+border-radius: 90px;
+position: relative;
+
+}
+.nav-buttons p{
+ display:inline;
+  padding: 0.5em 1.5em;
+  font-size: 16px;
+  color: var(--third-color);
+  font-weight: 600;
+  
+}
+.nav-buttons button{
+  width: 48px;
+  height: 48px;
+  background-color: var(--third-color);
+  border-radius: 90px;
+  border: none;
+}
+
+/*SideView _______________________________________________________________*/
+
+.db-col-1{
+    grid-area: db-col-1;
+   
+}
+.hours_mins{
+    display: flex;
+    align-items: flex-end;
+    
+}
+.hours_mins .iconify{
+    width: 48px;
+    height: 48px;
+    display: flex;
+    
+}
+.hours_mins .hours{
+    margin-left: 0.5em;
+    font-size: 30px;
+    font-weight: 600;
+}
+.dates{
+    display: flex;
+    justify-content: center;
+}
