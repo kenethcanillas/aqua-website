@@ -3,7 +3,7 @@ import './Header.js'
 import { Icon } from '@iconify/react';
 
 
-function DashboardView() {
+function WaterCondition() {
     
     return(
         <>
@@ -15,7 +15,7 @@ function DashboardView() {
             <div class="display-container">
                 <div class="temperature-container">
                         <div class="temperature-display">
-                            <h3>Temperature</h3>
+                            <h3>PH Level</h3>
                             <h2>32 <span class="iconify" data-icon="tabler:temperature-celsius"></span></h2>
                             <p>Condition: Good</p>
                         </div>
@@ -54,8 +54,8 @@ function DashboardView() {
                 </div>
                 <div class="humidity-container">
                         <div class="humidity-display">
-                            <h3>Humidity</h3>
-                            <h2>32 <span class="iconify" data-icon="tabler:temperature-celsius"></span></h2>
+                            <h3>Electrical Conductivity Level</h3>
+                            <h2>1000 <span class="iconify" data-icon="tabler:temperature-celsius"></span></h2>
                             <p>Condition: Good</p>
                         </div>
                         <div class="humidity-data">
@@ -96,4 +96,4 @@ function DashboardView() {
     </>
         );
 }  
-export default DashboardView;
+export default WaterCondition;

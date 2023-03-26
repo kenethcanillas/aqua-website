@@ -1,41 +1,101 @@
 import '../App.css';
+import Logo from '../img/aquaLogo.png';
 import { Icon } from '@iconify/react';
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 
-function Header() {
-        // const [isOpen, setIsOpen] = useState(false);
-      
-        // const toggleMenu = () => {
-        //   setIsOpen(!isOpen);
-        // };
+function Header(){
+         const [isOpen, setIsOpen] = useState(false);
+         const [open, opened] = useState(false);
+
+         const toggleMenu = () => {
+           setIsOpen(!isOpen);
+         };
+
+         const menuRef = useRef();
+
+         const handleOutsideClick = (event) => {
+          if (menuRef.current && !menuRef.current.contains(event.target)) {
+            setIsOpen(false);
+          }
+        };
+        useEffect(() => {
+          document.addEventListener("mousedown", handleOutsideClick);
         
-    return ( <div class="nav_bar-container">
-    <div class="nb-logo">
-        {<Icon icon="icon-park-solid:leaves-two" color="#1c7a6a" hFlip={true} />}
-         <h1 class="logo">AQUA</h1>
-    </div>
-   <ul class="nav-links">
-    <li><a href="#" id="active-link"> Green House</a></li>
-    <li><a href="#"> Water Condition</a></li>
-    <li><a href="#">Water Level</a></li>
-    <li><a href="#">Devices</a></li>
-   </ul>
-   <div class="nav-buttons">
-         <p>Keneth Canillas</p><button type="button" class="nav-btn">{<Icon icon="gg:profile" color="#f2f2f2" width="48" height="48" hFlip={true} />}</button>
-         {/* <div>
-      <button onClick={toggleMenu}>Menu</button>
-      {isOpen && (
-        <ul>
-          <li>Home</li>
-          <li>About</li>
-          <li>Contact</li>
-        </ul>
+          return () => {
+            document.removeEventListener("mousedown", handleOutsideClick);
+          };
+        }, []);
+
+        const hamburger = () => {
+          opened(!open); 
+        };
+        
+
+        
+    return (
+    <>
+      <div class="nav_bar-container">
+        <div class='ham_logo-container'>
+          <div className="hamburger-menu" onClick={hamburger}>
+            <div className={`hamburger ${open ? 'open' : ''}`}>
+              <div className="bar"></div>
+              <div className="bar"></div>
+              <div className="bar"></div>
+            </div>
+          </div>
+          <div class="nb-logo">
+              <img src={Logo} alt="Aqua Logo" width="64" height="64"/>
+          </div>
+        </div>
+        
+          <ul class="nav-links">
+          <li><a> Green House</a></li>
+              <li><a>Water Condition</a></li>
+              <li><a href="#">Water Level</a></li>
+              <li><a href="#">Devices</a></li>
+          </ul>
+         
+          <div class="nav-buttons">
+            <p>Keneth Canillas</p> 
+              <div>
+                <button type="button" ref={menuRef} class="nav-btn" onClick={() => toggleMenu(!isOpen)}>
+                    {<Icon icon="gg:profile" color="#f2f2f2" width="48" height="48" hFlip={true} />}
+                </button>
+              </div>
+          </div>
+          
+                  {isOpen && (
+                    <div class="toggle-nav_btn">
+                      <ul class="toggle-links">
+                        <li>
+                          <a href="#"><span>{<Icon icon="mdi:account" width="24" height="24"/>} </span>Profile</a>
+                          {<Icon icon="material-symbols:arrow-forward-ios-rounded" />}
+                        </li>
+                        <li>
+                          <a href="#"><span>{<Icon icon="circum:dark" width="24" height="24" />}</span>Theme</a>
+                          </li>
+                        <li id="signout">
+                          <a href="#"><span>{<Icon icon="ic:round-log-out" color="#900" width="24" height="24" />}</span>Sign out</a>
+                          </li>
+                    </ul>
+                  </div>
+                )}
+      </div>
+      {open &&(
+         <div class="burger_drop-container">
+            <ul class="burger-links">
+              <li><a href='#' id="active">Green House</a></li>
+              <li><a href='#'>Water Condition</a></li>
+              <li><a href='#'>Water Level</a></li>
+              <li><a href='#'>Devices</a></li>
+            </ul>
+         </div> 
       )}
-    </div> */}
-    </div>
-</div>
-)        
-    ;
+
+
+    </>
+);
 }
   export default Header;
+
