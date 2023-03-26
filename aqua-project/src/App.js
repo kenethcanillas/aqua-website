@@ -1,7 +1,8 @@
 import Header from './components/Header';
-import SideView from './components/SideView';
-import DashboardView from './components/DashboardView';
+
 import GreenHousePages from './pages/GreenHousePages';
+import WaterConditionPages from './pages/WaterConditionPage';
+
 import './App.css';
 import { BrowserRouter as  Router, Routes, Route, } from "react-router-dom";
 
@@ -9,11 +10,15 @@ function App() {
 
   return(
    <>
-   <Header/>
+   
    <Router>
-    <Routes>
-   <Route path="/greenhousepage" element={ <GreenHousePages/>}/>
-   </Routes>
+   <Header/>
+      <Routes>
+        <Route path="/" element={<GreenHousePages/>}/>
+        <Route path="/greenhousepage" element={ <GreenHousePages/>}/>
+        <Route path="/waterconditionpage" element={ <WaterConditionPages/>}/>
+
+    </Routes>
    </Router>
   
    

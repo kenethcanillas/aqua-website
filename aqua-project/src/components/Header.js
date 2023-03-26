@@ -3,6 +3,10 @@ import Logo from '../img/aquaLogo.png';
 import { Icon } from '@iconify/react';
 import React, { useEffect, useState, useRef } from "react";
 
+import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+
+
 
 function Header(){
          const [isOpen, setIsOpen] = useState(false);
@@ -50,10 +54,10 @@ function Header(){
         </div>
         
           <ul class="nav-links">
-          <li><a> Green House</a></li>
-              <li><a>Water Condition</a></li>
-              <li><a href="#">Water Level</a></li>
-              <li><a href="#">Devices</a></li>
+              <li><NavLink to="/greenhousepage" activeClassName='active-link'  >Green House</NavLink></li>
+              <li><NavLink to="/" activeClassName='active-link' >Water Level</NavLink></li>
+              <li><NavLink to="/waterconditionpage" activeClassName='active-link'>Water Condition</NavLink></li>
+              <li><NavLink to="/a" activeClassName='active-link'>Devices</NavLink></li>
           </ul>
          
           <div class="nav-buttons">
@@ -85,14 +89,13 @@ function Header(){
       {open &&(
          <div class="burger_drop-container">
             <ul class="burger-links">
-              <li><a href='#' id="active">Green House</a></li>
-              <li><a href='#'>Water Condition</a></li>
-              <li><a href='#'>Water Level</a></li>
-              <li><a href='#'>Devices</a></li>
+              <li><NavLink to="/greenhousepage" activeClassName='active-link'  >Green House</NavLink></li>
+              <li><NavLink to="/b" activeClassName='active-link' >Water Level</NavLink></li>
+              <li><NavLink to="/waterconditionpage" activeClassName='active-link'>Water Condition</NavLink></li>
+              <li><NavLink to="/a" activeClassName='active-link'>Devices</NavLink></li>
             </ul>
          </div> 
       )}
-
 
     </>
 );

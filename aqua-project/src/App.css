@@ -121,27 +121,27 @@
   text-decoration: none;
   margin-left: 1em;
 }
+.burger-links li a.active{
+  font-weight: 600;
+}
 .burger-links a:hover{
   font-weight: 600;
 }
 .burger-links li:hover{
   background-color: #259a86;
 }
-.burger-links #active{
-  font-weight: 600;
-  background-color: transparent;
-}
+
 .nb-logo img{
   margin-left: 1em;
   cursor: pointer;
 }
-
 .nav-links{
   display: flex;
   flex-wrap: wrap;
   justify-content:center;
   align-items: flex-end;
   list-style: none;
+  color: #000;
 }
 
 .nav-links li{
@@ -149,25 +149,22 @@
   padding-left: 1em;
 }
 
-.nav-links a{
+.nav-links li .active-link {
   text-decoration: none;
-  margin: 0 5px;
-  font-size: 16px;
-  color: var(--main-text-color);
-
 }
-.nav-links a:hover{
+.nav-links li a{
+    color: var(--main-text-color);
+    text-decoration: none;
+    font-size: var(--font-size);
+}
+
+.nav-links li a.active{
   font-weight: 600;
+  text-decoration: none;
 }
 
-#active-link{
+.nav-links li a:hover{
   font-weight: 600;
-}
-
-.nav-links .iconify{
-  color: #3F3F3F;
-  height: 18px;
-  width: 18px;
 }
 
 .nav-buttons{
@@ -244,15 +241,6 @@
 .toggle-links span{
   padding: 0 1em 0 0em;
 }
-
-/*GRID*/
- /*.grid-div{
-  display: grid;
-  grid-template-columns: 0.9fr 3fr;
-  grid-template-areas:"side-grid db-grid" ;
-  grid-gap: 1em;
-
-} */
 
 .grid-div{
   display: flex;
