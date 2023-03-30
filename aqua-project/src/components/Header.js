@@ -55,9 +55,9 @@ function Header(){
         
           <ul class="nav-links">
               <li><NavLink to="/greenhousepage" activeClassName='active-link'  >Green House</NavLink></li>
-              <li><NavLink to="/" activeClassName='active-link' >Water Level</NavLink></li>
+              <li><NavLink to="/waterlevelpage" activeClassName='active-link' >Water Level</NavLink></li>
               <li><NavLink to="/waterconditionpage" activeClassName='active-link'>Water Condition</NavLink></li>
-              <li><NavLink to="/a" activeClassName='active-link'>Devices</NavLink></li>
+              <li><NavLink to="/devicespage" activeClassName='active-link'>Devices</NavLink></li>
           </ul>
          
           <div class="nav-buttons">
@@ -90,9 +90,9 @@ function Header(){
          <div class="burger_drop-container">
             <ul class="burger-links">
               <li><NavLink to="/greenhousepage" activeClassName='active-link'  >Green House</NavLink></li>
-              <li><NavLink to="/b" activeClassName='active-link' >Water Level</NavLink></li>
+              <li><NavLink to="/waterlevelpage" activeClassName='active-link' >Water Level</NavLink></li>
               <li><NavLink to="/waterconditionpage" activeClassName='active-link'>Water Condition</NavLink></li>
-              <li><NavLink to="/a" activeClassName='active-link'>Devices</NavLink></li>
+              <li><NavLink to="/devicespage" activeClassName='active-link'>Devices</NavLink></li>
             </ul>
          </div> 
       )}

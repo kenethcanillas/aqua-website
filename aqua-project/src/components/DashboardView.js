@@ -20,7 +20,7 @@ function DashboardView() {
                             <p>Condition: Good</p>
                         </div>
                         <div class="temperature-data">
-                            <table>
+                            <table className='table-container'>
                                 <thead>
                                     <tr>
                                         <th>Date</th>
@@ -59,7 +59,7 @@ function DashboardView() {
                             <p>Condition: Good</p>
                         </div>
                         <div class="humidity-data">
-                            <table>
+                            <table className='table-container'>
                                 <thead>
                                     <tr>
                                         <th>Date</th>
