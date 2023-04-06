@@ -9,8 +9,6 @@ function WaterLevel() {
     const [snapABtnCheck, setIsChecked2] = useState(false);
     const [snapBBtnCheck, setIsChecked3] = useState(false);
 
-
-
     const waterBtn = () => {
       setIsChecked1(!waterBtnCheck);
     };
