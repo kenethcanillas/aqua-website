@@ -148,10 +148,13 @@
   flex-wrap: wrap;
   justify-content: center !important;
   align-items: center !important;
+  align-content: center;
   text-align: center;
   list-style: none;
 }
-
+ul.nav-links{
+  margin-bottom: 0px !important;
+}
     .nav-links li{
       width: 150px;
       padding-left: 1em;
