@@ -52,16 +52,20 @@
   --second-text-color:#e4e4e4;
   --main-font-family:arial;
   --font-size:16px;   
-  color: var(--main-text-color);
+  --close-color:#F15555;
+  
 }
 .nav_bar-container{
   width: 100%;
   display: flex;
-  justify-content: space-around;
-  align-items: center;
+  justify-content: space-around !important;
+  align-items: center !important;
+  text-align: center;
   padding:1em;
+
   border-bottom: 1px solid var(--third-color);
   box-shadow: 0px 5px 1em  rgba(72, 72, 72, 0.119);
+  background-color: var(--main-color);
 } 
 .ham_logo-container{
   display: flex;
@@ -139,10 +143,12 @@
 }
 
 .nav-links{
+  height: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content:center;
-  align-items: flex-end;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center;
   list-style: none;
 }
 
@@ -176,6 +182,7 @@
       border: 1px solid var(--third-color);
       border-radius: 90px;
       position: relative;
+      
     }
 
     .nav-buttons p{
@@ -192,6 +199,7 @@
       background-color: var(--third-color);
       border-radius: 90px;
       border: none;
+      cursor: pointer;
     }
     /*Toggle */
     .toggle-nav_btn{
@@ -623,128 +631,93 @@ input:checked + .slider:before {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Login Form ___________________________________________*/
-
-.container-login{
-  display: grid;
-  background-color:var(--second-color);
-  height: 100vh;
-  grid-template-columns: 0.5fr 3fr 0.5fr;
-  grid-template-areas:"col-1 login-form col-3";
+/* Profile Modal */
+.modal-container{
+  width: 60%;
+  box-shadow: 0px 5px 1em  rgba(72, 72, 72, 0.119);
+  padding:2em;
   
-  }
-.col-1{
-  grid-area: col-1;
 }
-.login-form{
-  width: 100%;
-  height: 100%;
-  margin-bottom:2em;
-  grid-area: login-form;
+.modal-title-row{
+
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  padding-top: 2em;
+  justify-content: space-between;
   align-items: center;
   
 }
-.login-form-2{
-  width:25em;
-  min-height: 80%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  border-radius: 10px;
-  background-color: var(--main-color);
-  font-size: var(--font-size);
-  position: relative;
-  box-shadow: 0px 10px 1em  rgba(72, 72, 72, 0.238);
-}
+.modal-title-row{
+  padding-bottom: 1em;
 
-#logo-login{
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  border:5px solid var(--second-color);
-  position: absolute;
-  top: 4%;
-  bottom: 0;
-  z-index: 1000000000;
+} 
+.modal-title .text{
+  font-size: 20px;
+
 }
-.form{
-  width: 100%;
-  padding: 0px 50px;
-  margin-top: 2em;
+.modal-close{
+  width: auto;
+  color: var(--close-color);
+  align-self: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  
 }
-.form li{
+.modal-close:hover{
+  font-weight: 600;
+}
+.modal-content{
   width: 100%;
+   border-top: 1px solid #3F3F3F;
+
+}
+.modal-content-column{
+  min-width: 60%;
   list-style: none;
-  margin-bottom: 1em;
 
 }
-.form input{
- width: 100%;
-  height: 54px;
+.modal-content-column input{
+  width: 50%;
+  padding: 1em;
   border-radius: 5px;
-  border:1px solid var(--third-color);
-  border-radius: 5px;
-  padding-left: 1em;
+  border: 1px solid #3f3f3f;
+
 }
-.login-button{
+.modal-content-column li{
+  display: flex;
+  flex-direction: column; 
+}
+
+.modal-content-column label{
+  padding:1em 0;
+
+}
+.first-content-container{
   width: 100%;
-  height: 54px;
-  border-radius: 5px;
-  border: none;
-  color: var(--main-color);
-  letter-spacing: 2px;
-  background-color:var(--third-color);
-  font-size: var(--font-size);
-  font-weight: bold;
+  display: flex;
+  flex-wrap: wrap-reverse;
+  flex-direction: row;
+  align-items: center;
+
 }
-.login-button:hover{
-  background-color:#259a86;
+.first-content{
+  width: 60%;
+ display: flex;
+ flex-direction: column;
 }
-.show-button{
-  border-radius: 5px;
-  border: none;
-  font-size: 12px;
-  padding-top: 4px;
+.first-content input{
+  width: 83%;
 }
-.form a{
-  font-size: 12px;
+.modal-links p{
+  padding-bottom: 1em;
 }
 
-button:active{
-  transform: translateY(1px);
-}
-.col-3{
-  grid-area: col-3;
-}
-#active{
-  background-color: var(--third-color);
-  border: none;
-  color: var(--second-text-color);
-}
-.user{
-  padding-top: 50px;
-}
+
+
+
+
+
