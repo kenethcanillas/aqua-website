@@ -21,7 +21,6 @@ function Devices() {
         setIsChecked3(!airPumpCheck);
       };
 
-
     return(
         <>
         <div class="container pt-4">
