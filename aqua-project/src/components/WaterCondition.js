@@ -1,6 +1,8 @@
 import '../App.css';
 import './Header.js'
 import { Icon } from '@iconify/react';
+import Table from 'react-bootstrap/Table';
+import Pagination from 'react-bootstrap/Pagination';
 
 
 function WaterCondition() {
@@ -20,75 +22,159 @@ function WaterCondition() {
                             <p>Condition: Good</p>
                         </div>
                         <div class="temperature-data">
-                            <table className='table-container'>
-                                <thead>
+                            <Table bordered hover className='table-container-bootstrap'>
+                                <thead className='p-2'>
                                     <tr>
+                                        <th>#</th>
                                         <th>Date</th>
                                         <th>Value Data </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
+                                        <td>1</td>
                                         <td>11/12/23</td>
                                         <td>34 <span class="iconify" data-icon="tabler:temperature-celsius"></span></td>
                                     </tr>
                                     <tr>
-                                    <td>11/13/23</td>
+                                        <td>2</td>
+                                        <td>11/13/23</td>
                                         <td>38 <span class="iconify" data-icon="tabler:temperature-celsius"></span></td>
                                     </tr>
                                     <tr>
+                                        <td>3</td>
                                         <td>11/12/23</td>
                                         <td>34 <span class="iconify" data-icon="tabler:temperature-celsius"></span></td>
                                     </tr>
                                     <tr>
+                                        <td>4</td>
                                         <td>11/12/23</td>
                                         <td>34 <span class="iconify" data-icon="tabler:temperature-celsius"></span></td>
                                     </tr>
                                     <tr>
+                                        <td>5</td>
+                                        <td>11/12/23</td>
+                                        <td>34 <span class="iconify" data-icon="tabler:temperature-celsius"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>6</td>
+                                        <td>11/12/23</td>
+                                        <td>34 <span class="iconify" data-icon="tabler:temperature-celsius"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>7</td>
+                                        <td>11/12/23</td>
+                                        <td>34 <span class="iconify" data-icon="tabler:temperature-celsius"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>8</td>
+                                        <td>11/12/23</td>
+                                        <td>34 <span class="iconify" data-icon="tabler:temperature-celsius"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>9</td>
+                                        <td>11/12/23</td>
+                                        <td>34 <span class="iconify" data-icon="tabler:temperature-celsius"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>10</td>
                                         <td>11/12/23</td>
                                         <td>34 <span class="iconify" data-icon="tabler:temperature-celsius"></span></td>
                                     </tr>
                                 </tbody>
-                            </table>
-                        </div>
+                            </Table>
+                            <Pagination size='md'>
+                                <Pagination.First />
+                                    <Pagination.Prev>Prev</Pagination.Prev>
+                                        <Pagination.Item active>{1}</Pagination.Item>
+                                        <Pagination.Item>{2}</Pagination.Item>
+                                        <Pagination.Item>{3}</Pagination.Item>
+                                        <Pagination.Item>{4}</Pagination.Item>
+                                        <Pagination.Item>{5}</Pagination.Item>
+                                    <Pagination.Next>Next</Pagination.Next>
+                                <Pagination.Last />
+                            </Pagination>
+                    </div>
                 </div>
                 <div class="humidity-container">
                         <div class="humidity-display">
-                            <h3>Electrical Conductivity Level</h3>
+                            <h3 className='title'>Electrical Conductivity Level</h3>
                             <h2>1000 <span class="iconify" data-icon="tabler:temperature-celsius"></span></h2>
                             <p>Condition: Good</p>
                         </div>
                         <div class="humidity-data">
-                            <table className='table-container'>
-                                <thead>
+                        <Table bordered hover className='table-container-bootstrap'>
+                                <thead className='p-2'>
                                     <tr>
+                                        <th>#</th>
                                         <th>Date</th>
                                         <th>Value Data </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
+                                        <td>1</td>
                                         <td>11/12/23</td>
                                         <td>34 <span class="iconify" data-icon="tabler:temperature-celsius"></span></td>
                                     </tr>
                                     <tr>
-                                    <td>11/13/23</td>
+                                        <td>2</td>
+                                        <td>11/13/23</td>
                                         <td>38 <span class="iconify" data-icon="tabler:temperature-celsius"></span></td>
                                     </tr>
                                     <tr>
+                                        <td>3</td>
                                         <td>11/12/23</td>
                                         <td>34 <span class="iconify" data-icon="tabler:temperature-celsius"></span></td>
                                     </tr>
                                     <tr>
+                                        <td>4</td>
                                         <td>11/12/23</td>
                                         <td>34 <span class="iconify" data-icon="tabler:temperature-celsius"></span></td>
                                     </tr>
                                     <tr>
+                                        <td>5</td>
+                                        <td>11/12/23</td>
+                                        <td>34 <span class="iconify" data-icon="tabler:temperature-celsius"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>6</td>
+                                        <td>11/12/23</td>
+                                        <td>34 <span class="iconify" data-icon="tabler:temperature-celsius"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>7</td>
+                                        <td>11/12/23</td>
+                                        <td>34 <span class="iconify" data-icon="tabler:temperature-celsius"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>8</td>
+                                        <td>11/12/23</td>
+                                        <td>34 <span class="iconify" data-icon="tabler:temperature-celsius"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>9</td>
+                                        <td>11/12/23</td>
+                                        <td>34 <span class="iconify" data-icon="tabler:temperature-celsius"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>10</td>
                                         <td>11/12/23</td>
                                         <td>34 <span class="iconify" data-icon="tabler:temperature-celsius"></span></td>
                                     </tr>
                                 </tbody>
-                            </table>
+                            </Table>
+                            <Pagination size='md'>
+                                <Pagination.First />
+                                    <Pagination.Prev>Prev</Pagination.Prev>
+                                        <Pagination.Item active>{1}</Pagination.Item>
+                                        <Pagination.Item>{2}</Pagination.Item>
+                                        <Pagination.Item>{3}</Pagination.Item>
+                                        <Pagination.Item>{4}</Pagination.Item>
+                                        <Pagination.Item>{5}</Pagination.Item>
+                                    <Pagination.Next>Next</Pagination.Next>
+                                <Pagination.Last />
+                            </Pagination>
                         </div>
                 </div>
             </div>

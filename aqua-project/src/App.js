@@ -1,5 +1,10 @@
 import Header from './components/Header';
 
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
+
 import GreenHousePages from './pages/GreenHousePages';
 import WaterConditionPages from './pages/WaterConditionPage';
 import WaterLevelPage from './pages/WaterLevelPage';
@@ -9,6 +14,7 @@ import DevicesPage from './pages/DevicesPage';
 import './App.css';
 import { BrowserRouter as  Router, Routes, Route, } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import SideView from './components/SideView';
 
 function App() {
 
@@ -16,15 +22,24 @@ function App() {
    <>
    
    <Router>
-   <Header/>
-      <Routes>
-        <Route path="/" element={<GreenHousePages/>}/>
-        <Route path="/greenhousepage" element={ <GreenHousePages/>}/>
-        <Route path="/waterconditionpage" element={ <WaterConditionPages/>}/>
-        <Route path="/waterlevelpage" element={ <WaterLevelPage/>}/>
-        <Route path="/devicespage" element={ <DevicesPage/>}/>
-
-    </Routes>
+    
+    <Header/>
+      <Container fluid>
+        <Row className='custom-row-container'>
+          <Col xxl={2} xl={3} lg={3} md={3} sm={12} xs={12}> 
+            <SideView />
+          </Col>
+          <Col xxl={10} xl={9}lg={9} md={9} sm={12} xs={12}>
+            <Routes>
+                <Route path="/" element={<GreenHousePages/>}/>
+                <Route path="/greenhousepage" element={ <GreenHousePages/>}/>
+                <Route path="/waterconditionpage" element={ <WaterConditionPages/>}/>
+                <Route path="/waterlevelpage" element={ <WaterLevelPage/>}/>
+                <Route path="/devicespage" element={ <DevicesPage/>}/>
+            </Routes>
+          </Col>
+        </Row>
+      </Container>
    </Router>
   
    
