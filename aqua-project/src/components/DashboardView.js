@@ -1,7 +1,12 @@
 import '../App.css';
 
 function DashboardView() {
-    
+
+    const handleClick=()=>{
+        localStorage.clear();
+        window.location.reload();
+      }
+
     return(
     <div class="grid-div">
     <div class="db-greenhouse">
@@ -90,6 +95,7 @@ function DashboardView() {
         </div>
     </div>
     </div>
+    <button onClick={handleClick}>Log Out</button>
     </div>
         );
 }  

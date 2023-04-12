@@ -1,16 +1,12 @@
-import Header from './components/Header';
-import SideView from './components/SideView';
-import DashboardView from './components/DashboardView';
-
+import Login from 'C:/Users/PC/Desktop/GIT/aqua-website/aqua-project/src/Homepage/Login';
 import './App.css';
 
 
 function App() {
   return(
-   <>
-   <Header/>
-   <SideView/>
-   <DashboardView/>
-   </>)
+    <div className='page'>
+   <Login title="AQUA"/>
+   </div>
+   )
 }
 export default App;
