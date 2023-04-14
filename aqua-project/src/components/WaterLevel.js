@@ -4,7 +4,7 @@ import "./Header.js";
 
 // import { Icon } from '@iconify/react';
 import React, { useEffect, useState } from "react";
-import db from "../firebase";
+import {db} from "../firebase";
 
 export default function WaterLevel() {
   const [waterBtnCheck, setIsChecked1] = useState(false);
