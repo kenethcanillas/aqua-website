@@ -3,7 +3,33 @@ import { Icon } from '@iconify/react';
 import React, { useEffect, useState } from "react";
 
 
+function getWeatherCategory(code) {
+  if (code === 0) {
+    return "Clear Sky";
+  } else if (code >= 1 && code <= 44) {
+    return "Party Cloud";
+  } else if (code >= 45 && code <= 47) {
+    return "Fog";
+  } else if (code >= 48 && code <= 55) {
+    return "Drizzle";
+  } else if (code >= 56 && code <= 77) {
+    return "Rain";
+  } else if (code >= 80 && code <= 94) {
+    return "Rain Shower";
+  } else if (code >= 95 && code <= 99) {
+    return "Thunderstorm";
+  } else {
+    return " ";
+  }
+};
+
+
 function SideView() {
+
+
+
+
+
   const [date, setDate] = useState(new Date());
 
   useEffect(() => {
@@ -13,20 +39,78 @@ function SideView() {
     return () => clearInterval(intervalId);
   }, []);
 
+
+  const [geoMeteo, setgeoMeteoState] = useState({});
+  const [openMeteo, setOpenMeteoState] = useState({});
+
+
+  useEffect(() => {
+
+    fetch(`https://geocoding-api.open-meteo.com/v1/search?name=Quezon+City&count=10&language=en&format=json`)
+
+      .then(response => response.json())
+      .then(geodata => {
+          // console.log(geodata);
+
+          setgeoMeteoState({lat: geodata.results[0].latitude , long: geodata.results[0].longitude, cityname: geodata.results[0].name, country: geodata.results[0].country });
+
+      })
+      .catch(error => console.error(error));
+  }, []);
+
+  // const latitude = geoMeteo.lat;
+  // const longitude = geoMeteo.long;
+
+  const [cordinates, setCordinates] = useState({});
+
+
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      setCordinates({ latitude: position.coords.latitude, longitude: position.coords.longitude });
+      setCordinates(position.coords)
+    })
+
+    fetch(`https://api.open-meteo.com/v1/forecast?latitude=${cordinates.latitude}&longitude=${cordinates.longitude}&hourly=temperature_2m,weathercode&current_weather=true`)
+
+      .then(response => response.json())
+      .then((data) => {
+        // console.log(data);
+        setOpenMeteoState({ temp: data.current_weather.temperature, code: data.current_weather.weathercode });
+
+      })
+      .catch(error => console.error(error));
+  }, []);
+
+  const weatherCategory = getWeatherCategory(openMeteo.code);
+
   return (
-    <div class="grid-div">
-    <div class="side-grid">
-    <div class="sideview">
-      <div class="hours_mins">
-        
-          <p class="hours"> {<Icon icon="ic:round-access-time" color="#3f3f3f" />}{date.toLocaleTimeString()}</p>
-          <p class="dates">{date.toLocaleDateString()}</p>
+    <>
+      {/* {geoMeteo.lat}
+    {geoMeteo.long} */}
+      <div className='sideview-container mt-4'>
+        <div className='weather-row'>
+          <div className="temp-column">
+            <h1 className='temperature'>{openMeteo.temp}{<Icon icon="tabler:temperature-celsius" color="#3f3f3f" />} </h1>
+            <p>Temperature</p>
+            <div className='time'>
+              <p className="hours "> <span>{<Icon icon="ic:round-access-time" color="#3f3f3f" />}</span>{date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+              <p className="dates"><span>{<Icon icon="material-symbols:calendar-month-outline" />}</span>{date.toLocaleDateString([], { month: 'long', day: '2-digit', year: 'numeric' })}</p>
+            </div>
+          </div>
+          <div className='weather-condition-column'>
+            <div className='condition'>
+              {<Icon icon="ic:outline-cloud-queue" width="42px" height="42px" />}
+              <span className='output'>{weatherCategory}</span>
+            </div>
+            <p className='place'>{geoMeteo.cityname}, <span>{geoMeteo.country}</span></p>
+          </div>
+        </div>
       </div>
-    </div>
-    </div>
-    </div>
+
+    </>
   );
 }
 
 export default SideView;
-  
+

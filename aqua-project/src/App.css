@@ -36,6 +36,7 @@
     transform: rotate(360deg);
   }
 }
+
 *{
   margin: 0%;
   padding: 0%;
@@ -51,128 +52,289 @@
   --second-text-color:#e4e4e4;
   --main-font-family:arial;
   --font-size:16px;   
+  --close-color:#F15555;
+  
 }
 .nav_bar-container{
-  width: 100%;
-  height: 84px;
   display: flex;
-  justify-content: space-around;
-  align-items: flex-end;
-  padding:1em;
+  justify-content: space-between;
+  align-items: center;
+
   border-bottom: 1px solid var(--third-color);
   box-shadow: 0px 5px 1em  rgba(72, 72, 72, 0.119);
+  background-color: var(--main-color);
 } 
-.nb-logo h1{
-  font-size: 24px;
-  letter-spacing: 2px;
-  color: var(--third-color);
-  font-weight: 700;
+.ham_logo-container{
+  display: flex;
+  align-items: center;
+}
+/* HAMBURGER -----------------------------------------------*/
+.hamburger-menu {
+  display: none;
   cursor: pointer;
 }
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 24px;
+      height: 18px;
+      padding: 0 4px;
+      transition: transform 0.3s;
+    }
+
+    .bar {
+      width: 100%;
+      height: 2px;
+      background-color: #3f3f3f;
+      transition: transform 0.3s;
+    }
+
+    .open .bar:first-child {
+      transform: rotate(45deg) translate(4px, 4px);
+    }
+
+    .open .bar:nth-child(2) {
+      opacity: 0;
+    }
+
+    .open .bar:last-child {
+      transform: rotate(-45deg) translate(4px, -4px);
+    }
+
+  /*HAMBURGER DROPDOWN ___________________________________________*/
+    .burger_drop-container{
+      width:100%;
+      background-color: var(--third-color);
+      display: none;
+    }
+    .burger-links{
+      display: flex;
+      flex-direction: column;
+      padding: 2em;
+    }
+    .burger-links li{
+      min-width: 100%;
+      list-style: none;
+      padding: 1em 0em;
+    }
+    .burger-links a{
+      font-size: var(--font-size);
+      text-decoration: none;
+      margin-left: 1em;
+      color: #FAFAFA;
+    }
+    .burger-links li a.active{
+      font-weight: 600;
+    }
+    .burger-links a:hover{
+      font-weight: 600;
+    }
+    .burger-links li:hover{
+      background-color: #259a86;
+    }
+
+.nb-logo img{
+  margin-left: 1em;
+  cursor: pointer;
+}
+
 .nav-links{
   display: flex;
   flex-wrap: wrap;
-  justify-content:flex-start;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
+  text-align: justify;
   list-style: none;
 }
-.nav-links li{
-  padding:0 1em
+ul.nav-links{
+  margin-bottom: 0px !important;
 }
-.nav-links a{
-  text-decoration: none;
-  margin: 0 5px;
-  font-size: 16px;
-  color: var(--main-text-color);
+    .nav-links li{
+      width: 150px;
+      padding-left: 1em;
+    }
 
-}
-#active-link{
-  font-weight: 600;
-}
-.nav-links .iconify{
-  color: #3F3F3F;
-  height: 18px;
-  width: 18px;
-}
-.nav-buttons{
-display: flex;
-justify-content: center;
-align-items: center;
-border: 1px solid var(--third-color);
-border-radius: 90px;
-position: relative;
+    .nav-links li .active-link {
+      text-decoration: none;
+    }
+    .nav-links li a{
+        color: var(--main-text-color);
+        text-decoration: none;
+        font-size: var(--font-size);
+    }
 
+    .nav-links li a.active{
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .nav-links li a:hover{
+      font-weight: 600;
+    }
+ 
+     .nav-buttons{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid var(--third-color);
+      border-radius: 90px;
+      text-align: center;
+      
+      
+    }
+    .nav-buttons-button{
+      width: 48px;
+      height: 48px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: var(--third-color);
+      border-radius:50%;
+      border: none;
+      
+      }
+      .nav-buttons .btn-primary{
+        background-color: var(--third-color);
+      }
+      .nav-buttons .btn-primary:hover{
+        background-color: #259a86;
+        border-color: #259a86;
+        
+      }
+      .nav-buttons .btn{
+        border-radius: 90px;
+      }
+   .nav-buttons .name{
+       display:inline;
+      font-size: 16px;
+      color: var(--third-color);
+      font-weight: 600;
+      
+    }
+
+/*Bootstrap Dropdwon CSS*/
+.dropdown-toggle::after {
+  display: none !important; 
 }
-.nav-buttons p{
- display:inline;
-  padding: 0.5em 1.5em;
-  font-size: 16px;
-  color: var(--third-color);
-  font-weight: 600;
-  
-}
-.nav-buttons button{
-  width: 48px;
-  height: 48px;
-  background-color: var(--third-color);
-  border-radius: 90px;
-  border: none;
-}
-/*GRID*/
-/* .grid-div{
-  display: grid;
-  grid-template-columns: 1fr 3fr;
-  grid-area:"side-grid db-grid" ;
-} */
+
+
+    /* DROPDOWN MENU */
+
+    .profile-dropdowMenu-container{
+      margin-top:1.5em !important;
+      background-color:var(--main-color) !important;
+      padding: 2em !important;
+      border-radius: 5px !important;   
+      text-align: left !important;
+      box-shadow: 0px 5px 1em  rgba(72, 72, 72, 0.119);
+    }
+
+    .profile-dropdown-links{   
+      width: 220px !important;
+      border-bottom: 1px solid var(--main-text-color) !important;
+      border-radius: 2px !important;
+      padding: 1.5em 0 !important;
+      font-size: var(--font-size) !important;
+      letter-spacing: 1px !important;
+      text-align: left !important;
+      color: var(--main-text-color) !important;
+
+      
+    }
+    .profile-dropdown-links:hover{
+      font-weight: 600;
+    }
+    #sign-out{
+      border: none !important;
+    }
+
 /*SideView _______________________________________________________________*/
-.side-grid{
-   grid-area: side-grid;
-  
+.sideview-container{
+  display: flex;
+  flex-direction: column;
 }
-.sideview{ 
-  
+
+.weather-row{
+  width:100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #FFDB59;
+  border-radius: 1em;
+}
+.temp-column, .weather-condition-column{
+  min-width: 100%;
+  padding: 1em;
+  text-align: center;
+}
+.temperature{
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 25%;
-  margin-top: 3em;
-  color: var(--main-text-color);
+  font-size:30px;
+}
+.temperature .iconify{
+  align-self: flex-start;
+  width: 24px;
+  height: 24px;
+}
 
+
+.time{
+  display: flex;
+  flex-direction: column; 
+  justify-content:flex-start;
+  align-items:flex-start;
 }
-.hours_mins{
-    width: 100%;
-    margin-top:1em;
-    display: flex;
-    flex-direction: column;
-  
+.time .iconify{
+  width: 16px;
+  height: 16px;
 }
-.hours_mins .iconify{
-    width: 42px;
-    height: 42px;
-}
+
 .hours{
   display: flex;
-  justify-content: center;
-  align-items: flex-end;
-    margin-left: 0.5em;
-    font-size: 28px;
-    font-weight: 600;
+  align-items: center;
+  margin-bottom: 0 !important;
+}
+.hours span{
+  margin-right: 1em;
+
 }
 .dates{
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
+  margin: 0 !important;
 }
+.dates span{
+  margin-right: 1em;
+
+}
+
+.weather-condition-column{
+  background-color: var(--main-color);
+}
+
+.condition{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.condition .output{
+  font-size:18px;
+  padding-left: 1em;
+}
+
+
  /*DASHBOARD -----------------------------------------------*/
 
- .db-greenhouse{
-  grid-area: db-grid;
-   width: 75%;
-}
+
+
 .db-buttons{
   display: flex;
   justify-content: flex-end;
-  align-items:flex-end;
-  margin-bottom: 5px;
+  align-items:center;
 }
 .db-buttons a{
   margin: 0 1em;
@@ -181,31 +343,35 @@ position: relative;
   font-weight: 200;
 }
 .display-container{
-  width: auto;
-  height: auto;
   display: grid;
+
   grid-template-columns: 1fr 1fr;
   grid-template-areas: "temperature humidity";  
 
 }
 .temperature-container{
+  width: 100%;
+  height: 30%;
   grid-area:temperature;
 }
 .temperature-display{
+  min-width: 50%;
   background-color: var(--second-color);
-  padding:3em;
+  padding:3em 1em;
   border-radius: 10px 0 0px 10px;
 }
 .humidity-display{
+  min-width: 50%;
   grid-area:humidity;
   background-color: var(--second-color);
-  padding:3em;
+  padding:3em 1em;
   border-radius: 10px;
   border-radius: 0px 10px 10px 0px;
 }
 .temperature-display h3, .humidity-display h3{
   font-weight: 600;
   font-size: var(--font-size);
+  display: block !important;
 }
 .temperature-display h2, .humidity-display h2{
   font-size: 72px;
@@ -216,66 +382,269 @@ position: relative;
   font-size:14px;
 }
 .temperature-data, .humidity-data{
- margin: 1em 0;
+ margin: 1em 0.2em;
 
 }
-table{
+
+/*WATER LEVEL AND DEVICES ----------------------------------------*/
+.container{
+  margin:0 !important;
+  padding: 0 !important;
+  color: var(--main-text-color);
+}
+.row-container{
   width: 100%;
-  border-radius: 10px;
-  border-collapse: collapse;
-  text-align: center;
-  border: 4px solid #134550be;   
-  overflow: hidden;
-}
-table thead{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: var(--second-color);
-  
+  border-radius: 10px;
+}
+.column-content .icons{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
 
+.column-content{
+  padding:3em 2em;
+}
+.content-title{
+  font-weight: 600;
+text-align: center;
+  font-size: var(--font-size);
+  align-self: flex-start;
+}
+.content-value{
+  font-size: 72px;
+}
+.content-condition{
+  font-size:14px;
+}
+.content-value, .content-condition{
+  text-align: center;
+}
+.value-icon{
+  font-size: 32px;
+}
+.row-container-2{
+  margin-top: 1em;
+}
+.table-container-bootstrap{
+  border-radius: 1em !important;
+}
+.table-container{
+  width: 100%;
+  text-align: center;
  
 }
-table th{
-  padding: 1em;
- 
-}
-table td{
-  padding: 0.5em;
- 
-}
-table tr{
+.table-container th, td{
   padding: 10px;
-  border-bottom: 1px solid var(--main-text-color);
+  border: 1px solid var(--main-text-color) ;
 }
 
-tbody tr:hover{
-  background-color: #3f3f3f31;
-}   
+.table-container td{
+  font-size: 16px;
+
+}
+
+.pagination{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #c8c8c8;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: var(--third-color);
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color:#35bda6;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px var(--second-color);
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
 
 
-@media only screen and (max-width:600px) {
-  .dashboard-container{
-      display: grid;
-      grid-template-columns:1fr;
-      grid-template-areas:"db-col-1"
-                          "db-greenhouse";
-     
-  }
+/*Devices dashboard ---------------------------------------*/
+.cameraBtn, .pairedBtn{
+  border-radius: 5px;
+  border: none;
+  background-color: var(--third-color);
+  color: var(--main-color);
+  padding: 10px 1em;
+}
+
+.custom-row-container{
+   padding: 3rem;
+}
+.nav_bar-container{
+  padding: 0.5rem 3rem;
+}
+
+
+/* Profile Modal */
+.modal-content-column{
+  width: 100%;
+  padding: 1em !important;
   
-  .nav-links{
-      display:none;
-  }
-  .db-col-1{
+}
+.modal-content-column input{
+  width: 100%;
+  padding: 1em;
+  border-radius: 5px;
+  border: 1px solid #3f3f3f;
 
-      grid-area: db-col-1;
+}
+.modal-content-column li{
+  display: flex;
+  flex-direction: column; 
+}
+
+.modal-content-column label{
+  padding:1em 0;
+
+}
+.modal-links{
+  display: flex;
+  flex-direction: column;
+ 
+}
+.modal-links a{
+  padding: 1em;
+}
+.modalSaveBtn{
+  font-size: var(--font-size);
+}
+
+
+/*THEME CSS*/
+
+  .theme-body{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
   }
+
+  .theme-body p{
+    letter-spacing: 1px;
+  }
+
+
+  
+  /*MEDIA QUERIES*/
+  
+@media only screen and (min-width: 576px){
+  .container{
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+}
+@media only screen and (max-width:768px){
+  .humidity-display, .temperature-display{
+    padding: 2em;
+  }
+
+}
+@media only screen and (max-width:650px) {
+  *{
+    font-size:14px ;
+  }
+ .nav_bar-container{
+  padding: 1rem !important;
+ }
+ .custom-row-container{
+  padding: 1rem !important;
+ }
+ 
+    /*Hamburger*/
+    .hamburger-menu {
+      display: block;
+      cursor: pointer;
+    }
+    .burger_drop-container{
+      display: block;
+    }
+    .nav-links{
+        display:none;
+    }
+  
+/*Grid */
+
+  .sideview{
+    width: 100%;
+    grid-area:sideView;
+  }
+  .sideview-container{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 1em;
+    align-items: center;
+  }
+
+
   .db-greenhouse{
-      grid-area:db-greenhouse;
+    margin-top: 2em;
+    padding: 0 !important;
   }
+ 
+  
   .display-container{
       display: grid;
       grid-template-columns:1fr;
       grid-template-areas:"temperature-container"
                           "humidity-container";
-
      
   }
   .temperature-container{
@@ -285,113 +654,22 @@ tbody tr:hover{
   .temperature-display{
       border-radius: 10px;
   }
+
   .humidity-display{
       grid-area: humidity;
+      border-radius: 10px;
   }
-}
-
-/* Login Form ___________________________________________*/
-
-.container-login{
-  display: grid;
-  background-color:var(--second-color);
-  height: 100vh;
-  grid-template-columns: 0.5fr 3fr 0.5fr;
-  grid-template-areas:"col-1 login-form col-3";
-  
+  .container{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
   }
-.col-1{
-  grid-area: col-1;
-}
-.login-form{
-  width: 100%;
-  height: 100%;
-  margin-bottom:2em;
-  grid-area: login-form;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  
-}
-.login-form-2{
-  width:25em;
-  min-height: 80%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  border-radius: 10px;
-  background-color: var(--main-color);
-  font-size: var(--font-size);
-  position: relative;
-  box-shadow: 0px 10px 1em  rgba(72, 72, 72, 0.238);
-}
-
-#logo-login{
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  border:5px solid var(--second-color);
-  position: absolute;
-  top: 4%;
-  bottom: 0;
-  z-index: 1000000000;
-}
-.form{
-  width: 100%;
-  padding: 0px 50px;
-  margin-top: 2em;
-}
-.form li{
-  width: 100%;
-  list-style: none;
-  margin-bottom: 1em;
-
-}
-.form input{
- width: 100%;
-  height: 54px;
-  border-radius: 5px;
-  border:1px solid var(--third-color);
-  border-radius: 5px;
-  padding-left: 1em;
-}
-.login-button{
-  width: 100%;
-  height: 54px;
-  border-radius: 5px;
-  border: none;
-  color: var(--main-color);
-  letter-spacing: 2px;
-  background-color:var(--third-color);
-  font-size: var(--font-size);
-  font-weight: bold;
-}
-.login-button:hover{
-  background-color:#259a86;
-}
-.show-button{
-  border-radius: 5px;
-  border: none;
-  font-size: 12px;
-  padding-top: 4px;
-}
-.form a{
-  font-size: 12px;
-}
-
-button:active{
-  transform: translateY(1px);
-}
-.col-3{
-  grid-area: col-3;
-}
-#active{
-  background-color: var(--third-color);
-  border: none;
-  color: var(--second-text-color);
-}
-.user{
-  padding-top: 50px;
+  .row-container{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+  .column-1{
+    width: 100%;
+  }
 }
