@@ -10,6 +10,7 @@ import Table from "react-bootstrap/Table";
 import Pagination from "react-bootstrap/Pagination";
 
 function WaterCondition() {
+
   const functions = getFunctions(app, "asia-southeast1");
   const getAllSensorData = httpsCallable(functions, "getAllSensorData");
   const [ecData, setEcData] = useState({});
@@ -96,6 +97,7 @@ function WaterCondition() {
                    {/* phlvel */}
                    {phListData.map((data) => (
                     <tr>
+                      <td>1</td>
                       <td>{data.datetime}</td>
                       <td>
                         {data.value}
@@ -146,6 +148,7 @@ function WaterCondition() {
                   {/* eclevel table */}
                   {ecListData.map((data) => (
                     <tr>
+                      <td>1</td>
                       <td>{data.datetime}</td>
                       <td>
                         {data.value}{" "}
