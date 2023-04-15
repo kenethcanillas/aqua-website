@@ -5,9 +5,10 @@ import React, { useEffect, useState } from "react";
 
 function getWeatherCategory(code) {
   if (code === 0) {
+    
     return "Clear Sky";
   } else if (code >= 1 && code <= 44) {
-    return "Party Cloud";
+    return " Partly Cloudy";
   } else if (code >= 45 && code <= 47) {
     return "Fog";
   } else if (code >= 48 && code <= 55) {
@@ -26,10 +27,6 @@ function getWeatherCategory(code) {
 
 function SideView() {
 
-
-
-
-
   const [date, setDate] = useState(new Date());
 
   useEffect(() => {
@@ -40,38 +37,42 @@ function SideView() {
   }, []);
 
 
-  const [geoMeteo, setgeoMeteoState] = useState({});
-  const [openMeteo, setOpenMeteoState] = useState({});
-
-
-  useEffect(() => {
-
-    fetch(`https://geocoding-api.open-meteo.com/v1/search?name=Quezon+City&count=10&language=en&format=json`)
-
-      .then(response => response.json())
-      .then(geodata => {
-          // console.log(geodata);
-
-          setgeoMeteoState({lat: geodata.results[0].latitude , long: geodata.results[0].longitude, cityname: geodata.results[0].name, country: geodata.results[0].country });
-
-      })
-      .catch(error => console.error(error));
-  }, []);
 
   // const latitude = geoMeteo.lat;
   // const longitude = geoMeteo.long;
 
-  const [cordinates, setCordinates] = useState({});
+  // const [cordinates, setCordinates] = useState({});
 
+  // useEffect(() => {
+  //   navigator.geolocation.getCurrentPosition((position) => {
+  //     setCordinates({ latitude: position.coords.latitude, longitude: position.coords.longitude });
+  //     setCordinates(position.coords)
+  //   })
 
+ 
+   
+    const [openMeteo, setOpenMeteoState] = useState({});
+    
+    const [latitude, setLatitude] = useState(null);
+    const [longitude, setLongitude] = useState(null);
+   
+    const [cordinatesName, setCordinatesName] = useState({});
+  
+    useEffect(() => {
+      if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          const { latitude, longitude } = position.coords;
+          setLatitude(latitude);
+          setLongitude(longitude);
+        });
+      } else {
+        console.log('Geolocation is not supported by your browser');
+      }
+    }, []);
 
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      setCordinates({ latitude: position.coords.latitude, longitude: position.coords.longitude });
-      setCordinates(position.coords)
-    })
-
-    fetch(`https://api.open-meteo.com/v1/forecast?latitude=${cordinates.latitude}&longitude=${cordinates.longitude}&hourly=temperature_2m,weathercode&current_weather=true`)
+    useEffect(() => {
+      if (latitude && longitude){
+    fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,weathercode&current_weather=true`)
 
       .then(response => response.json())
       .then((data) => {
@@ -80,14 +81,55 @@ function SideView() {
 
       })
       .catch(error => console.error(error));
-  }, []);
+    }
+  }, [latitude, longitude]);
+
+  useEffect(() => {
+    if (latitude && longitude){
+  fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`)
+
+    .then(response => response.json())
+    .then((data) => {
+      // console.log(data);
+      setCordinatesName({ cityname: data.address.city, countryname: data.address.country});
+
+    })
+    .catch(error => console.error(error));
+  }
+}, [latitude, longitude]);
+
+
+  // useEffect(() => {
+
+  //   fetch(`https://geocoding-api.open-meteo.com/v1/search?name=Quezon+City&count=10&language=en&format=json`)
+
+  //     .then(response => response.json())
+  //     .then(geodata => {
+  //         // console.log(geodata);
+
+  //         setgeoMeteoState({lat: geodata.results[0].latitude , long: geodata.results[0].longitude, cityname: geodata.results[0].name, country: geodata.results[0].country });
+
+  //     })
+  //     .catch(error => console.error(error));
+  // }, []);
+
+  // useEffect(() => {
+
+  //   fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,weathercode&current_weather=true`)
+
+  //     .then(response => response.json())
+  //     .then((data) => {
+  //       // console.log(data);
+  //       setOpenMeteoState({ temp: data.current_weather.temperature, code: data.current_weather.weathercode });
+
+  //     })
+  //     .catch(error => console.error(error));
+  // }, []);
 
   const weatherCategory = getWeatherCategory(openMeteo.code);
 
   return (
     <>
-      {/* {geoMeteo.lat}
-    {geoMeteo.long} */}
       <div className='sideview-container mt-4'>
         <div className='weather-row'>
           <div className="temp-column">
@@ -103,7 +145,7 @@ function SideView() {
               {<Icon icon="ic:outline-cloud-queue" width="42px" height="42px" />}
               <span className='output'>{weatherCategory}</span>
             </div>
-            <p className='place'>{geoMeteo.cityname}, <span>{geoMeteo.country}</span></p>
+            <p className='place'>{cordinatesName.cityname}, <span>{cordinatesName.countryname}</span></p>
           </div>
         </div>
       </div>

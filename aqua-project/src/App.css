@@ -54,6 +54,8 @@
   --font-size:16px;   
   --close-color:#F15555;
   
+  --darkmode-color:#3F3F3F;
+  --darkmode-text-color:#fafafa;
 }
 .nav_bar-container{
   display: flex;
