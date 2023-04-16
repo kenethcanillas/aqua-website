@@ -1,11 +1,11 @@
 import '../App.css';
-import React, {useCallback, useRef, useState} from 'react';
-import { useNavigate } from "react-router-dom";
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import { Navigate, useNavigate } from "react-router-dom";
 import Logo from '../components/img/aqua logo.png';
 import { useAuth } from '../context/AuthContext';
 import { auth, app } from '../firebase';
 
-function Login({histroy}) {
+function Login() {
   // const email = useRef()
   // const password = useRef()
   // const getEmail = localStorage.getItem("emailData")
@@ -17,12 +17,12 @@ function Login({histroy}) {
   //     }
   // }
 
+
   const emailRef = useRef()
   const passwordRef = useRef()
   const { login } = useAuth()
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
-  const history = useNavigate()
 
 
   
@@ -49,7 +49,6 @@ const handleSubmit = useCallback(async event=>{
       setLoading(true)
 
       await login(emailRef.current.value, passwordRef.current.value);
-      history("/")
     }catch(e){
       console.log(e)
       setError("Failed to log in")

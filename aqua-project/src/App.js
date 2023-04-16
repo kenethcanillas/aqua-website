@@ -10,7 +10,12 @@ import WaterLevelPage from "./pages/WaterLevelPage";
 import DevicesPage from "./pages/DevicesPage";
 
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import SideView from "./components/SideView";
 import Login from "./Homepage/Login";
@@ -19,10 +24,10 @@ import PrivateRoute from "./components/PrivateRoute";
 import { Fragment } from "react";
 
 function App() {
+  const {currentUser} = useAuth();
   return (
     <>
-      <Router>
-        <AuthProvider>
+        {currentUser ? <Router>
           <Fragment>
             <Header />
             <Container fluid>
@@ -32,54 +37,23 @@ function App() {
                 </Col>
                 <Col xxl={10} xl={9} lg={9} md={9} sm={12} xs={12}>
                   <Routes>
-                    <Route exact path="/login" Component={Login} />
-                    <Route
-                      path="/"
-                      element={
-                        <RequireAuth>
-                          <GreenHousePages />
-                        </RequireAuth>
-                      }
-                    />
+                    <Route path="/" element={<GreenHousePages />} />
+                    <Route path="/login" element={<GreenHousePages />} />
                     <Route
                       path="/waterconditionpage"
-                      element={
-                        <RequireAuth>
-                          <WaterConditionPages />
-                        </RequireAuth>
-                      }
+                      Component={WaterConditionPages}
                     />
 
-                    <Route
-                      path="/waterlevelpage"
-                      element={
-                        <RequireAuth>
-                          <WaterLevelPage />
-                        </RequireAuth>
-                      }
-                    />
-                    <Route
-                      path="/devicespage"
-                      element={
-                        <RequireAuth>
-                          <DevicesPage />
-                        </RequireAuth>
-                      }
-                    />
+                    <Route path="/waterlevelpage" Component={WaterLevelPage} />
+                    <Route path="/devicespage" Component={DevicesPage} />
                   </Routes>
                 </Col>
               </Row>
             </Container>
           </Fragment>
-        </AuthProvider>
-      </Router>
+        </Router> : <Login />}
     </>
   );
-}
-
-function RequireAuth({ children }) {
-  let {currentUser} = useAuth();
-  return currentUser ? children : <Navigate to="/login" />;
 }
 
 export default App;
