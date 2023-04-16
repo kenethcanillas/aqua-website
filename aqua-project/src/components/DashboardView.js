@@ -57,6 +57,9 @@ function DashboardView() {
       );
     });
   }
+  tempListData.forEach((item, i) => {
+    item.id = i+ 1;
+  });
 
   return (
     <>
@@ -98,7 +101,7 @@ function DashboardView() {
 
                   {tempListData.map((data) => (
                     <tr>
-                      <td></td>
+                      <td>{data.id}</td>
                       <td>{data.datetime}</td>
                       <td>
                           {data.value}
