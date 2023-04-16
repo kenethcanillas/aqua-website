@@ -98,12 +98,13 @@ function DashboardView() {
 
                   {tempListData.map((data) => (
                     <tr>
+                      <td></td>
                       <td>{data.datetime}</td>
                       <td>
-                        {data.value}
-                        <span
-                          class="iconify"
-                          data-icon="tabler:temperature-celsius"
+                          {data.value}
+                          <span
+                            class="iconify"
+                            data-icon="tabler:temperature-celsius"
                         ></span>
                       </td>
                     </tr>

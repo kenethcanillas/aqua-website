@@ -2,10 +2,14 @@ import "../App.css";
 import { Icon } from "@iconify/react";
 import React, { useEffect, useState } from "react";
 
+
+
 function getWeatherCategory(code) {
   if (code === 0) {
+    <img src=".\img\ICON\Clear.png" alt="" width="42px" height="42px"> </img>
     return "Clear Sky";
   } else if (code >= 1 && code <= 44) {
+   const weatherCategoryIcon = ".\img\ICON\Clear.png";
     return " Partly Cloudy";
   } else if (code >= 45 && code <= 47) {
     return "Fog";
@@ -23,7 +27,7 @@ function getWeatherCategory(code) {
 }
 function setIcon(code) {
   if (code >= 1 && code <= 44) {
-    return <Icon icon="ic:outline-cloud-queue" width="42px" height="42px" />;
+    return <img src="" />;
   }
 }
 
@@ -165,7 +169,7 @@ function SideView() {
           </div>
           <div className="weather-condition-column">
             <div className="condition">
-              {setIcon(openMeteo.code)}
+              {/* <img src={weatherCategoryIcon.code} alt="Icon"/>   */}
               <span className="output">{weatherCategory}</span>
             </div>
             <p className="place">
