@@ -3,7 +3,7 @@ import Logo from '../img/aquaLogo.png';
 
 import { Icon } from '@iconify/react';
 import React, { useState } from "react";
-import { NavLink } from 'react-router-dom';
+import { NavLink, Navigate } from 'react-router-dom';
 
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button';
@@ -11,9 +11,17 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { useAuth } from '../context/AuthContext';
 
 
 function Header(){
+  const {logout} = useAuth();
+  const signOut = () =>{
+    logout();
+    CMbtnClose();
+    <Navigate to="/login"/>
+
+  }
          
       /*  HAMBURGER TOGGLE */
       const [open, opened] = useState(false);
@@ -268,7 +276,7 @@ function Header(){
               <Button variant="secondary" onClick={CMbtnClose}>
                 Cancel
               </Button>
-              <Button variant="danger" onClick={CMbtnClose}>
+              <Button variant="danger" onClick={signOut}>
                 Sign out
               </Button>
             </Modal.Footer>
@@ -293,7 +301,7 @@ function Header(){
         </div>
         
           <ul className="nav-links">
-              <li><NavLink to="/greenhousepage" activeClassName='active-link'  >Green House</NavLink></li>
+              <li><NavLink to="/" activeClassName='active-link'  >Green House</NavLink></li>
               <li><NavLink to="/waterlevelpage" activeClassName='active-link' >Water Level</NavLink></li>
               <li><NavLink to="/waterconditionpage" activeClassName='active-link'>Water Condition</NavLink></li>
               <li><NavLink to="/devicespage" activeClassName='active-link'>Devices</NavLink></li>

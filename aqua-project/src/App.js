@@ -1,52 +1,85 @@
-import Header from './components/Header';
+import Header from "./components/Header";
 
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
+import GreenHousePages from "./pages/GreenHousePages";
+import WaterConditionPages from "./pages/WaterConditionPage";
+import WaterLevelPage from "./pages/WaterLevelPage";
+import DevicesPage from "./pages/DevicesPage";
 
-import GreenHousePages from './pages/GreenHousePages';
-import WaterConditionPages from './pages/WaterConditionPage';
-import WaterLevelPage from './pages/WaterLevelPage';
-import DevicesPage from './pages/DevicesPage';
-
-
-import './App.css';
-import { BrowserRouter as  Router, Routes, Route, } from "react-router-dom";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import SideView from './components/SideView';
+import "./App.css";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import SideView from "./components/SideView";
+import Login from "./Homepage/Login";
+import { AuthProvider, useAuth } from "./context/AuthContext";
+import PrivateRoute from "./components/PrivateRoute";
+import { Fragment } from "react";
 
 function App() {
+  return (
+    <>
+      <Router>
+        <AuthProvider>
+          <Fragment>
+            <Header />
+            <Container fluid>
+              <Row className="custom-row-container">
+                <Col xxl={2} xl={3} lg={3} md={3} sm={12} xs={12}>
+                  <SideView />
+                </Col>
+                <Col xxl={10} xl={9} lg={9} md={9} sm={12} xs={12}>
+                  <Routes>
+                    <Route exact path="/login" Component={Login} />
+                    <Route
+                      path="/"
+                      element={
+                        <RequireAuth>
+                          <GreenHousePages />
+                        </RequireAuth>
+                      }
+                    />
+                    <Route
+                      path="/waterconditionpage"
+                      element={
+                        <RequireAuth>
+                          <WaterConditionPages />
+                        </RequireAuth>
+                      }
+                    />
 
-  return(
-   <>
-   
-   <Router>
-    
-    <Header/>
-      <Container fluid>
-        <Row className='custom-row-container'>
-          <Col xxl={2} xl={3} lg={3} md={3} sm={12} xs={12}> 
-            <SideView />
-          </Col>
-          <Col xxl={10} xl={9}lg={9} md={9} sm={12} xs={12}>
-            <Routes>
-                <Route path="/" element={<GreenHousePages/>}/>
-                <Route path="/greenhousepage" element={ <GreenHousePages/>}/>
-                <Route path="/waterconditionpage" element={ <WaterConditionPages/>}/>
-                <Route path="/waterlevelpage" element={ <WaterLevelPage/>}/>
-                <Route path="/devicespage" element={ <DevicesPage/>}/>
-            </Routes>
-          </Col>
-        </Row>
-      </Container>
-   </Router>
-  
-   
-   
- 
- 
-
-   </>)
+                    <Route
+                      path="/waterlevelpage"
+                      element={
+                        <RequireAuth>
+                          <WaterLevelPage />
+                        </RequireAuth>
+                      }
+                    />
+                    <Route
+                      path="/devicespage"
+                      element={
+                        <RequireAuth>
+                          <DevicesPage />
+                        </RequireAuth>
+                      }
+                    />
+                  </Routes>
+                </Col>
+              </Row>
+            </Container>
+          </Fragment>
+        </AuthProvider>
+      </Router>
+    </>
+  );
 }
+
+function RequireAuth({ children }) {
+  let {currentUser} = useAuth();
+  return currentUser ? children : <Navigate to="/login" />;
+}
+
 export default App;
