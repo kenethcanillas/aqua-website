@@ -61,6 +61,19 @@ function DashboardView() {
     item.id = i+ 1;
   });
 
+  {/** BOOTSTRAP PAGINATION */}
+
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const itemsPerPage = 10;
+
+
+  // const getData = () => {
+  //   const startIndex = (currentPage - 1) * itemsPerPage;
+  //   const endIndex = startIndex + itemsPerPage;
+  //   return data.slice(startIndex, endIndex);
+  // };
+
+  const [page, setPage] = useState(1)
   return (
     <>
       <div class="db-greenhouse">
@@ -79,11 +92,8 @@ function DashboardView() {
             <div class="temperature-display">
               <h3>Temperature</h3>
               <h2>
-                {Object.keys(tempData).length !== 0 ? tempData.value + "%" : ""}{" "}
-                <span
-                  class="iconify"
-                  data-icon="tabler:temperature-celsius"
-                ></span>
+                {Object.keys(tempData).length !== 0 ? tempData.value + "" : ""}{" "}
+                <Icon icon="tabler:temperature-celsius" width="42" height="42" />
               </h2>
               <p>Condition: Good</p>
             </div>
@@ -98,18 +108,12 @@ function DashboardView() {
                 </thead>
                 <tbody>
                   {/* temperature */}
-
                   {tempListData.map((data) => (
+                    // <tr key={item.id}>
                     <tr>
                       <td>{data.id}</td>
                       <td>{data.datetime}</td>
-                      <td>
-                          {data.value}
-                          <span
-                            class="iconify"
-                            data-icon="tabler:temperature-celsius"
-                        ></span>
-                      </td>
+                      <td>{data.value} {<Icon icon="tabler:temperature-celsius" width="16" height="16" />}</td>                        
                     </tr>
                   ))}
                 </tbody>
@@ -120,10 +124,6 @@ function DashboardView() {
                         <Pagination.First />
                         <Pagination.Prev>Prev</Pagination.Prev>
                         <Pagination.Item active>{1}</Pagination.Item>
-                        <Pagination.Item>{2}</Pagination.Item>
-                        <Pagination.Item>{3}</Pagination.Item>
-                        <Pagination.Item>{4}</Pagination.Item>
-                        <Pagination.Item>{5}</Pagination.Item>
                         <Pagination.Next>Next</Pagination.Next>
                         <Pagination.Last />
                       </Pagination>
@@ -138,11 +138,8 @@ function DashboardView() {
             <div class="humidity-display">
               <h3>Humidity</h3>
               <h2>
-                {Object.keys(humData).length !== 0 ? humData.value + "%" : ""}
-                <span
-                  class="iconify"
-                  data-icon="tabler:temperature-celsius"
-                ></span>
+                {Object.keys(humData).length !== 0 ? humData.value + "" : ""}
+                <Icon icon="material-symbols:humidity-percentage-outline-rounded" width="42" height="42" />
               </h2>
               <p>Condition: Good</p>
             </div>
@@ -173,7 +170,16 @@ function DashboardView() {
                 <tfoot>
                   <tr>
                     <td colspan={3}>
-                      <Pagination size="md">
+                      <Pagination size="md" 
+                        page={page}
+                        between={4}
+                        total={250}
+                        limit={20}
+                        changePage={(page) => {
+                          setPage(page); 
+                          console.log(page) }}
+                      >
+                        
                         <Pagination.First />
                         <Pagination.Prev>Prev</Pagination.Prev>
                         <Pagination.Item active>{1}</Pagination.Item>

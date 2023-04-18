@@ -48,7 +48,7 @@
   --main-color:#FAFAFA;
   --second-color:#2EBDDA;
   --third-color:#1C7A6A;
-  --main-text-color:#3F3F3F;
+  --main-text-color:#110606;
   --second-text-color:#e4e4e4;
   --main-font-family:arial;
   --font-size:16px;   
@@ -262,7 +262,7 @@ ul.nav-links{
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #FFDB59;
+  background-color: #ffdb59;
   border-radius: 1em;
 }
 .temp-column, .weather-condition-column{
@@ -314,7 +314,8 @@ ul.nav-links{
 }
 
 .weather-condition-column{
-  background-color: var(--main-color);
+  background-color: #1d1d1d0c;
+  border-radius: 0 0 10px 10px;
 }
 
 .condition{
@@ -322,7 +323,9 @@ ul.nav-links{
   justify-content: center;
   align-items: center;
 
+
 }
+
 .condition .output{
   font-size:18px;
   padding-left: 1em;
@@ -377,7 +380,12 @@ ul.nav-links{
 }
 .temperature-display h2, .humidity-display h2{
   font-size: 72px;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.temperature-display h2 .iconify, .humidity-display h2 .iconify{
+  align-self: flex-start;
 }
 .temperature-display p, .humidity-display p{
   text-align: center;
