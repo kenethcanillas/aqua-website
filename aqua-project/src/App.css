@@ -48,8 +48,10 @@
   --main-color:#FAFAFA;
   --second-color:#2EBDDA;
   --third-color:#1C7A6A;
+
   --main-text-color:#110606;
   --second-text-color:#e4e4e4;
+
   --main-font-family:arial;
   --font-size:16px;   
   --close-color:#F15555;
@@ -253,6 +255,7 @@ ul.nav-links{
 
 /*SideView _______________________________________________________________*/
 .sideview-container{
+  color:var(--main-text-color);
   display: flex;
   flex-direction: column;
 }
@@ -335,11 +338,12 @@ ul.nav-links{
  /*DASHBOARD -----------------------------------------------*/
 
 
-
 .db-buttons{
+  
   display: flex;
   justify-content: flex-end;
   align-items:center;
+ 
 }
 .db-buttons a{
   margin: 0 1em;
@@ -349,10 +353,9 @@ ul.nav-links{
 }
 .display-container{
   display: grid;
-
   grid-template-columns: 1fr 1fr;
   grid-template-areas: "temperature humidity";  
-
+  color: var(--main-text-color) !important;
 }
 .temperature-container{
   width: 100%;
@@ -383,6 +386,7 @@ ul.nav-links{
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 0.3em;
 }
 .temperature-display h2 .iconify, .humidity-display h2 .iconify{
   align-self: flex-start;
@@ -400,33 +404,40 @@ ul.nav-links{
 .container{
   margin:0 !important;
   padding: 0 !important;
-  color: var(--main-text-color);
+  color: var(--main-text-color) !important;
 }
 .row-container{
   width: 100%;
   display: flex;
-  justify-content: center;
   align-items: center;
   background-color: var(--second-color);
   border-radius: 10px;
+}
+.column-1{
+  width: 50%;
+}
+
+.column-2{
+  width: 50%;
+
 }
 .column-content .icons{
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
-
 .column-content{
   padding:3em 2em;
 }
 .content-title{
   font-weight: 600;
-text-align: center;
   font-size: var(--font-size);
   align-self: flex-start;
+  color: var(--main-text-color);
 }
 .content-value{
   font-size: 72px;
+  margin-bottom: 0.3em;
 }
 .content-condition{
   font-size:14px;
@@ -434,29 +445,14 @@ text-align: center;
 .content-value, .content-condition{
   text-align: center;
 }
-.value-icon{
-  font-size: 32px;
-}
+
 .row-container-2{
   margin-top: 1em;
 }
 .table-container-bootstrap{
   border-radius: 1em !important;
 }
-.table-container{
-  width: 100%;
-  text-align: center;
- 
-}
-.table-container th, td{
-  padding: 10px;
-  border: 1px solid var(--main-text-color) ;
-}
 
-.table-container td{
-  font-size: 16px;
-
-}
 
 .pagination{
   display: flex;
@@ -634,16 +630,10 @@ input:checked + .slider:before {
 
   .sideview{
     width: 100%;
-    grid-area:sideView;
   }
   .sideview-container{
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-gap: 1em;
     align-items: center;
   }
-
-
   .db-greenhouse{
     margin-top: 2em;
     padding: 0 !important;
@@ -680,6 +670,9 @@ input:checked + .slider:before {
     flex-wrap: wrap;
   }
   .column-1{
+    width: 100%;
+  }
+  .column-2{
     width: 100%;
   }
 }

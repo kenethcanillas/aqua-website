@@ -8,6 +8,7 @@ import { getFunctions, httpsCallable } from "firebase/functions";
 import { toDateTime } from "../utility/utility";
 import Table from "react-bootstrap/Table";
 import Pagination from "react-bootstrap/Pagination";
+import PageItem from 'react-bootstrap/PageItem';
 
 function DashboardView() {
   const functions = getFunctions(app, "asia-southeast1");
@@ -19,6 +20,7 @@ function DashboardView() {
   const [isFirst, setIsFirst] = useState(true);
   const t = query(collection(db, "temperature"), orderBy("datetime", "asc"));
   const h = query(collection(db, "humidity"), orderBy("datetime", "asc"));
+ 
   useEffect(() => {
     onSnapshot(t, (snapshot) => {
       snapshot.docChanges().forEach((change) => {
@@ -57,23 +59,76 @@ function DashboardView() {
       );
     });
   }
+
+
+  {/** TEMPERATURE PAGINATION */} 
+
   tempListData.forEach((item, i) => {
     item.id = i+ 1;
   });
+  
+  const [currentTempPage, setCurrentPage] = useState(1);
+  const [itemsTempPerPage, setItemsPerPage] = useState(10);
+  const totalItems = tempListData.length;
+  const totalPages = Math.ceil(totalItems / itemsTempPerPage);
 
-  {/** BOOTSTRAP PAGINATION */}
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+  
+  const startIndex = (currentTempPage - 1) * itemsTempPerPage;
+  const endIndex = startIndex + itemsTempPerPage;
 
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const itemsPerPage = 10;
+  // slice the array of items to display only the items for the current page
+  const currentItems = tempListData.slice(startIndex, endIndex);
+
+  const paginationItems = [];
+  for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
+    paginationItems.push(
+      <Pagination.Item
+        key={pageNumber}
+        active={pageNumber === currentTempPage}
+        onClick={() => handlePageChange(pageNumber)}
+      >
+        {pageNumber}
+      </Pagination.Item>
+    );
+  }
 
 
-  // const getData = () => {
-  //   const startIndex = (currentPage - 1) * itemsPerPage;
-  //   const endIndex = startIndex + itemsPerPage;
-  //   return data.slice(startIndex, endIndex);
-  // };
+  /* HUMIDITY PAGINATION */
 
-  const [page, setPage] = useState(1)
+  humListData.forEach((item, i) => {
+    item.id = i+ 1;
+  });
+  
+  const [HUMcurrentPage, HUMsetCurrentPage] = useState(1);
+  const [HUMitemsPerPage, HUMsetItemsPerPage] = useState(10);
+  const HUMtotalItems = humListData.length;
+  const HUMtotalPages = Math.ceil(HUMtotalItems / HUMitemsPerPage);
+
+  const HUMhandlePageChange = (page) => {
+    HUMsetCurrentPage(page);
+  };
+  
+  const HUMstartIndex = (HUMcurrentPage - 1) * HUMitemsPerPage;
+  const HUMendIndex = HUMstartIndex + HUMitemsPerPage;
+
+  // slice the array of items to display only the items for the current page
+  const HUMcurrentItems = tempListData.slice(HUMstartIndex, HUMendIndex);
+
+  const HUMpaginationItems = [];
+  for (let HUMpageNumber = 1; HUMpageNumber <= HUMtotalPages; HUMpageNumber++) {
+    HUMpaginationItems.push(
+      <Pagination.Item
+        key={HUMpageNumber}
+        active={HUMpageNumber === HUMcurrentPage}
+        onClick={() => HUMhandlePageChange(HUMpageNumber)}
+      >
+        {HUMpageNumber}
+      </Pagination.Item>
+    );
+  }
   return (
     <>
       <div class="db-greenhouse">
@@ -108,8 +163,7 @@ function DashboardView() {
                 </thead>
                 <tbody>
                   {/* temperature */}
-                  {tempListData.map((data) => (
-                    // <tr key={item.id}>
+                  {currentItems.map((data) => (
                     <tr>
                       <td>{data.id}</td>
                       <td>{data.datetime}</td>
@@ -119,13 +173,34 @@ function DashboardView() {
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colspan={3}>
-                      <Pagination size="md" className="pagination">
-                        <Pagination.First />
-                        <Pagination.Prev>Prev</Pagination.Prev>
-                        <Pagination.Item active>{1}</Pagination.Item>
-                        <Pagination.Next>Next</Pagination.Next>
-                        <Pagination.Last />
+                    <td colSpan={3}>
+                      <Pagination 
+                        size="md" 
+                        className="pagination" 
+                      >
+                         <Pagination.First
+                            disabled={currentTempPage === 1}
+                            onClick={() => handlePageChange(1)}
+                        />
+                          <Pagination.Prev
+                            disabled={currentTempPage === 1}
+                            onClick={() => handlePageChange(currentTempPage - 1)}>
+                              Prev
+                          </Pagination.Prev>
+                          
+                          {paginationItems}
+
+                          <Pagination.Next
+                              disabled={currentTempPage === totalPages}
+                              onClick={() => handlePageChange(currentTempPage + 1)} >
+                                Next
+                          </Pagination.Next>
+
+                          <Pagination.Last
+                              disabled={currentTempPage === totalPages }
+                              onClick={() => handlePageChange(totalPages)}>
+                          </Pagination.Last>
+                           
                       </Pagination>
                     </td>
                   </tr>
@@ -154,41 +229,49 @@ function DashboardView() {
                 </thead>
                 <tbody>
                   {/* humidty table */}
-                  {humListData.map((data) => (
+                  {HUMcurrentItems.map((data) => (
                     <tr>
+                      <td>{data.id}</td>
                       <td>{data.datetime}</td>
-                      <td>
-                        {data.value}
-                        <span
-                          class="iconify"
-                          data-icon="tabler:temperature-celsius"
-                        ></span>
+                      <td> 
+                         {data.value}
                       </td>
                     </tr>
                   ))}
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colspan={3}>
-                      <Pagination size="md" 
-                        page={page}
-                        between={4}
-                        total={250}
-                        limit={20}
-                        changePage={(page) => {
-                          setPage(page); 
-                          console.log(page) }}
+                  <td colSpan={3}>
+                      <Pagination 
+                        size="md" 
+                        className="pagination" 
+                        //  active={currentTempPage}
+                        //  totalPages={totalPages}
+                        //  onChange={handlePageChange}
                       >
-                        
-                        <Pagination.First />
-                        <Pagination.Prev>Prev</Pagination.Prev>
-                        <Pagination.Item active>{1}</Pagination.Item>
-                        <Pagination.Item>{2}</Pagination.Item>
-                        <Pagination.Item>{3}</Pagination.Item>
-                        <Pagination.Item>{4}</Pagination.Item>
-                        <Pagination.Item>{5}</Pagination.Item>
-                        <Pagination.Next>Next</Pagination.Next>
-                        <Pagination.Last />
+                         <Pagination.First
+                            disabled={HUMcurrentPage === 1}
+                            onClick={() => HUMhandlePageChange(1)}
+                        />
+                          <Pagination.Prev
+                            disabled={HUMcurrentPage === 1}
+                            onClick={() => HUMhandlePageChange(HUMcurrentPage - 1)}>
+                              Prev
+                          </Pagination.Prev>
+                          
+                          {HUMpaginationItems}
+
+                          <Pagination.Next
+                              disabled={HUMcurrentPage === HUMtotalPages}
+                              onClick={() => HUMhandlePageChange(HUMcurrentPage + 1)} >
+                                Next
+                          </Pagination.Next>
+
+                          <Pagination.Last
+                              disabled={HUMcurrentPage === HUMtotalPages }
+                              onClick={() => HUMhandlePageChange(HUMtotalPages)}>
+                          </Pagination.Last>
+                           
                       </Pagination>
                     </td>
                   </tr>

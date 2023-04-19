@@ -10,35 +10,7 @@ import rain from  '../img/rain.png';
 import rainshowers from  '../img/showers.png';
 import thunderstorm from  '../img/thunderstorm.png';
 
-
-function getWeatherCategory(code) {
-
-  if (code === 0) {     
-    return "Clear Sky";
-  } else if (code >= 1 && code <= 44) {
-    return " Partly Cloudy";
-  } else if (code >= 45 && code <= 47) {
-    return "Fog";
-  } else if (code >= 48 && code <= 55) {
-    return "Drizzle";
-  } else if (code >= 56 && code <= 77) {
-    return "Rain";
-  } else if (code >= 80 && code <= 94) {
-    return "Rain Shower";
-  } else if (code >= 95 && code <= 99) {
-    return "Thunderstorm";
-  } else {
-    return " ";
-  }
-}
-// function weatherImage({getWeatherCategory.code}) {
-//   const imgsrc = {
-
-//   }
-// }
-
 function SideView() {
-
 
   const [date, setDate] = useState(new Date());
 
@@ -151,7 +123,6 @@ return (
             <p>Temperature</p>
             <div className="time">
               <p className="hours ">
-                {" "}
                 <span>
                   {<Icon icon="ic:round-access-time" color="#3f3f3f" />}
                 </span>

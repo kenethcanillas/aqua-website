@@ -293,14 +293,14 @@ function Header(){
         </div>
         
           <ul className="nav-links">
-              <li><NavLink to="/greenhousepage" activeClassName='active-link'  >Green House</NavLink></li>
-              <li><NavLink to="/waterlevelpage" activeClassName='active-link' >Water Level</NavLink></li>
-              <li><NavLink to="/waterconditionpage" activeClassName='active-link'>Water Condition</NavLink></li>
-              <li><NavLink to="/devicespage" activeClassName='active-link'>Devices</NavLink></li>
+              <li><NavLink to="/greenhousepage" ClassName='active-link'  >Green House</NavLink></li>
+              <li><NavLink to="/waterlevelpage" ClassName='active-link' >Water Level</NavLink></li>
+              <li><NavLink to="/waterconditionpage" ClassName='active-link'>Water Condition</NavLink></li>
+              <li><NavLink to="/devicespage" ClassName='active-link'>Devices</NavLink></li>
           </ul>
       
           <Dropdown className='nav-buttons'>
-            <Dropdown.ItemText className='name px-2'>Keneth Canillas</Dropdown.ItemText>
+            <Dropdown.ItemText className='name px-2'>Joselito Manuel</Dropdown.ItemText>
               <Dropdown.Toggle  id="dropdown-basic" className='nav-buttons-button d-flex '>
                         <span>{<Icon icon="gg:profile" color="#fafafa" width="48" height="48" hFlip={true} />}</span>
               </Dropdown.Toggle>
