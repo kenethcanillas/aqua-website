@@ -70,6 +70,7 @@ function DashboardView() {
   tempListData.forEach((item, i) => {
     item.id = i+ 1;
   });
+
   
   const [currentTempPage, setCurrentPage] = useState(1);
   const [itemsTempPerPage, setItemsPerPage] = useState(10);
@@ -203,7 +204,6 @@ function DashboardView() {
     }
       
     const [ReportModalShow, setReportModalShow] = React.useState(false);
-
   return (
     <>
       <ReportModal
@@ -357,6 +357,7 @@ function DashboardView() {
             </div>
           </div>
         </div>
+        <button onClick={handleClick}>Log Out</button>
       </div>
     </>
   );
