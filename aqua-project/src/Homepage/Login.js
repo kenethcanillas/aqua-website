@@ -69,7 +69,7 @@ const handleSubmit = useCallback(async event=>{
                 </div>
               </div>
                           <div>
-                            {error}
+                            <div className=''>{error}</div>
                             <form onSubmit={handleSubmit}>
                                 <div className="second-input">
                                   <p>Username</p>
