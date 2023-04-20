@@ -26,10 +26,10 @@ function App() {
     <Header/>
       <Container fluid>
         <Row className='custom-row-container'>
-          <Col xxl={2} xl={3} lg={3} md={3} sm={12} xs={12}> 
+          <Col xxl={3} xl={3} lg={3} md={3} sm={12} xs={12}> 
             <SideView />
           </Col>
-          <Col xxl={10} xl={9}lg={9} md={9} sm={12} xs={12}>
+          <Col xxl={9} xl={9}lg={9} md={9} sm={12} xs={12}>
             <Routes>
                 <Route path="/" element={<GreenHousePages/>}/>
                 <Route path="/greenhousepage" element={ <GreenHousePages/>}/>

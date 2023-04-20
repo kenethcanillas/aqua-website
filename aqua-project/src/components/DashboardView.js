@@ -8,6 +8,10 @@ import { getFunctions, httpsCallable } from "firebase/functions";
 import { toDateTime } from "../utility/utility";
 import Table from "react-bootstrap/Table";
 import Pagination from "react-bootstrap/Pagination";
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import Dropdown from 'react-bootstrap/Dropdown';
+
 import PageItem from 'react-bootstrap/PageItem';
 
 function DashboardView() {
@@ -83,7 +87,7 @@ function DashboardView() {
   const currentItems = tempListData.slice(startIndex, endIndex);
 
   const paginationItems = [];
-  for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
+  for (let pageNumber = 1; pageNumber <= 10; pageNumber++) {
     paginationItems.push(
       <Pagination.Item
         key={pageNumber}
@@ -118,7 +122,7 @@ function DashboardView() {
   const HUMcurrentItems = tempListData.slice(HUMstartIndex, HUMendIndex);
 
   const HUMpaginationItems = [];
-  for (let HUMpageNumber = 1; HUMpageNumber <= HUMtotalPages; HUMpageNumber++) {
+  for (let HUMpageNumber = 1; HUMpageNumber <= 10; HUMpageNumber++) {
     HUMpaginationItems.push(
       <Pagination.Item
         key={HUMpageNumber}
@@ -129,17 +133,90 @@ function DashboardView() {
       </Pagination.Item>
     );
   }
+
+  /**REPORT MODAL*/
+    function ReportModal(props) {
+      return (
+        <Modal 
+          {...props}
+          size="lg"
+          backdrop="static"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+        <Modal.Header closeButton>
+          <Modal.Title>
+              Reports
+          </Modal.Title>
+        </Modal.Header>
+          <Modal.Body >
+          <div className="Report-Options mb-3">
+            <div className="dropdown">
+              <Dropdown variant="light" className="d-inline mx-2">
+                <Dropdown.Toggle id="dropdown-autoclose-true">
+                  Temperature
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item href="#">Humidity</Dropdown.Item>
+                  <Dropdown.Item href="#">PH Level</Dropdown.Item>
+                  <Dropdown.Item href="#">Electrical Conductivity</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </div>
+            <div className='search'>
+              {<Icon icon="ic:outline-filter-alt" width="24" height="24"/>}
+              <input type="text" placeholder="Search" className="mx-2"/>
+              <button type="button" className="bg-success ">Search</button>
+
+            </div>
+          </div>
+            <div style={{ height: '400px', overflowY: 'scroll' }}>
+              <h3></h3>
+              <Table bordered hover>
+                  <thead className="p-2">
+                    <tr>
+                      <th>#</th>
+                      <th>Date</th>
+                      <th>Value Data </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {/* temperature */}
+                    {tempListData.map((data) => (
+                      <tr>
+                        <td>{data.id}</td>
+                        <td>{data.datetime}</td>
+                        <td>{data.value} {<Icon icon="tabler:temperature-celsius" width="16" height="16" />}</td>                        
+                      </tr>
+                    ))}
+                  </tbody>            
+                </Table>
+                </div>
+          </Modal.Body>
+          <Modal.Footer>
+                 <Button variant='light' className='modalSaveBtn py-3 ' onClick={props.onHide}>Cancel</Button>
+                <Button variant='success' className='modalSaveBtn py-3 px-5 ' onClick={props.onHide}>Download</Button>
+          </Modal.Footer>
+        </Modal>
+      );
+    }
+      
+    const [ReportModalShow, setReportModalShow] = React.useState(false);
+
   return (
     <>
+      <ReportModal
+        show={ReportModalShow}
+        onHide={() => setReportModalShow(false)}
+      />
+
       <div class="db-greenhouse">
         <div class="db-buttons">
-          <a href="#react">
-            {<Icon icon="icon-park-outline:eyes" width="16" height="16" />} View
-            All Data
-          </a>
-          <a href="#">
+       
+          <a href="#/reports" onClick={() => setReportModalShow(true)}>
             {<Icon icon="fluent-mdl2:report-document" width="16" height="16" />}{" "}
-            Reports
+            Reports 
           </a>
         </div>
         <div className="display-container">

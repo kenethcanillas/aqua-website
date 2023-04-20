@@ -58,7 +58,13 @@
   
   --darkmode-color:#3F3F3F;
   --darkmode-text-color:#fafafa;
+
+  --bs-dropdown-link-active-bg: #e7e7e7 !important;
+
 }
+  .disable{
+    background-color: #e8e8e8;
+  }
 .nav_bar-container{
   display: flex;
   justify-content: space-between;
@@ -216,6 +222,8 @@ ul.nav-links{
       font-weight: 600;
       
     }
+
+    
 
 /*Bootstrap Dropdwon CSS*/
 .dropdown-toggle::after {
@@ -398,6 +406,23 @@ ul.nav-links{
 .temperature-data, .humidity-data{
  margin: 1em 0.2em;
 
+}
+.Report-Options{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.search input{
+  padding:0.5em;
+  border-radius:10px;
+  border:1px solid black;
+}
+.search button{
+  padding:0.5em;
+  border-radius:10px;
+  border: none;
+  color:white;
+  
 }
 
 /*WATER LEVEL AND DEVICES ----------------------------------------*/
@@ -588,7 +613,9 @@ input:checked + .slider:before {
   }
 
 
-  
+  element .style{
+    padding-left: 0 !important;
+  }
   /*MEDIA QUERIES*/
   
 @media only screen and (min-width: 576px){

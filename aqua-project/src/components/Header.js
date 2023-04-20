@@ -21,18 +21,21 @@ function Header(){
         const hamburger = () => {
           opened(!open); 
         };
-      
+    
+
+
         function ProfileModal(props) {
           return (
-            <Modal
-              {...props}
+            <Modal {...props}
               size="lg"
               backdrop="static"
               aria-labelledby="contained-modal-title-vcenter"
-              centered>
+              centered 
+            >
               <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                  <span className='px-2' >{<Icon icon="mdi:account" width="24" height="24"/>}</span> Profile
+                  <span className='px-2' >{<Icon icon="mdi:account" width="24" height="24"/>}</span> 
+                    Profile
                 </Modal.Title>
               </Modal.Header>
               <Modal.Body>
@@ -42,29 +45,30 @@ function Header(){
                       <ul className='modal-content-column'>
                         <li>
                             <label>User ID</label>
-                            <input  type='input'/>
+                            <input  type='input' placeholder='20-1234' disabled/>
                         </li>
                         <li>
                           <label>Name</label>
-                          <input  type='input'/>
+                          <input  type='input' placeholder='John Doe' disabled/>
                         </li>
                         <li>
                           <label>User Level</label>
-                          <input  type='input'/>
-                        </li>
-                        <li>
-                          <label>Birth Date</label>
-                          <input  type='input'/>
+                          <input  type='input' placeholder='Member' disabled/>
                         </li>
                         <li>
                           <label>Email Address</label>
-                          <input  type='input'/>
+                          <input  type='input' placeholder='johndoe@gmail.com' disabled/>
+
                         </li>
                       </ul> 
                     </Col>
                     <Col lg={6} xs={12} className='modal-links '>
-                            <a href="#/changeprofile"  onClick={() => setEditProfileModalShow(true)}>Change Profile Information ? </a>
-                            <a href="#/changepassword"  onClick={() => setChangePasswordModalShow(true)}>Change Password ?  </a>
+                      <ul className='modal-content-column'>
+                        <li>
+                          <a href="#/changeprofile"  onClick={() => setEditProfileModalShow(true)}>Change Profile Information ? </a>
+                          <a href="#/changepassword"  onClick={() => setChangePasswordModalShow(true)}>Change Password ?  </a>
+                        </li>
+                      </ul>
                     </Col>
                   </Row>
                 </Container>
@@ -76,15 +80,20 @@ function Header(){
         const [ProfileModalShow, setProfileModalShow] = React.useState(false);
 
         // EDIT PROFILE INFORMATION 
+const disableBG = {
+  backgroundColor :'#e8e8e8'
+};
+
         function EditProfileModal(props) {
           return (
-            <Modal
-              {...props}
-              size="lg"
-              backdrop="static"
-              aria-labelledby="contained-modal-title-vcenter"
-              centered>
-              <Modal.Header closeButton>
+            <Modal 
+            {...props}
+                size="lg"
+                backdrop="static"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                >
+            <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
                   <span className='px-2' ><Icon icon="material-symbols:edit-square-outline-rounded" width='24px' height='24px' /></span> Edit Profile
                 </Modal.Title>
@@ -96,36 +105,32 @@ function Header(){
                       <ul className='modal-content-column'>
                         <li>
                             <label>User ID</label>
-                            <input  type='input'/>
+                            <input  type='input' placeholder='20-1234' disabled style={disableBG}/>
                         </li>
                         <li>
                           <label>Name</label>
-                          <input  type='input'/>
+                          <input  type='input' placeholder='John Doe'/>
                         </li>
                         <li>
                           <label>User Level</label>
-                          <input  type='input'/>
-                        </li>
-                        <li>
-                          <label>Birth Date</label>
-                          <input  type='input'/>
+                          <input  type='input' placeholder='Member' disabled style={disableBG}/>
                         </li>
                         <li>
                           <label>Email Address</label>
-                          <input  type='input'/>
+                          <input  type='input' placeholder='johndoe@gmail.com' />
                         </li>
-                        <li>
-                          <label></label>
-                          <Button variant='success' className='modalSaveBtn py-3 ' onClick={props.onHide}>Save</Button>
-                        </li>
+                      
                       </ul> 
                     </Col>
-                    <Col lg={4} xs={12} className='modal-links '>
-                        
+                    <Col lg={6} xs={12} className='modal-links '>
                     </Col>
                   </Row>
                 </Container>
               </Modal.Body>
+              <Modal.Footer>
+                <Button variant='light' className='modalSaveBtn py-3 ' onClick={props.onHide}>Cancel</Button>
+                <Button variant='success' className='modalSaveBtn py-3 px-5 ' onClick={props.onHide}>Save</Button>
+              </Modal.Footer>
             </Modal>
           );
         }
@@ -165,30 +170,24 @@ function Header(){
                         </li>
                         <li>
                           <label></label>
-                        <Button variant='success' className='modalSaveBtn py-3 ' onClick={props.onHide}>Save</Button>
-                        </li>
-                        <li>
-                          <label></label>
                           <label></label>
                         </li>
-                        <li>
-                          <label></label>
-                          <label></label>
-                        </li>
-                       
                       </ul> 
                     </Col>
-                    <Col lg={4} xs={12} className='modal-links '>
-                        
+                    <Col lg={6} xs={12} className='modal-links '>
                     </Col>
                   </Row>
                 </Container>
-              </Modal.Body>
+                </Modal.Body>
+                  <Modal.Footer>
+                <Button variant='light' className='modalSaveBtn py-3 ' onClick={props.onHide}>Cancel</Button>
+                <Button variant='success' className='modalSaveBtn py-3 px-5 ' onClick={props.onHide}>Save</Button>
+              </Modal.Footer>
             </Modal>
           );
         }
-
         const [ChangePasswordModalShow, setChangePasswordModalShow] = React.useState(false);
+       
 
           // THEME BUTTON && MODAL
             const [themeBtnCheck, themeBtnIsChecked] = useState(false);
@@ -208,7 +207,31 @@ function Header(){
 
       const CMbtnClose = () => CMsetShow(false);
       const CMbtnShow = () => CMsetShow(true);
-    
+
+    // /*Confirm PAssword  Modal**/
+    // function ConfirmPass(props) {
+    //   return (
+    //     <Modal 
+    //       {...props}
+    //       size="sm"
+    //       backdrop="static"
+    //       position="initial"
+    //       >
+    //       <Modal.Header>
+    //       </Modal.Header>
+    //       <Modal.Body>
+    //           <p>Save Changes </p>
+    //       </Modal.Body>
+    //       <Modal.Footer>
+    //              <Button variant='light' className='modalSaveBtn py-3 ' onClick={props.onHide}>Cancel</Button>
+    //             <Button variant='success' className='modalSaveBtn py-3 px-5 ' onClick={setconfirmPassShow(false)}>Save</Button>
+    //       </Modal.Footer>
+    //     </Modal>
+    //   );
+    // }
+      
+    // const [confirmPassShow, setconfirmPassShow] = React.useState(false);
+
     return (
     <>
       <ProfileModal
@@ -219,12 +242,18 @@ function Header(){
         <EditProfileModal
         show={EditProfileModalShow}
         onHide={() => setEditProfileModalShow(false)}
+
       />
       
       <ChangePasswordModal
         show={ChangePasswordModalShow}
         onHide={() => setChangePasswordModalShow(false)}
       />
+
+       {/* <ConfirmPass
+        show={confirmPassShow}
+        onHide={() => setconfirmPassShow(false)}
+      /> */}
 
       <Modal
         show={themeModal}
@@ -300,17 +329,23 @@ function Header(){
           </ul>
       
           <Dropdown className='nav-buttons'>
-            <Dropdown.ItemText className='name px-2'>Joselito Manuel</Dropdown.ItemText>
+            <Dropdown.ItemText className='name px-2'>John Doe</Dropdown.ItemText>
               <Dropdown.Toggle  id="dropdown-basic" className='nav-buttons-button d-flex '>
                         <span>{<Icon icon="gg:profile" color="#fafafa" width="48" height="48" hFlip={true} />}</span>
               </Dropdown.Toggle>
 
           <Dropdown.Menu  className='profile-dropdowMenu-container'>
-            <Dropdown.Item href="#/profile" className='profile-dropdown-links' onClick={() => setProfileModalShow(true)}><span className='px-2' >{<Icon icon="mdi:account" width="24" height="24"/>}</span> Profile <span className=''> {<Icon icon="material-symbols:arrow-forward-ios-rounded" />}</span></Dropdown.Item>
+            <Dropdown.Item href="#/profile" className='profile-dropdown-links' onClick={() => setProfileModalShow(true)}>
+              <span className='px-2' >{<Icon icon="mdi:account" width="24" height="24"/>}</span> Profile 
+              <span className=''> {<Icon icon="material-symbols:arrow-forward-ios-rounded" />}</span>
+            </Dropdown.Item>
             <Dropdown.Item href="#/theme"  className='profile-dropdown-links' onClick={themebtnShow}>
               <span className='px-2'>{<Icon icon="circum:dark" width="24" height="24" />}Theme</span>
             </Dropdown.Item>
-            <Dropdown.Item href="#/sign-out"  className='profile-dropdown-links'  id='sign-out' onClick={CMbtnShow}><span className='px-2'>{<Icon icon="ic:round-log-out" color="#900" width="24" height="24"/>}</span>Sign out</Dropdown.Item>
+            <Dropdown.Item href="#/sign-out"  className='profile-dropdown-links'  id='sign-out' onClick={CMbtnShow}>
+              <span className='px-2'>{<Icon icon="ic:round-log-out" color="#900" width="24" height="24"/>}</span>
+              Sign out
+            </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
 
