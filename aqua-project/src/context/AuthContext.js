@@ -3,7 +3,7 @@ import { auth } from "../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
-import Logo from "../components/img/aqua logo.png"
+import Logo from "../img/aquaLogo.png"
 
 const AuthContext = React.createContext();
 

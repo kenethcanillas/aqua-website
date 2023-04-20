@@ -14,18 +14,18 @@
 }
 
 .App-header {
-  background-color: var(--body-background);
+  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: var(--body-color);
+  color: white;
 }
 
 .App-link {
-  color: var(--link-color);
+  color: #61dafb;
 }
 
 @keyframes App-logo-spin {
@@ -61,15 +61,6 @@
 
   --bs-dropdown-link-active-bg: #e7e7e7 !important;
 
-}
-
-.page{
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #2EBDDA;
 }
   .disable{
     background-color: #e8e8e8;

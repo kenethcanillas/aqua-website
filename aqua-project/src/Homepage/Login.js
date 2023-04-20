@@ -1,7 +1,7 @@
 import '../App.css';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import { Navigate, useNavigate } from "react-router-dom";
-import Logo from '../components/img/aqua logo.png';
+import Logo from '../img/aquaLogo.png';
 import { useAuth } from '../context/AuthContext';
 import { auth, app } from '../firebase';
 
@@ -85,6 +85,7 @@ const handleSubmit = useCallback(async event=>{
 
     </div>
 </div>
-  );
+
+    );
 }
 export default Login;
