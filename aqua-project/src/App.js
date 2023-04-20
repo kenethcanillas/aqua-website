@@ -24,6 +24,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import { Fragment } from "react";
 
 function App() {
+
   const {currentUser} = useAuth();
   return (
     <>

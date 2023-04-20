@@ -9,12 +9,16 @@ import {db} from "../firebase";
 
 function WaterLevel() {
     const [waterBtnCheck, setIsChecked1] = useState(false);
+    const [airBtnCheck, setIsChecked2] = useState(false);
     // const [snapABtnCheck, setIsChecked2] = useState(false);
     // const [snapBBtnCheck, setIsChecked3] = useState(false);
 
     const waterBtn = () => {
       setIsChecked1(!waterBtnCheck);
     };
+    const airBtn = () => {
+        setIsChecked2(!airBtnCheck);
+      };
     // const snapABtn = () => {
     //     setIsChecked2(!snapABtnCheck);
     //   };
@@ -46,6 +50,7 @@ function WaterLevel() {
         //     }
         //   });
         // });
+        
   });
   return(
     <>
@@ -53,11 +58,21 @@ function WaterLevel() {
         <div className='row-container'>
             <div class="column-1">
                     <div class="column-content p-xs-2">
-                        <h3 className='content-title '>Water</h3>
+                        <h3 className='content-title'>Water</h3>
                         <h2 className='content-value'>
-                        {Object.keys(waterData).length !== 0 ? waterData.value : ""} <span className="value-icon">%</span>
+                             {Object.keys(waterData).length !== 0 ? waterData.value + "" : ""} 
+                            {/* {<Icon icon="icon-park-outline:percentage" className="waterPercentIcon" width="32" height="32"/>} */}
                           </h2>
                         <p className='content-condition'>Condition: Good</p>
+                    </div>
+            </div>
+            <div class="column-2">
+                    <div class="column-content p-xs-2">
+                        <h3 className='content-title'>Air Pump</h3>
+                        <h2 className='content-value'>
+                           {<Icon icon="ic:round-heat-pump"  width="75" height="75"></Icon>}
+                        </h2>  
+                        <p className='content-condition'>Status: {airBtnCheck ? 'ON' : 'OFF'}</p>
                     </div>
             </div>
         </div>
@@ -76,6 +91,15 @@ function WaterLevel() {
                             <label class="switch" >
                                 <input type="checkbox" checked={waterBtnCheck} onClick={waterBtn}/>
                                 <span class="slider round"/> {waterBtnCheck ? 'ON' : 'OFF'}
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Air Pump</td>
+                        <td>    
+                            <label class="switch" >
+                                <input type="checkbox" checked={airBtnCheck} onClick={airBtn}/>
+                                <span class="slider round"/> {airBtnCheck ? 'ON' : 'OFF'}
                             </label>
                         </td>
                     </tr>

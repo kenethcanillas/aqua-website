@@ -58,6 +58,77 @@ function WaterCondition() {
       );
     });
   }
+
+/*PH Level PAGINATION*/
+  
+phListData.forEach((item, i) => {
+  item.id = i+ 1;
+});
+
+const [PHcurrentPage, PHsetCurrentPage] = useState(1);
+const [PHitemsPerPage, PHsetItemsPerPage] = useState(10);
+const PHtotalItems = phListData.length;
+const PHtotalPages = Math.ceil(PHtotalItems / PHitemsPerPage);
+
+const PHhandlePageChange = (page) => {
+  PHsetCurrentPage(page);
+};
+
+const PHstartIndex = (PHcurrentPage - 1) * PHitemsPerPage;
+const PHendIndex = PHstartIndex + PHitemsPerPage;
+
+// slice the array of items to display only the items for the current page
+const PHcurrentItems = phListData.slice(PHstartIndex, PHendIndex);
+
+const PHpaginationItems = [];
+for (let PHpageNumber = 1; PHpageNumber <= PHtotalPages; PHpageNumber++) {
+  PHpaginationItems.push(
+    <Pagination.Item
+      key={PHpageNumber}
+      active={PHpageNumber === PHcurrentPage}
+      onClick={() => PHhandlePageChange(PHpageNumber)}
+    >
+      {PHpageNumber}
+    </Pagination.Item>
+  );
+}
+
+
+
+/*ECL PAGINATION*/
+  
+ecListData.forEach((item, i) => {
+  item.id = i+ 1;
+});
+
+const [ECcurrentPage, ECsetCurrentPage] = useState(1);
+const [ECitemsPerPage, ECsetItemsPerPage] = useState(10);
+const ECtotalItems = ecListData.length;
+const ECtotalPages = Math.ceil(ECtotalItems / ECitemsPerPage);
+
+const EChandlePageChange = (page) => {
+  ECsetCurrentPage(page);
+};
+
+const ECstartIndex = (ECcurrentPage - 1) * ECitemsPerPage;
+const ECendIndex = ECstartIndex + ECitemsPerPage;
+
+// slice the array of items to display only the items for the current page
+const ECcurrentItems = ecListData.slice(ECstartIndex, ECendIndex);
+
+const ECpaginationItems = [];
+for (let ECpageNumber = 1; ECpageNumber <= ECtotalPages; ECpageNumber++) {
+  ECpaginationItems.push(
+    <Pagination.Item
+      key={ECpageNumber}
+      active={ECpageNumber === ECcurrentPage}
+      onClick={() => EChandlePageChange(ECpageNumber)}
+    >
+      {ECpageNumber}
+    </Pagination.Item>
+  );
+}
+
   return (
     <>
       <div class="db-greenhouse">
@@ -77,10 +148,7 @@ function WaterCondition() {
               <h3>PH Level</h3>
               <h2>
                 {Object.keys(phData).length !== 0 ? phData.value : ""}{" "}
-                <span
-                  class="iconify"
-                  data-icon="tabler:temperature-celsius"
-                ></span>
+                <Icon icon="material-symbols:water-ph-outline-rounded" width="42" height="42" />
               </h2>
               <p>Condition: Good</p>
             </div>
@@ -95,32 +163,49 @@ function WaterCondition() {
                 </thead>
                 <tbody>
                    {/* phlvel */}
-                   {phListData.map((data) => (
+                   {PHcurrentItems.map((data) => (
                     <tr>
-                      <td>1</td>
+                      <td>{data.id}</td>
                       <td>{data.datetime}</td>
-                      <td>
-                        {data.value}
-                        <span
-                          class="iconify"
-                          data-icon="tabler:temperature-celsius"
-                        ></span>
-                      </td>
+                      <td> {data.value}</td>
                     </tr>
                   ))}
                 </tbody>
+                <tfoot>
+                  <tr>
+                    <td colSpan={3}>
+                      <Pagination 
+                        size="md" 
+                        className="pagination" 
+                      >
+                         <Pagination.First
+                            disabled={PHcurrentPage === 1}
+                            onClick={() => PHhandlePageChange(1)}
+                        />
+                          <Pagination.Prev
+                            disabled={PHcurrentPage === 1}
+                            onClick={() => PHhandlePageChange(PHcurrentPage - 1)}>
+                              Prev
+                          </Pagination.Prev>
+                          
+                          {PHpaginationItems}
+
+                          <Pagination.Next
+                              disabled={PHcurrentPage === PHtotalPages}
+                              onClick={() => PHhandlePageChange(PHcurrentPage + 1)} >
+                                Next
+                          </Pagination.Next>
+
+                          <Pagination.Last
+                              disabled={PHcurrentPage === PHtotalPages }
+                              onClick={() => PHhandlePageChange(PHtotalPages)}>
+                          </Pagination.Last>
+                           
+                      </Pagination>
+                    </td>
+                  </tr>
+                </tfoot>
               </Table>
-              <Pagination size="md">
-                <Pagination.First />
-                <Pagination.Prev>Prev</Pagination.Prev>
-                <Pagination.Item active>{1}</Pagination.Item>
-                <Pagination.Item>{2}</Pagination.Item>
-                <Pagination.Item>{3}</Pagination.Item>
-                <Pagination.Item>{4}</Pagination.Item>
-                <Pagination.Item>{5}</Pagination.Item>
-                <Pagination.Next>Next</Pagination.Next>
-                <Pagination.Last />
-              </Pagination>
             </div>
           </div>
           <div class="humidity-container">
@@ -146,32 +231,49 @@ function WaterCondition() {
                 </thead>
                 <tbody>
                   {/* eclevel table */}
-                  {ecListData.map((data) => (
+                  {ECcurrentItems.map((data) => (
                     <tr>
-                      <td>1</td>
+                      <td>{data.id}</td>
                       <td>{data.datetime}</td>
-                      <td>
-                        {data.value}{" "}
-                        <span
-                          class="iconify"
-                          data-icon="tabler:temperature-celsius"
-                        ></span>
-                      </td>
+                      <td> {data.value}</td>  
                     </tr>
                   ))}
                 </tbody>
+                <tfoot>
+                  <tr>
+                    <td colSpan={3}>
+                      <Pagination 
+                        size="md" 
+                        className="pagination" 
+                      >
+                         <Pagination.First
+                            disabled={ECcurrentPage === 1}
+                            onClick={() => EChandlePageChange(1)}
+                        />
+                          <Pagination.Prev
+                            disabled={ECcurrentPage === 1}
+                            onClick={() => EChandlePageChange(ECcurrentPage - 1)}>
+                              Prev
+                          </Pagination.Prev>
+                          
+                          {ECpaginationItems}
+
+                          <Pagination.Next
+                              disabled={ECcurrentPage === ECtotalPages}
+                              onClick={() => EChandlePageChange(ECcurrentPage + 1)} >
+                                Next
+                          </Pagination.Next>
+
+                          <Pagination.Last
+                              disabled={ECcurrentPage === ECtotalPages }
+                              onClick={() => EChandlePageChange(ECtotalPages)}>
+                          </Pagination.Last>
+                           
+                      </Pagination>
+                    </td>
+                  </tr>
+                </tfoot>
               </Table>
-              <Pagination size="md">
-                <Pagination.First />
-                <Pagination.Prev>Prev</Pagination.Prev>
-                <Pagination.Item active>{1}</Pagination.Item>
-                <Pagination.Item>{2}</Pagination.Item>
-                <Pagination.Item>{3}</Pagination.Item>
-                <Pagination.Item>{4}</Pagination.Item>
-                <Pagination.Item>{5}</Pagination.Item>
-                <Pagination.Next>Next</Pagination.Next>
-                <Pagination.Last />
-              </Pagination>
             </div>
           </div>
         </div>

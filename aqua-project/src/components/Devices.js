@@ -9,7 +9,6 @@ import Table from 'react-bootstrap/esm/Table';
 function Devices() {
     const [glowLightCheck, setIsChecked1] = useState(false);
     const [coolingFanCheck, setIsChecked2] = useState(false);
-    const [airPumpCheck, setIsChecked3] = useState(false);
 
     const glowLightBtn = () => {
       setIsChecked1(!glowLightCheck);
@@ -17,27 +16,30 @@ function Devices() {
     const coolingFanBtn = () => {
         setIsChecked2(!coolingFanCheck);
       };
-      const airPumpBtn = () => {
-        setIsChecked3(!airPumpCheck);
-      };
 
     return(
         <>
+
+
+
         <div class="container pt-4">
             <div className='row-container'>
                 <div class="column-1">
-                        <div className='column-content p-md-1'>
-                            <span className='icons p-5' >{<Icon icon="fa6-solid:lightbulb" color="#3f3f3f" width="72" height="72" />}</span>
-                       </div>
-                </div>
-                <div class="column-2">
-                        <div class="column-content">
-                            <span className='icons p-5'>{<Icon icon="fa6-solid:fan" color="#3f3f3f" width="72" height="72" />}</span>
+                        <div class="column-content p-xs-2">
+                            <h3 className='content-title'>Grow Light</h3>
+                            <h2 className='content-value'>
+                                {<Icon icon="fa6-solid:lightbulb"  width="72" height="72" />}
+                            </h2>  
+                            <p className='content-condition'>Status: {glowLightCheck ? 'ON' : 'OFF'}</p>
                         </div>
                 </div>
-                <div class="column-3">
-                        <div class="column-content">
-                            <span className='icons p-5'>{<Icon icon="ic:round-heat-pump"  color="#3f3f3f" width="72" height="72" />}</span>
+                <div class="column-2">
+                        <div class="column-content p-xs-2">
+                            <h3 className='content-title'>Cooling Fan</h3>
+                            <h2 className='content-value'>
+                                {<Icon icon="fa6-solid:fan" width="72" height="72" />}
+                            </h2>  
+                            <p className='content-condition'>Status: {coolingFanCheck ? 'ON' : 'OFF'}</p>
                         </div>
                 </div>
             </div>
@@ -68,21 +70,7 @@ function Devices() {
                             </label>
                             </td>
                         </tr>
-                        <tr>
-                            <td>Air Pump</td>
-                            <td>    
-                            <label class="switch" >
-                                <input type="checkbox" checked={ airPumpCheck} onClick={airPumpBtn}/>
-                                <span class="slider round"/> {airPumpCheck ? 'ON' : 'OFF'}
-                            </label>
-                            </td>
-                        </tr>
-                        <tr>
-                        <td>Paired Devices</td>
-                            <td>
-                                <button className='pairedBtn'>  Paired Devices</button>
-                            </td>
-                        </tr>
+
                     </tbody>
                 </Table>
             </div>

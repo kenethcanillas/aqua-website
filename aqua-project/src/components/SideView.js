@@ -2,32 +2,16 @@ import "../App.css";
 import { Icon } from "@iconify/react";
 import React, { useEffect, useState } from "react";
 
-function getWeatherCategory(code) {
-  if (code === 0) {
-    return "Clear Sky";
-  } else if (code >= 1 && code <= 44) {
-    return " Partly Cloudy";
-  } else if (code >= 45 && code <= 47) {
-    return "Fog";
-  } else if (code >= 48 && code <= 55) {
-    return "Drizzle";
-  } else if (code >= 56 && code <= 77) {
-    return "Rain";
-  } else if (code >= 80 && code <= 94) {
-    return "Rain Shower";
-  } else if (code >= 95 && code <= 99) {
-    return "Thunderstorm";
-  } else {
-    return " ";
-  }
-}
-function setIcon(code) {
-  if (code >= 1 && code <= 44) {
-    return <Icon icon="ic:outline-cloud-queue" width="42px" height="42px" />;
-  }
-}
+import clearsky from '../img/Clear.png';
+import partlycloudy from '../img/partly cloudy.png';
+import fog from  '../img/fog.png';
+import drizzle from  '../img/Drizzle.png';
+import rain from  '../img/rain.png';
+import rainshowers from  '../img/showers.png';
+import thunderstorm from  '../img/thunderstorm.png';
 
 function SideView() {
+
   const [date, setDate] = useState(new Date());
 
   useEffect(() => {
@@ -36,17 +20,6 @@ function SideView() {
     }, 1000);
     return () => clearInterval(intervalId);
   }, []);
-
-  // const latitude = geoMeteo.lat;
-  // const longitude = geoMeteo.long;
-
-  // const [cordinates, setCordinates] = useState({});
-
-  // useEffect(() => {
-  //   navigator.geolocation.getCurrentPosition((position) => {
-  //     setCordinates({ latitude: position.coords.latitude, longitude: position.coords.longitude });
-  //     setCordinates(position.coords)
-  //   })
 
   const [openMeteo, setOpenMeteoState] = useState({});
 
@@ -101,37 +74,45 @@ function SideView() {
     }
   }, [latitude, longitude]);
 
-  // useEffect(() => {
+  // const weatherCategory = getWeatherCategory(openMeteo.code);
 
-  //   fetch(`https://geocoding-api.open-meteo.com/v1/search?name=Quezon+City&count=10&language=en&format=json`)
+  let imgURL = ""; 
+  let weatherCategory = "";
+    
+    if(openMeteo.code === 0) {
+        imgURL = clearsky;
+        weatherCategory = "Clear Sky"
 
-  //     .then(response => response.json())
-  //     .then(geodata => {
-  //         // console.log(geodata);
+    } else if(openMeteo.code >= 1 && openMeteo.code <=44){
+        imgURL = partlycloudy;
+        weatherCategory = "Partly Cloudy"
+    
+    } else if(openMeteo.code >= 45 && openMeteo.code <= 47){
+        imgURL = fog;
+        weatherCategory = "Fog"
+ 
+    } else if(openMeteo.code >= 48 && openMeteo.code <= 55){
+        imgURL = drizzle;
+        weatherCategory = "Drizzle";
+    
+    } else if(openMeteo.code >= 56 && openMeteo.code <= 77){
+        imgURL = rain;
+        weatherCategory = "Rain";
 
-  //         setgeoMeteoState({lat: geodata.results[0].latitude , long: geodata.results[0].longitude, cityname: geodata.results[0].name, country: geodata.results[0].country });
-
-  //     })
-  //     .catch(error => console.error(error));
-  // }, []);
-
-  // useEffect(() => {
-
-  //   fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,weathercode&current_weather=true`)
-
-  //     .then(response => response.json())
-  //     .then((data) => {
-  //       // console.log(data);
-  //       setOpenMeteoState({ temp: data.current_weather.temperature, code: data.current_weather.weathercode });
-
-  //     })
-  //     .catch(error => console.error(error));
-  // }, []);
-
-  const weatherCategory = getWeatherCategory(openMeteo.code);
-
-  return (
-    <>
+    } else if(openMeteo.code >= 80 && openMeteo.code <= 94){
+        imgURL = rainshowers;
+        weatherCategory = "Rain Shower"
+    
+    } else if(openMeteo.code >= 95 && openMeteo.code <=99){
+        imgURL = thunderstorm;
+        weatherCategory = "Thunderstorm"
+    } else{
+        imgURL = " ";
+        weatherCategory = " ";
+    }
+  
+return (
+    <> 
       <div className="sideview-container mt-4">
         <div className="weather-row">
           <div className="temp-column">
@@ -142,7 +123,6 @@ function SideView() {
             <p>Temperature</p>
             <div className="time">
               <p className="hours ">
-                {" "}
                 <span>
                   {<Icon icon="ic:round-access-time" color="#3f3f3f" />}
                 </span>
@@ -165,7 +145,11 @@ function SideView() {
           </div>
           <div className="weather-condition-column">
             <div className="condition">
-              {setIcon(openMeteo.code)}
+              <img src={imgURL} 
+                width= "42px"
+                height= "42px"
+                alt="Weather Icon"/>
+              {/* <img src={weatherCategoryIcon.code} alt="Icon"/>   */}
               <span className="output">{weatherCategory}</span>
             </div>
             <p className="place">
