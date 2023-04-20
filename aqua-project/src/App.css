@@ -922,7 +922,7 @@ button{
   border-radius: var(--border-radius);
   border: solid black 0.5px;
   padding: 10px 20px;
-  width: 200px;
+  /* width: 200px; */
 }
 
 .dropdown-menu::before{

@@ -59,8 +59,6 @@ const handleSubmit = useCallback(async event=>{
   return (
   <div>
     <div className="main">
-
-   
      <div className="sub-main">
        <div>
               <div className="imgs">
