@@ -3,7 +3,7 @@ import Logo from '../img/aquaLogo.png';
 
 import { Icon } from '@iconify/react';
 import React, { useState } from "react";
-import { NavLink, Navigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button';
@@ -11,17 +11,9 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { useAuth } from '../context/AuthContext';
 
 
 function Header(){
-  const {logout} = useAuth();
-  const signOut = () =>{
-    logout();
-    CMbtnClose();
-    <Navigate to="/login"/>
-
-  }
          
       /*  HAMBURGER TOGGLE */
       const [open, opened] = useState(false);
@@ -305,7 +297,7 @@ const disableBG = {
               <Button variant="secondary" onClick={CMbtnClose}>
                 Cancel
               </Button>
-              <Button variant="danger" onClick={signOut}>
+              <Button variant="danger" onClick={CMbtnClose}>
                 Sign out
               </Button>
             </Modal.Footer>
@@ -330,10 +322,10 @@ const disableBG = {
         </div>
         
           <ul className="nav-links">
-              <li><NavLink to="/" activeClassName='active-link'  >Green House</NavLink></li>
-              <li><NavLink to="/waterlevelpage" activeClassName='active-link' >Water Level</NavLink></li>
-              <li><NavLink to="/waterconditionpage" activeClassName='active-link'>Water Condition</NavLink></li>
-              <li><NavLink to="/devicespage" activeClassName='active-link'>Devices</NavLink></li>
+              <li><NavLink to="/greenhousepage" ClassName='active-link'  >Green House</NavLink></li>
+              <li><NavLink to="/waterlevelpage" ClassName='active-link' >Water Level</NavLink></li>
+              <li><NavLink to="/waterconditionpage" ClassName='active-link'>Water Condition</NavLink></li>
+              <li><NavLink to="/devicespage" ClassName='active-link'>Devices</NavLink></li>
           </ul>
       
           <Dropdown className='nav-buttons'>
