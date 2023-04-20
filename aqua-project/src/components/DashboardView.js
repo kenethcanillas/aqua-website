@@ -26,22 +26,22 @@ function DashboardView() {
   const h = query(collection(db, "humidity"), orderBy("datetime", "asc"));
  
   useEffect(() => {
-    // onSnapshot(t, (snapshot) => {
-    //   snapshot.docChanges().forEach((change) => {
-    //     if (change.type === "added") {
-    //       setTempData(change.doc.data());
-    //       getTemp();
-    //     }
-    //   });
-    // });
-    // onSnapshot(h, (snapshot) => {
-    //   snapshot.docChanges().forEach((change) => {
-    //     if (change.type === "added") {
-    //       setHumData(change.doc.data());
-    //       getHum();
-    //     }
-    //   });
-    // });
+    onSnapshot(t, (snapshot) => {
+      snapshot.docChanges().forEach((change) => {
+        if (change.type === "added") {
+          setTempData(change.doc.data());
+          getTemp();
+        }
+      });
+    });
+    onSnapshot(h, (snapshot) => {
+      snapshot.docChanges().forEach((change) => {
+        if (change.type === "added") {
+          setHumData(change.doc.data());
+          getHum();
+        }
+      });
+    });
   }, []);
   function getTemp() {
     getAllSensorData({ collectionName: "temperature" }).then((result) => {
