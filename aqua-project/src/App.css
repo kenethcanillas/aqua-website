@@ -805,7 +805,7 @@ button:active{
   padding-top: 50px;
 }
 */
-
+    /* LOGIN CSS 
 .main {
   text-align: center;
   justify-content: center;
@@ -887,9 +887,9 @@ input:focus {
   font-family:arial;
   font-size:18px;
   padding-bottom: 10px;
-}
+} */
 
-button{
+/* button{
     width: 380px;
     height: 50px;
     border-radius: 5px;
@@ -897,7 +897,7 @@ button{
     color: white;
     font-size: 25px;
     border: none;
-}
+} */
 .login-button{
     padding-top: 25px;
 }
@@ -940,7 +940,7 @@ button{
   transform: translateY(-20px);
   transition: all 0.5 ease;
 }
-h3{
+/* h3{
   width: 100%;
   text-align: center;
   font-size: 18px;
@@ -949,7 +949,7 @@ h3{
   font-size: 18px;
   color: var(--primary-text-color);
   line-height: 1.2rem;
-}
+} */
 
 .dropdown-menu ul li{
   padding: 10px  0;
@@ -983,3 +983,166 @@ h3{
   margin-left: 10px;
   transition: var(--speed);
 }
+/*HOMEPAGE CONTAINER*/
+  .RH-container{
+    width: 100%;
+    height: 100vh;
+    background-color: var(--second-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .RH-row{
+    width: 80%;
+    height: 90%;
+    background-color: var(--main-color);
+    border-radius: 10px;
+    box-shadow: 0px 5px 1em  rgba(72, 72, 72, 0.119); 
+  }
+  .col-1-12{
+    padding: 0 0 !important;
+  }
+/*HOMEPAGE CONTAINER*/
+  .home-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .home-container h3{
+    letter-spacing: 0.5px;
+    font-weight: 600;
+  }
+  .home-container p{
+   
+    width: 80%;
+    text-align: justify;
+  }
+
+/*LOGIN HEADER*/
+.log-nav-container{
+   display:flex;
+   flex-wrap: nowrap;
+   justify-content: space-between !important;
+   align-items: center;
+  }
+  .log-nav-home{
+    letter-spacing: 1px;
+    font-size: 16px;
+    margin-bottom: 0 !important;
+    cursor: pointer;
+     font-weight: 600;
+  }
+  .log-nav button{
+    width: 120px;
+    font-size: 16px;
+    padding: 0.8em;
+    border: none;
+    border-radius:50px;
+    margin-left:1em;
+  }
+  .log-nav .use{
+    color: #1C7A6A;
+    border: 1px solid var(--third-color);
+    background-color: transparent;
+  }
+  .log-nav .sign{
+    background-color:var(--third-color);
+    color: var(--main-color);
+  }
+
+
+  /*INSTRICTION CSS*/
+  .ins-row{
+    width: 100%;
+    display: flex !important;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-radius: 10px;
+  }
+  .ins-row .img{
+    min-width: 50%;
+  }
+  .img p{
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .ins-caps{
+    width: 50%;
+    
+  }
+  .ins-caps p{
+    color: var(--main-text-color);
+    text-align: justify;
+  }
+  .carousel-caption{
+    position: static !important;
+  }
+
+/*LOGIN FORM*/
+.login-container{
+  width: 100%;
+}
+.login-form{
+  padding: 1em ;
+}
+.login-form p{
+  padding-top: 1em;
+}
+.login-form input{
+  width: 100%;
+  height: 54px;
+  border-radius: 5px;
+  border:1px solid var(--third-color);
+  border-radius: 5px;
+  padding-left: 1em;
+
+}
+.login-form button{
+  width: 100%;
+  height: 54px;
+  border-radius: 5px;
+  border: none;
+  color: var(--main-color);
+  letter-spacing: 2px;
+  background-color:var(--third-color);
+  font-size: var(--font-size);
+  font-weight: bold;
+  
+}
+
+  @media only screen and (max-width:640px){
+    .RH-container{
+      width: 100%;
+      height:100%;
+    }    
+    .RH-row{
+      width: 100%;
+      height: 100%;
+      /* padding: 5px !important; */
+    
+      border-radius: 0px !important;
+    }
+    .log-nav-container{
+      font-size: 14px;
+    }
+  
+    .log-nav button{
+      width: 100px;
+      
+    }
+    .log-nav-home span{
+      display: none;
+    }
+
+    .home-container p{
+      width: 97%;
+      text-align: justify;
+    }
+
+    .img-system{
+      display: none;
+    }
+  }

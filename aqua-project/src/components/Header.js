@@ -294,30 +294,6 @@ function Header() {
   const CMbtnClose = () => CMsetShow(false);
   const CMbtnShow = () => CMsetShow(true);
 
-  // /*Confirm PAssword  Modal**/
-  // function ConfirmPass(props) {
-  //   return (
-  //     <Modal
-  //       {...props}
-  //       size="sm"
-  //       backdrop="static"
-  //       position="initial"
-  //       >
-  //       <Modal.Header>
-  //       </Modal.Header>
-  //       <Modal.Body>
-  //           <p>Save Changes </p>
-  //       </Modal.Body>
-  //       <Modal.Footer>
-  //              <Button variant='light' className='modalSaveBtn py-3 ' onClick={props.onHide}>Cancel</Button>
-  //             <Button variant='success' className='modalSaveBtn py-3 px-5 ' onClick={setconfirmPassShow(false)}>Save</Button>
-  //       </Modal.Footer>
-  //     </Modal>
-  //   );
-  // }
-
-  // const [confirmPassShow, setconfirmPassShow] = React.useState(false);
-
   return (
     <>
       <ProfileModal
@@ -334,11 +310,6 @@ function Header() {
         show={ChangePasswordModalShow}
         onHide={() => setChangePasswordModalShow(false)}
       />
-
-      {/* <ConfirmPass
-        show={confirmPassShow}
-        onHide={() => setconfirmPassShow(false)}
-      /> */}
 
       <Modal
         show={themeModal}
@@ -408,22 +379,22 @@ function Header() {
 
         <ul className="nav-links">
           <li>
-            <NavLink to="/" activeClassName="active-link">
+            <NavLink to="/" ClassName="active-link">
               Green House
             </NavLink>
           </li>
           <li>
-            <NavLink to="/waterlevelpage" activeClassName="active-link">
+            <NavLink to="/waterlevelpage" ClassName="active-link">
               Water Level
             </NavLink>
           </li>
           <li>
-            <NavLink to="/waterconditionpage" activeClassName="active-link">
+            <NavLink to="/waterconditionpage" ClassName="active-link">
               Water Condition
             </NavLink>
           </li>
           <li>
-            <NavLink to="/devicespage" activeClassName="active-link">
+            <NavLink to="/devicespage" ClassName="active-link">
               Devices
             </NavLink>
           </li>
@@ -498,22 +469,22 @@ function Header() {
         <div class="burger_drop-container">
           <ul class="burger-links">
             <li>
-              <NavLink to="/greenhousepage" activeClassName="active-link">
+              <NavLink to="/greenhousepage" ClassName="active-link">
                 Green House
               </NavLink>
             </li>
             <li>
-              <NavLink to="/waterlevelpage" activeClassName="active-link">
+              <NavLink to="/waterlevelpage" ClassName="active-link">
                 Water Level
               </NavLink>
             </li>
             <li>
-              <NavLink to="/waterconditionpage" activeClassName="active-link">
+              <NavLink to="/waterconditionpage" ClassName="active-link">
                 Water Condition
               </NavLink>
             </li>
             <li>
-              <NavLink to="/devicespage" activeClassName="active-link">
+              <NavLink to="/devicespage" ClassName="active-link">
                 Devices
               </NavLink>
             </li>

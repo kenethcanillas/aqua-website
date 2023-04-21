@@ -18,38 +18,45 @@ import {
 } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import SideView from "./components/SideView";
+
+import LoginHeader from "./Homepage/LoginHeader";
 import Login from "./Homepage/Login";
 import {useAuth } from "./context/AuthContext";
 import { Fragment } from "react";
+
+import RoutesHome from "./Homepage/RoutesHome";
 
 function App() {
 
   const {currentUser} = useAuth();
   return (
-   <>
-        {currentUser ? <Router>
-          <Fragment>
-            <Header />
-      <Container fluid>
+   <>  
+   <Router>
+      <RoutesHome/>
+   </Router>
+      {currentUser ?  <Router>
+
+        <Fragment>
+          <Header />
+            <Container fluid>
               <Row className="custom-row-container">
                 <Col xxl={2} xl={3} lg={3} md={3} sm={12} xs={12}>
-            <SideView />
-          </Col>
+                  <SideView />
+                </Col>
                 <Col xxl={10} xl={9} lg={9} md={9} sm={12} xs={12}>
-            <Routes>
+                  <Routes>
                     <Route path="/" element={<GreenHousePages />} />
                     <Route path="/login" element={<GreenHousePages />} />
                     <Route
                       path="/waterconditionpage"
                       Component={WaterConditionPages}
                     />
-
                     <Route path="/waterlevelpage" Component={WaterLevelPage} />
                     <Route path="/devicespage" Component={DevicesPage} />
-            </Routes>
-          </Col>
-        </Row>
-      </Container>
+                  </Routes>
+                </Col>
+              </Row>
+            </Container>
           </Fragment>
         </Router> : <Login />}
     </>

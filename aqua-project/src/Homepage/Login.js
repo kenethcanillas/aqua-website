@@ -5,6 +5,11 @@ import Logo from '../img/aquaLogo.png';
 import { useAuth } from '../context/AuthContext';
 import { auth, app } from '../firebase';
 
+import imgCar1 from '../img/car1.jpg';
+
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 function Login() {
   // const email = useRef()
   // const password = useRef()
@@ -57,35 +62,34 @@ const handleSubmit = useCallback(async event=>{
     setLoading(false)
 })
   return (
-  <div>
-    <div className="main">
-     <div className="sub-main">
-       <div>
-              <div className="imgs">
-                <div className="container-image">
-                  <img src={Logo} alt="profile" className="profile"/>
+  <>
+      <Container>
+        <Row>
+          <Col lg={6} xs={12} className='img-system'>
+            <img
+                  className='mt-1'
+                  src={imgCar1}
+                  width="100%"
+                  height="350px"
+                  alt="System"
+              />
+          </Col>
+          <Col lg={6} xs={12} className='login-container'>
+              <div className='login-form'>
+                  {error}
+                  <form onSubmit={handleSubmit}>
+                      <p>Username</p>
+                        <input type="text" ref={emailRef} className="Uname"/>
+                      <p>Password</p>
+                        <input type="password" ref={passwordRef} className="Pname"/>  
+                        
+                        <button className='mt-5' disabled={loading} type="submit">Sign</button>
+                  </form>
                 </div>
-              </div>
-                          <div>
-                            {error}
-                            <form onSubmit={handleSubmit}>
-                                <div className="second-input">
-                                  <p>Username</p>
-                                  <input type="text" ref={emailRef} className="Uname"/>
-                                  <p>Password</p>
-                                  <input type="password" ref={passwordRef} className="Pname"/>
-                                </div>
-                                <div className="login-button">
-                                  <button  disabled={loading} type="submit">Login</button>
-                                </div>
-                            </form>
-                          </div>
-       </div>
-     </div>
-
-    </div>
-</div>
-
+            </Col>
+        </Row>
+      </Container>
+      </>
     );
 }
 export default Login;
