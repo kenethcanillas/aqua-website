@@ -25,15 +25,17 @@ function DashboardView() {
   const t = query(collection(db, "temperature"), orderBy("datetime", "asc"));
   const h = query(collection(db, "humidity"), orderBy("datetime", "asc"));
 
-  const [selectedSensor, setSelectedSensor] = useState("temperature");
+  const [selectedSensor, setSelectedSensor] = useState("");
   const [reports, setRerpots] = useState([]);
+
   const storage = getStorage();
 
   useEffect(() => {
-    const listRef = ref(storage, "daily-reports");
+    const listRef = ref(storage, "daily-reports/temperature");
     listAll(listRef).then((result) => {
       setRerpots(result.items);
     });
+
     //
     // onSnapshot(t, (snapshot) => {
     //   snapshot.docChanges().forEach((change) => {
@@ -184,23 +186,23 @@ function DashboardView() {
             <div className="dropdown">
               <Dropdown variant="light" className="d-inline mx-2">
                 <Dropdown.Toggle id="dropdown-autoclose-true">
-                  {selectedSensor.toUpperCase()}
+                  {selectedSensor}
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                   <Dropdown.Item
-                    onClick={() => setSelectedSensor("Temperature")}
+                    onClick={() => {
+                      setSelectedSensor("Temperature");
+                    }}
                   >
                     Temperature
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={() => setSelectedSensor("humidity")}>
+                  <Dropdown.Item onClick={() => setSelectedSensor("Humidity")}>
                     Humidity
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={() => setSelectedSensor("ph level")}>
+                  <Dropdown.Item onClick={() => setSelectedSensor("pH Level")}>
                     PH Level
                   </Dropdown.Item>
-                  <Dropdown.Item
-                    onClick={() => setSelectedSensor("Electrical Conductivity")}
-                  >
+                  <Dropdown.Item onClick={() => setSelectedSensor("EC Level")}>
                     Electrical Conductivity
                   </Dropdown.Item>
                 </Dropdown.Menu>
