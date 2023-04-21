@@ -22,10 +22,10 @@ return(
             </Col>
             <Col lg={12} className='mt-4'>
                 <Routes>
-                    <Route path="/" element ={<Homepage/>} />
+                    {/* <Route path="/" element ={<Homepage/>} /> */}
                     <Route path="/home" element={<Homepage/>}></Route>
                     <Route path="/instructions" element={<Instructions/>}></Route>
-                    <Route path="/signup" element={<Login/>}></Route>
+                    <Route path="/" element={<Login/>}></Route>
                 </Routes>
             </Col>
         </Row>

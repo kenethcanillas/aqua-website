@@ -18,7 +18,7 @@ function LoginHeader(){
                         <NavLink to="/instructions" className="active-link">
                             <button className='use'> Instruction</button>
                         </NavLink>
-                        <NavLink to="/signup" className='active-link'>
+                        <NavLink to="/" className='active-link'>
                             <button className='sign'>Sign up</button>
                         </NavLink>
                     </div>
