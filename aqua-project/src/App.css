@@ -1010,13 +1010,16 @@ input:focus {
     align-items: center;
   }
   .home-container h3{
+    margin-top: 1em;
     letter-spacing: 0.5px;
     font-weight: 600;
   }
   .home-container p{
-   
     width: 80%;
     text-align: justify;
+  }
+  .home-container img{
+    
   }
 
 /*LOGIN HEADER*/
@@ -1026,6 +1029,9 @@ input:focus {
    justify-content: space-between !important;
    align-items: center;
   }
+.log-nav-container .active-link{
+  text-decoration: none;
+}
   .log-nav-home{
     letter-spacing: 1px;
     font-size: 16px;

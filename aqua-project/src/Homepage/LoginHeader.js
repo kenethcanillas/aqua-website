@@ -7,7 +7,6 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 function LoginHeader(){
 
-
     return(
     <>
         <nav className='log-nav-container px-2'>
