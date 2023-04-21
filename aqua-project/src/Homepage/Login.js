@@ -54,6 +54,8 @@ const handleSubmit = useCallback(async event=>{
       setLoading(true)
 
       await login(emailRef.current.value, passwordRef.current.value);
+  
+      
     }catch(e){
       console.log(e)
       setError("Failed to log in")

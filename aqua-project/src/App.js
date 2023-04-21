@@ -21,23 +21,19 @@ import SideView from "./components/SideView";
 
 import LoginHeader from "./Homepage/LoginHeader";
 import Login from "./Homepage/Login";
-import {useAuth } from "./context/AuthContext";
+import { useAuth } from "./context/AuthContext";
 import { Fragment } from "react";
 
 import RoutesHome from "./Homepage/RoutesHome";
 
 function App() {
-
-  const {currentUser} = useAuth();
+  const { currentUser } = useAuth();
   return (
-   <>  
-   <Router>
-      <RoutesHome/>
-   </Router>
-      {currentUser ?  <Router>
-
-        <Fragment>
-          <Header />
+    <>
+      {currentUser ? (
+        <Router>
+          <Fragment>
+            <Header />
             <Container fluid>
               <Row className="custom-row-container">
                 <Col xxl={2} xl={3} lg={3} md={3} sm={12} xs={12}>
@@ -46,7 +42,6 @@ function App() {
                 <Col xxl={10} xl={9} lg={9} md={9} sm={12} xs={12}>
                   <Routes>
                     <Route path="/" element={<GreenHousePages />} />
-                    <Route path="/login" element={<GreenHousePages />} />
                     <Route
                       path="/waterconditionpage"
                       Component={WaterConditionPages}
@@ -58,7 +53,12 @@ function App() {
               </Row>
             </Container>
           </Fragment>
-        </Router> : <Login />}
+        </Router>
+      ) : (
+        <Router>
+          <RoutesHome  />
+        </Router>
+      )}
     </>
   );
 }
