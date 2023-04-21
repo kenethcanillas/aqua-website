@@ -2,7 +2,7 @@ import "../App.css";
 import Logo from "../img/aquaLogo.png";
 
 import { Icon } from "@iconify/react";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { NavLink, Navigate } from "react-router-dom";
 
 import Modal from "react-bootstrap/Modal";
@@ -11,22 +11,29 @@ import Dropdown from "react-bootstrap/Dropdown";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form"
+import Form from "react-bootstrap/Form";
 import { useAuth } from "../context/AuthContext";
 import { app } from "../firebase";
 import { getFunctions, httpsCallable } from "firebase/functions";
+import Swal from "sweetalert2";
+import { Stack } from "@mui/material";
+import useRunOnce from "../utility/useRunOnce";
 
 function Header() {
-  const { logout } = useAuth();
+  const { logout, verifyEmail , resetPassword} = useAuth();
+
   const [userInfo, setUserInfo] = useState({});
   const functions = getFunctions(app, "asia-southeast1");
   const getInfo = httpsCallable(functions, "getProfile");
+  const updateInfo = httpsCallable(functions, "updateUserInfo");
+  const name = useRef();
+  const email = useRef();
 
   useEffect(() => {
-    getInfo().then((result) => {
-      setUserInfo(result.data);
-    });
-  }, []);
+      getInfo().then((result) => {
+        setUserInfo(result.data);
+      });
+  },[]);
 
   const signOut = () => {
     logout();
@@ -34,6 +41,79 @@ function Header() {
     <Navigate to="/login" />;
   };
 
+  const updateProfile = (e) => {
+    e.preventDefault();
+    updateInfo({ name: name.current.value, email: email.current.value }).then(
+      (result) => {
+        getInfo().then((data) => {
+          setUserInfo(data.data);
+        });
+        setEditProfileModalShow(false);
+      }
+    );
+    return Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "Update Success",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  };
+  const closeModalProfile = () => {
+    setProfileModalShow(false);
+    setEditProfileModalShow(true);
+  };
+  const verifyBtn = () => {
+    verifyEmail().then(() => {
+      setProfileModalShow(false);
+      return Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Email Sent",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    });
+    
+  };
+  const checkVerification = (isVerify) => {
+    if (!isVerify) {
+      return (
+        <div
+          className="bg-warning"
+          height={50}
+          style={{
+            display: "flex",
+            borderRadius: "5px",
+            justifyContent: "space-around",
+            alignItems: "center",
+            justifyItems: "center",
+            padding: "5px",
+          }}
+        >
+          <div>Your Account is Not yet Verified</div>
+          <a style={{ cursor: "pointer" }} onClick={verifyBtn}>
+            <u>Verify Now</u>
+          </a>
+        </div>
+      );
+    } else {
+      return;
+    }
+  };
+  const resetPasswordBtn = () =>{
+    setProfileModalShow(false);
+    resetPassword(userInfo.email  ).then(()=>{
+      return Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Password Reset Sent to Email",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    })
+    
+  }
   /*  HAMBURGER TOGGLE */
   const [open, opened] = useState(false);
 
@@ -67,6 +147,10 @@ function Header() {
                     <label>User ID</label>
                     <input type="input" placeholder="20-1234" disabled />
                   </li> */}
+                  {
+                  checkVerification(userInfo.isEmailVerified)
+                  }
+
                   <li>
                     <label>Name</label>
                     <input
@@ -99,10 +183,14 @@ function Header() {
               <Col lg={6} xs={12} className="modal-links ">
                 <ul className="modal-content-column">
                   <li>
-                    <a onClick={() => setEditProfileModalShow(true)}>
+                    <a onClick={closeModalProfile}>
                       <u>Change Profile Information ? </u>
                     </a>
-                    <a onClick={() => setChangePasswordModalShow(true)}>
+                    <a 
+                    style={{cursor: "pointer"}}
+                    onClick={resetPasswordBtn}
+                    // onClick={() => setChangePasswordModalShow(true)}
+                    >
                       <u>Reset Password </u>
                     </a>
                   </li>
@@ -131,24 +219,25 @@ function Header() {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            <span className="px-2">
-              <Icon
-                icon="material-symbols:edit-square-outline-rounded"
-                width="24px"
-                height="24px"
-              />
-            </span>{" "}
-            Edit Profile
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Container>
-            <Row className="profile-reverse">
-              <Col lg={6} xs={12}>
-                <ul className="modal-content-column">
-                  {/* <li>
+        <Form>
+          <Modal.Header closeButton>
+            <Modal.Title id="contained-modal-title-vcenter">
+              <span className="px-2">
+                <Icon
+                  icon="material-symbols:edit-square-outline-rounded"
+                  width="24px"
+                  height="24px"
+                />
+              </span>{" "}
+              Edit Profile
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Container>
+              <Row className="profile-reverse">
+                <Col lg={6} xs={12}>
+                  <ul className="modal-content-column">
+                    {/* <li>
                     <label>User ID</label>
                     <input
                       type="input"
@@ -157,48 +246,59 @@ function Header() {
                       style={disableBG}
                     />
                   </li> */}
-                  <li>
-                    <label>Name</label>
-                    <input
-                      type="input"
-                      placeholder="John Doe"
-                      value={userInfo.name}
-                    />
-                  </li>
-                  <li>
-                    <Form.Select aria-label="Default select example">
-                      <option>Open this select menu</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </Form.Select>
-                  </li>
-                  <li>
-                    <label>Email Address</label>
-                    <input type="input" placeholder="johndoe@gmail.com" />
-                  </li>
-                </ul>
-              </Col>
-              <Col lg={6} xs={12} className="modal-links "></Col>
-            </Row>
-          </Container>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant="light"
-            className="modalSaveBtn py-3 "
-            onClick={props.onHide}
-          >
-            Cancel
-          </Button>
-          <Button
-            variant="success"
-            className="modalSaveBtn py-3 px-5 "
-            onClick={props.onHide}
-          >
-            Save
-          </Button>
-        </Modal.Footer>
+                    <li>
+                      <form>
+                        <label>Name</label>
+                        <input
+                          type="text"
+                          placeholder="John Doe"
+                          ref={name}
+                          defaultValue={userInfo.name}
+                        />
+                      </form>
+                    </li>
+                    <li>
+                      <Form.Select aria-label="Default select example" disabled>
+                        <option defaultValue={userInfo.userLevel}>
+                          {userInfo.userLevel}
+                        </option>
+                        <option value="Admin">Admin</option>
+                        <option value="Member">Member</option>
+                      </Form.Select>
+                    </li>
+                    <li>
+                      <label>Email Address</label>
+                      <input
+                        type="email"
+                        placeholder="johndoe@gmail.com"
+                        ref={email}
+                        defaultValue={userInfo.email}
+                      />
+                    </li>
+                  </ul>
+                </Col>
+                <Col lg={6} xs={12} className="modal-links "></Col>
+              </Row>
+            </Container>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              type="submit"
+              variant="light"
+              className="modalSaveBtn py-3 "
+              onClick={props.onHide}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="success"
+              className="modalSaveBtn py-3 px-5 "
+              onClick={updateProfile}
+            >
+              Save
+            </Button>
+          </Modal.Footer>
+        </Form>
       </Modal>
     );
   }
@@ -474,7 +574,7 @@ function Header() {
               </span>
             </Dropdown.Item>
             <Dropdown.Item
-              href="#/sign-out"
+              
               className="profile-dropdown-links"
               id="sign-out"
               onClick={CMbtnShow}
