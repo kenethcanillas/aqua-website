@@ -194,10 +194,6 @@ function DashboardView() {
                 </Table>
                 </div>
           </Modal.Body>
-          <Modal.Footer>
-                 <Button variant='light' className='modalSaveBtn py-3 ' onClick={props.onHide}>Cancel</Button>
-                <Button variant='success' className='modalSaveBtn py-3 px-5 ' onClick={props.onHide}>Download</Button>
-          </Modal.Footer>
         </Modal>
       );
     }

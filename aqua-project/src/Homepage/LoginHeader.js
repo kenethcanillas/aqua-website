@@ -9,7 +9,7 @@ function LoginHeader(){
 
     return(
     <>
-        <nav className='log-nav-container px-2'>
+        <nav className='log-nav-container'>
             <NavLink to="/home" className="active-link">
                 <p className='log-nav-home'>{<Icon icon="material-symbols:home-rounded" width='32' height='32'/>} 
                 <span className='Home'>Home</span></p>
@@ -19,7 +19,7 @@ function LoginHeader(){
                             <button className='use'> Instruction</button>
                         </NavLink>
                         <NavLink to="/" className='active-link'>
-                            <button className='sign'>Sign up</button>
+                            <button className='sign'>Sign in</button>
                         </NavLink>
                     </div>
         </nav>
