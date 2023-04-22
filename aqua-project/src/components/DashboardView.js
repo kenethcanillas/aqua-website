@@ -13,6 +13,11 @@ import Button from "react-bootstrap/Button";
 import Dropdown from "react-bootstrap/Dropdown";
 import PageItem from "react-bootstrap/PageItem";
 import { getStorage, ref, listAll, getDownloadURL } from "firebase/storage";
+import TempReport from "./Report/TempReport";
+import HumReport from "./Report/HumReport";
+import EcReport from "./Report/EcReport";
+import PhReport from "./Report/PhReport";
+import AllReport from "./Report/AllReport";
 
 function DashboardView() {
   const functions = getFunctions(app, "asia-southeast1");
@@ -25,7 +30,7 @@ function DashboardView() {
   const t = query(collection(db, "temperature"), orderBy("datetime", "asc"));
   const h = query(collection(db, "humidity"), orderBy("datetime", "asc"));
 
-  const [selectedSensor, setSelectedSensor] = useState("");
+  const [selectedSensor, setSelectedSensor] = useState("All");
   const [reports, setRerpots] = useState([]);
 
   const storage = getStorage();
@@ -35,13 +40,13 @@ function DashboardView() {
     listAll(listRef).then((result) => {
       setRerpots(result.items);
     });
-
+    getTemp();
     //
     // onSnapshot(t, (snapshot) => {
     //   snapshot.docChanges().forEach((change) => {
     //     if (change.type === "added") {
     //       setTempData(change.doc.data());
-    //       getTemp();
+    //      
     //     }
     //   });
     // });
@@ -57,28 +62,29 @@ function DashboardView() {
   {
     /* reports*/
   }
-  const viewPdf = (e, path) => {
-    e.preventDefault();
+  // const viewPdf = (e, path) => {
+  //   e.preventDefault();
 
-    getDownloadURL(ref(storage, path)).then((url) => {
-      window.open(url, "_blank");
-    });
-  };
+  //   getDownloadURL(ref(storage, path)).then((url) => {
+  //     window.open(url, "_blank");
+  //   });
+  // };
 
-  const downloadPdf = (e, path) => {
-    e.preventDefault();
-    getDownloadURL(ref(storage, path)).then((url) => {
-      const xhr = new XMLHttpRequest();
-      xhr.responseType = "blob";
-      xhr.onload = (event) => {
-        const document = xhr.response;
-      };
-      xhr.open("GET", url);
-      xhr.send();
-    });
-  };
+  // const downloadPdf = (e, path) => {
+  //   e.preventDefault();
+  //   getDownloadURL(ref(storage, path)).then((url) => {
+  //     const xhr = new XMLHttpRequest();
+  //     xhr.responseType = "blob";
+  //     xhr.onload = (event) => {
+  //       const document = xhr.response;
+  //     };
+  //     xhr.open("GET", url);
+  //     xhr.send();
+  //   });
+  // };
   function getTemp() {
     getAllSensorData({ collectionName: "temperature" }).then((result) => {
+      console.log(result)
       setTempListData(
         result.data.data.map((temperature) => ({
           ...temperature,
@@ -96,6 +102,30 @@ function DashboardView() {
         }))
       );
     });
+  }
+  const [searchReport, setSearchReport] = useState("");
+
+  const searchReportFunc = (event) => {
+    event.preventDefault();
+    setSearchReport(event.target.value);
+  };
+
+  const searchSubmit = (event)=>{
+    event.preventDefault()
+    setSearchReport(event.target[0].value)
+  }
+  function displayReport(searchReport) {
+    if (selectedSensor === "Temperature") {
+      return <TempReport data={searchReport} />;
+    } else if (selectedSensor === "Humidity") {
+      return <HumReport data={searchReport} />;
+    } else if (selectedSensor === "Ec Level") {
+      return <EcReport data={searchReport}/>;
+    }else if(selectedSensor === "pH Level"){
+      return <PhReport data={searchReport}/>
+    }else{
+      return <AllReport data={searchReport}/>
+    }
   }
 
   {
@@ -169,124 +199,6 @@ function DashboardView() {
   }
 
   /**REPORT MODAL*/
-  function ReportModal(props) {
-    return (
-      <Modal
-        {...props}
-        size="lg"
-        backdrop="static"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Reports</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="Report-Options mb-3">
-            <div className="dropdown">
-              <Dropdown variant="light" className="d-inline mx-2">
-                <Dropdown.Toggle id="dropdown-autoclose-true">
-                  {selectedSensor}
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item
-                    onClick={() => {
-                      setSelectedSensor("Temperature");
-                    }}
-                  >
-                    Temperature
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => setSelectedSensor("Humidity")}>
-                    Humidity
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => setSelectedSensor("pH Level")}>
-                    PH Level
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => setSelectedSensor("EC Level")}>
-                    Electrical Conductivity
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
-            <div className="search">
-              {<Icon icon="ic:outline-filter-alt" width="24" height="24" />}
-              <input type="text" placeholder="Search" className="mx-2" />
-              <button type="button" className="bg-success ">
-                Search
-              </button>
-            </div>
-          </div>
-          <div style={{ height: "400px", overflowY: "scroll" }}>
-            <h3></h3>
-            <Table bordered hover>
-              <thead className="p-2">
-                <tr>
-                  <th style={{ display: "flex", justifyContent: "center" }}>
-                    Date
-                  </th>
-                  <th>
-                    <div style={{ display: "flex", justifyContent: "center" }}>
-                      Action
-                    </div>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {/* reports*/}
-                {reports.map((data) => (
-                  <tr>
-                    <td>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "center",
-                          marginTop: "15px",
-                        }}
-                      >
-                        {data.name}
-                      </div>
-                    </td>
-                    <td>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-around",
-                        }}
-                      >
-                        <Button
-                          width={20}
-                          style={{ width: "100px" }}
-                          onClick={(e) => viewPdf(e, data.fullPath)}
-                        >
-                          Download
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant="light"
-            className="modalSaveBtn py-3 "
-            onClick={props.onHide}
-          >
-            Cancel
-          </Button>
-          <Button
-            variant="success"
-            className="modalSaveBtn py-3 px-5 "
-            onClick={props.onHide}
-          >
-            Download
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    );
-  }
 
   const [ReportModalShow, setReportModalShow] = useState(false);
 
@@ -295,6 +207,12 @@ function DashboardView() {
       <ReportModal
         show={ReportModalShow}
         onHide={() => setReportModalShow(false)}
+        searchReport={searchReport}
+        searchReportFunc={searchReportFunc}
+        setSelectedSensor={setSelectedSensor}
+        selectedSensor={selectedSensor}
+        displayReport={displayReport}
+        searchSubmit={searchSubmit}
       />
 
       <div class="db-greenhouse">
@@ -465,6 +383,109 @@ function DashboardView() {
         </div>
       </div>
     </>
+  );
+}
+
+function ReportModal(props) {
+  return (
+    <Modal
+      {...props}
+      size="lg"
+      backdrop="static"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title>Reports</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <div className="Report-Options mb-3">
+          <div className="dropdown">
+            <Dropdown variant="light" className="d-inline mx-2">
+              <Dropdown.Toggle id="dropdown-autoclose-true" style={{width:"100px"}}>
+                {props.selectedSensor}
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item
+                  onClick={() => {
+                    props.setSelectedSensor("Temperature");
+                  }}
+                >
+                  Temperature
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => props.setSelectedSensor("Humidity")}
+                >
+                  Humidity
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => props.setSelectedSensor("pH Level")}
+                >
+                  PH Level
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => props.setSelectedSensor("Ec Level")}
+                >
+                  Electrical Conductivity
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
+          <div className="search">
+            {<Icon icon="ic:outline-filter-alt" width="24" height="24" />}
+            <form onSubmit={props.searchSubmit}>
+            <input
+              type="text"
+              placeholder="Search"
+              className="mx-2"
+              onChange={props.searchReportFunc}
+              value={props.searchReport}
+            />
+            <button type="submit" className="bg-success ">
+              Search
+            </button>
+            </form>
+          </div>
+        </div>
+        <div style={{ height: "400px", overflowY: "scroll" }}>
+          <h3></h3>
+          <Table bordered hover>
+            <thead className="p-2">
+              <tr>
+                <th style={{ display: "flex", justifyContent: "center" }}>
+                  Date
+                </th>
+                <th>
+                  <div style={{ display: "flex", justifyContent: "center" }}>
+                    Action
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {/* reports*/}
+              {props.displayReport(props.searchReport)}
+            </tbody>
+          </Table>
+        </div>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button
+          variant="light"
+          className="modalSaveBtn py-3 "
+          onClick={props.onHide}
+        >
+          Cancel
+        </Button>
+        <Button
+          variant="success"
+          className="modalSaveBtn py-3 px-5 "
+          onClick={props.onHide}
+        >
+          Download
+        </Button>
+      </Modal.Footer>
+    </Modal>
   );
 }
 export default DashboardView;

@@ -1118,7 +1118,15 @@ input:focus {
   font-weight: bold;
   
 }
-
+@keyframes rotation {
+  from{
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(356deg);
+  }
+  
+}
   @media only screen and (max-width:640px){
     .RH-container{
       width: 100%;

@@ -78,12 +78,12 @@ const handleSubmit = useCallback(async event=>{
           </Col>
           <Col lg={6} xs={12} className='login-container'>
               <div className='login-form'>
-                  {error}
+                  <p style={{color:"red"}}>{error}</p>
                   <form onSubmit={handleSubmit}>
                       <p>Username</p>
-                        <input type="text" ref={emailRef} className="Uname"/>
+                        <input type="email" ref={emailRef} className="Uname" required/>
                       <p>Password</p>
-                        <input type="password" ref={passwordRef} className="Pname"/>  
+                        <input type="password" ref={passwordRef} className="Pname" required/>  
                         
                         <button className='mt-5' disabled={loading} type="submit">Sign</button>
                   </form>
