@@ -34,7 +34,11 @@ function DashboardView() {
   const [reports, setRerpots] = useState([]);
 
   const storage = getStorage();
-
+  const [pageCount, setPageCount] = useState(0);
+  const limitData = 10;
+  const [currentPage, setCurrentTempPage] = useState(0);
+  const [humPageCounts, setHumPageCounts] = useState(0);
+  const [humCurrentPage, setHumCurrentPage] = useState(0);
   useEffect(() => {
     const listRef = ref(storage, "daily-reports/temperature");
     listAll(listRef).then((result) => {
@@ -42,22 +46,21 @@ function DashboardView() {
     });
     getTemp();
     //
-    // onSnapshot(t, (snapshot) => {
-    //   snapshot.docChanges().forEach((change) => {
-    //     if (change.type === "added") {
-    //       setTempData(change.doc.data());
-    //      
-    //     }
-    //   });
-    // });
-    // onSnapshot(h, (snapshot) => {
-    //   snapshot.docChanges().forEach((change) => {
-    //     if (change.type === "added") {
-    //       setHumData(change.doc.data());
-    //       getHum();
-    //     }
-    //   });
-    // });
+    onSnapshot(t, (snapshot) => {
+      snapshot.docChanges().forEach((change) => {
+        if (change.type === "added") {
+          setTempData(change.doc.data());
+        }
+      });
+    });
+    getHum();
+    onSnapshot(h, (snapshot) => {
+      snapshot.docChanges().forEach((change) => {
+        if (change.type === "added") {
+          setHumData(change.doc.data());
+        }
+      });
+    });
   }, []);
   {
     /* reports*/
@@ -82,27 +85,38 @@ function DashboardView() {
   //     xhr.send();
   //   });
   // };
-  function getTemp() {
-    getAllSensorData({ collectionName: "temperature" }).then((result) => {
-      console.log(result)
+  const getTemp = (pageIndex = 0) => {
+    getAllSensorData({
+      collectionName: "temperature",
+      pageIndex,
+      limit: limitData,
+    }).then((result) => {
+      console.log(result);
       setTempListData(
         result.data.data.map((temperature) => ({
           ...temperature,
           datetime: toDateTime(temperature.datetime._seconds),
         }))
       );
+      setPageCount(result.data.count / limitData);
     });
-  }
-  function getHum() {
-    getAllSensorData({ collectionName: "humidity" }).then((result) => {
+  };
+  const getHum = (pageIndex = 0) => {
+    getAllSensorData({
+      collectionName: "humidity",
+      pageIndex,
+      limit: limitData,
+    }).then((result) => {
       setHumListData(
         result.data.data.map((humidity) => ({
           ...humidity,
           datetime: toDateTime(humidity.datetime._seconds),
         }))
       );
+      setHumPageCounts(result.data.count / limitData);
     });
-  }
+  };
+  console.log(currentPage);
   const [searchReport, setSearchReport] = useState("");
 
   const searchReportFunc = (event) => {
@@ -110,21 +124,21 @@ function DashboardView() {
     setSearchReport(event.target.value);
   };
 
-  const searchSubmit = (event)=>{
-    event.preventDefault()
-    setSearchReport(event.target[0].value)
-  }
+  const searchSubmit = (event) => {
+    event.preventDefault();
+    setSearchReport(event.target[0].value);
+  };
   function displayReport(searchReport) {
     if (selectedSensor === "Temperature") {
       return <TempReport data={searchReport} />;
     } else if (selectedSensor === "Humidity") {
       return <HumReport data={searchReport} />;
     } else if (selectedSensor === "Ec Level") {
-      return <EcReport data={searchReport}/>;
-    }else if(selectedSensor === "pH Level"){
-      return <PhReport data={searchReport}/>
-    }else{
-      return <AllReport data={searchReport}/>
+      return <EcReport data={searchReport} />;
+    } else if (selectedSensor === "pH Level") {
+      return <PhReport data={searchReport} />;
+    } else {
+      return <AllReport data={searchReport} />;
     }
   }
 
@@ -136,13 +150,46 @@ function DashboardView() {
     item.id = i + 1;
   });
 
+  // temperature page ni noe
+  const pageTemp = (isNext) => {
+    // console.log(pageCount);
+    if (isNext) {
+      const nextPage = currentPage + 1;
+      if (nextPage < pageCount) {
+        getTemp(nextPage);
+        setCurrentTempPage(nextPage);
+      }
+    } else {
+      const prevPage = currentPage - 1;
+      if (prevPage >= 0) {
+        getTemp(prevPage);
+        setCurrentTempPage(prevPage);
+      }
+    }
+  };
+  const pageHum = (isNext) => {
+    if (isNext) {
+      const nextPage = humCurrentPage + 1;
+      if (nextPage < humPageCounts) {
+        getHum(nextPage);
+        setHumCurrentPage(nextPage);
+      }
+    } else {
+      const prevPage = humCurrentPage - 1;
+      if (prevPage >= 0) {
+        getHum(prevPage);
+        setHumCurrentPage(prevPage);
+      }
+    }
+  };
   const [currentTempPage, setCurrentPage] = useState(1);
   const [itemsTempPerPage, setItemsPerPage] = useState(10);
   const totalItems = tempListData.length;
   const totalPages = Math.ceil(totalItems / itemsTempPerPage);
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
+  const handlePageChange = () => {
+    // setCurrentPage(page);
+    // pageTemp(true);
   };
 
   const startIndex = (currentTempPage - 1) * itemsTempPerPage;
@@ -183,7 +230,7 @@ function DashboardView() {
   const HUMendIndex = HUMstartIndex + HUMitemsPerPage;
 
   // slice the array of items to display only the items for the current page
-  const HUMcurrentItems = tempListData.slice(HUMstartIndex, HUMendIndex);
+  const HUMcurrentItems = humListData.slice(HUMstartIndex, HUMendIndex);
 
   const HUMpaginationItems = [];
   for (let HUMpageNumber = 1; HUMpageNumber <= 10; HUMpageNumber++) {
@@ -250,7 +297,7 @@ function DashboardView() {
                 </thead>
                 <tbody>
                   {/* temperature */}
-                  {currentItems.map((data) => (
+                  {tempListData.map((data) => (
                     <tr>
                       <td>{data.id}</td>
                       <td>{data.datetime}</td>
@@ -272,21 +319,21 @@ function DashboardView() {
                     <td colSpan={3}>
                       <Pagination size="md" className="pagination">
                         <Pagination.First
-                          disabled={currentTempPage === 1}
+                          // disabled={currentTempPage === 1}
                           onClick={() => handlePageChange(1)}
                         />
                         <Pagination.Prev
-                          disabled={currentTempPage === 1}
-                          onClick={() => handlePageChange(currentTempPage - 1)}
+                          disabled={currentPage === 0}
+                          onClick={() => pageTemp(false)}
                         >
                           Prev
                         </Pagination.Prev>
 
-                        {paginationItems}
+                        {/* {paginationItems} */}
 
                         <Pagination.Next
-                          disabled={currentTempPage === totalPages}
-                          onClick={() => handlePageChange(currentTempPage + 1)}
+                          // disabled={currentTempPage === totalPages}
+                          onClick={() => pageTemp(true)}
                         >
                           Next
                         </Pagination.Next>
@@ -302,7 +349,6 @@ function DashboardView() {
               </Table>
             </div>
           </div>
-
           <div class="humidity-container">
             <div class="humidity-display">
               <h3>Humidity</h3>
@@ -327,7 +373,7 @@ function DashboardView() {
                 </thead>
                 <tbody>
                   {/* humidty table */}
-                  {HUMcurrentItems.map((data) => (
+                  {humListData.map((data) => (
                     <tr>
                       <td>{data.id}</td>
                       <td>{data.datetime}</td>
@@ -346,31 +392,27 @@ function DashboardView() {
                         //  onChange={handlePageChange}
                       >
                         <Pagination.First
-                          disabled={HUMcurrentPage === 1}
+                          // disabled={HUMcurrentPage === 1}
                           onClick={() => HUMhandlePageChange(1)}
                         />
                         <Pagination.Prev
-                          disabled={HUMcurrentPage === 1}
-                          onClick={() =>
-                            HUMhandlePageChange(HUMcurrentPage - 1)
-                          }
+                          disabled={humCurrentPage === 0}
+                          onClick={() => pageHum(false)}
                         >
                           Prev
                         </Pagination.Prev>
 
-                        {HUMpaginationItems}
+                        {/* {HUMpaginationItems} */}
 
                         <Pagination.Next
-                          disabled={HUMcurrentPage === HUMtotalPages}
-                          onClick={() =>
-                            HUMhandlePageChange(HUMcurrentPage + 1)
-                          }
+                          // disabled={HUMcurrentPage === HUMtotalPages}
+                          onClick={() => pageHum(true)}
                         >
                           Next
                         </Pagination.Next>
 
                         <Pagination.Last
-                          disabled={HUMcurrentPage === HUMtotalPages}
+                          // disabled={(currentPage === 0)}
                           onClick={() => HUMhandlePageChange(HUMtotalPages)}
                         ></Pagination.Last>
                       </Pagination>
@@ -402,7 +444,10 @@ function ReportModal(props) {
         <div className="Report-Options mb-3">
           <div className="dropdown">
             <Dropdown variant="light" className="d-inline mx-2">
-              <Dropdown.Toggle id="dropdown-autoclose-true" style={{width:"100px"}}>
+              <Dropdown.Toggle
+                id="dropdown-autoclose-true"
+                style={{ width: "100px" }}
+              >
                 {props.selectedSensor}
               </Dropdown.Toggle>
               <Dropdown.Menu>
@@ -434,16 +479,16 @@ function ReportModal(props) {
           <div className="search">
             {<Icon icon="ic:outline-filter-alt" width="24" height="24" />}
             <form onSubmit={props.searchSubmit}>
-            <input
-              type="text"
-              placeholder="Search"
-              className="mx-2"
-              onChange={props.searchReportFunc}
-              value={props.searchReport}
-            />
-            <button type="submit" className="bg-success ">
-              Search
-            </button>
+              <input
+                type="text"
+                placeholder="Search"
+                className="mx-2"
+                onChange={props.searchReportFunc}
+                value={props.searchReport}
+              />
+              <button type="submit" className="bg-success ">
+                Search
+              </button>
             </form>
           </div>
         </div>

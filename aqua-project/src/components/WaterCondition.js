@@ -18,22 +18,29 @@ function WaterCondition() {
   const [ecListData, setEcListData] = useState([]);
   const [phListData, setPhListData] = useState([]);
   // const ref = collection(db, 'ec_level')
+  const [pageCount, setPageCount] = useState(0);
+  const limitData = 10;
+  const [currentPage, setCurrentTempPage] = useState(0);
+  const [humPageCounts, setHumPageCounts] = useState(0);
+  const [humCurrentPage, setHumCurrentPage] = useState(0);
   useEffect(() => {
     const q = query(collection(db, "ec_level"), orderBy("datetime", "asc"));
     const p = query(collection(db, "ph_level"), orderBy("datetime", "asc"));
+    getEc();
     onSnapshot(q, (snapshot) => {
       snapshot.docChanges().forEach((change) => {
         if (change.type === "added") {
           setEcData(change.doc.data());
-          getEc();
+         
         }
       });
     });
+    getPh();
     onSnapshot(p, (snapshot) => {
       snapshot.docChanges().forEach((change) => {
         if (change.type === "added") {
           setPhData(change.doc.data());
-          getPh();
+     
         }
       });
     });
@@ -133,10 +140,10 @@ for (let ECpageNumber = 1; ECpageNumber <= ECtotalPages; ECpageNumber++) {
     <>
       <div class="db-greenhouse">
         <div class="db-buttons">
-          <a href="#">
+          {/* <a href="#">
             {<Icon icon="icon-park-outline:eyes" width="16" height="16" />} View
             All Data
-          </a>
+          </a> */}
           <a href="#">
             {<Icon icon="fluent-mdl2:report-document" width="16" height="16" />}{" "}
             Reports
@@ -188,7 +195,7 @@ for (let ECpageNumber = 1; ECpageNumber <= ECtotalPages; ECpageNumber++) {
                               Prev
                           </Pagination.Prev>
                           
-                          {PHpaginationItems}
+                          {/* {PHpaginationItems} */}
 
                           <Pagination.Next
                               disabled={PHcurrentPage === PHtotalPages}
@@ -256,7 +263,7 @@ for (let ECpageNumber = 1; ECpageNumber <= ECtotalPages; ECpageNumber++) {
                               Prev
                           </Pagination.Prev>
                           
-                          {ECpaginationItems}
+                          {/* {ECpaginationItems} */}
 
                           <Pagination.Next
                               disabled={ECcurrentPage === ECtotalPages}
