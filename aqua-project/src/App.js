@@ -42,10 +42,7 @@ function App() {
                 <Col xxl={9} xl={9} lg={9} md={9} sm={12} xs={12}>
                   <Routes>
                     <Route path="/" element={<GreenHousePages />} />
-                    <Route
-                      path="/waterconditionpage"
-                      Component={WaterConditionPages}
-                    />
+                    <Route path="/waterconditionpage" Component={WaterConditionPages}/>
                     <Route path="/waterlevelpage" Component={WaterLevelPage} />
                     <Route path="/devicespage" Component={DevicesPage} />
                   </Routes>

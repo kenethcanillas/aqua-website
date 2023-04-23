@@ -24,7 +24,6 @@ function LoginHeader(){
                     </div>
         </nav>
     </>
-
     );
 
 }

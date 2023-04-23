@@ -401,11 +401,11 @@ function Header() {
 
     
   // THEME BUTTON USESTATE
-  const [themeBtnCheck, themeBtnIsChecked] = useState(false);
+  // const [themeBtnCheck, themeBtnIsChecked] = useState(false);
 
-      const themeBtn = () => {
-        themeBtnIsChecked(!themeBtnCheck);
-      };
+  //     const themeBtn = () => {
+  //       themeBtnIsChecked(!themeBtnCheck);
+  //     };
 
       const [themeModal, themeSetShow] = useState(false);
 
@@ -429,6 +429,19 @@ function Header() {
   const [userLog, setUserLog] = useState(false);
            const userLogClose = () => setUserLog(false);
            const userLogShow = () => setUserLog(true); 
+
+  const [darkMode, setDarkMode] = useState(false);
+
+    useEffect(() => {
+      if (darkMode) {
+        document.body.classList.add('dark-mode');
+      } else {
+        document.body.classList.remove('dark-mode');
+      }
+    }, [darkMode]);
+      
+
+
   return (
     <> 
       {/* <> *MEMBER MODAL -> ADMIN FILE     
@@ -481,13 +494,13 @@ function Header() {
         </Modal.Header>
         <Modal.Body className="theme-body">
           <p>Dark Mode :</p>
-          <label class="switch">
-            <input type="checkbox" checked={themeBtnCheck} onClick={themeBtn} />
-            <span class="slider round" />
+            <label class="switch">
+                <input type="checkbox" checked={darkMode} onClick={() => setDarkMode(!darkMode)} />
+                <span class="slider round" />
           </label>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="light" onClick={themebtnClose}>
+          <Button variant="danger" onClick={themebtnClose}>
             Cancel
           </Button>
           <Button variant="success" onClick={themebtnClose}>
@@ -565,12 +578,12 @@ function Header() {
 
         <Dropdown className="nav-buttons">
           <Dropdown.ItemText className="name px-2">
-            {userInfo.name}
+            <>{userInfo.name ? userInfo.name.toUpperCase() : ""}</>
           </Dropdown.ItemText>
           <Dropdown.Toggle
             id="dropdown-basic"
-            className="nav-buttons-button d-flex "
-          >
+            variant="success"
+            className="nav-buttons-button d-flex" >
             <span>
               {
                 <Icon
@@ -578,34 +591,23 @@ function Header() {
                   color="#fafafa"
                   width="48"
                   height="48"
-                  hFlip={true}
-                />
+                  hFlip={true}  />
               }
             </span>
           </Dropdown.Toggle>
-
           <Dropdown.Menu className="profile-dropdowMenu-container">
+            
             <Dropdown.Item
-              className="profile-dropdown-links"
-              onClick={() => setProfileModalShow(true)} >
-              <span className="px-2">
+                className="profile-dropdown-links prof-btn"
+                onClick={() => setProfileModalShow(true)} >
                 {<Icon icon="mdi:account" width="24" height="24" />}
-              </span>{" "}
-              Profile
-              <span className="">
-                {" "}
-                {<Icon icon="material-symbols:arrow-forward-ios-rounded" />}
-              </span>
+                Profile
             </Dropdown.Item>
-
             <Dropdown.Item
-
-              className="profile-dropdown-links"
-              onClick={themebtnShow}
-            >
-              <span className="px-2">
-                {<Icon icon="circum:dark" width="24" height="24" />}Theme
-              </span>
+                className="profile-dropdown-links"
+                onClick={themebtnShow}  >
+                {<Icon icon="fluent:dark-theme-20-filled" width="24" height="24" />}
+                Theme
             </Dropdown.Item>
 
             {/*Admin Button ----------------------------*/}
@@ -615,44 +617,33 @@ function Header() {
               onClick={handleShow} >
               <Member 
                   show={show} 
-                  handleCloseBtn={()=> setShow(false)}
-              >
-              </Member>
-              <span className="px-2">
+                  handleCloseBtn={()=> setShow(false)} />
                 {<Icon  icon="fluent:people-add-20-filled" width="24" height="24" />}Member
-              </span>
-           
-            </Dropdown.Item>
-            <Dropdown.Item
-              className="profile-dropdown-links"
-              onClick={userLogShow} >
-            
-              <UserLog 
-                  show={userLog} 
-                  onHideBtn={() => setUserLog(false)}>
-              </UserLog>
-
-                <span className="px-2">
-                  {<Icon icon="octicon:log-16" width="24" height="24" />} User Log
-                </span>
-            
             </Dropdown.Item>
 
             <Dropdown.Item
-              className="profile-dropdown-links"
-              id="sign-out"
-              onClick={CMbtnShow} >
+                className="profile-dropdown-links"
+                onClick={userLogShow} >
+              
+                <UserLog 
+                    show={userLog} 
+                    onHideBtn={() => setUserLog(false)} />
+                    {<Icon icon="octicon:log-16" width="20" height="20" />}
+                    User Log
+            </Dropdown.Item>
 
-              <span className="px-2">
-                {
-                  <Icon
-                    icon="ic:round-log-out"
-                    color="#900"
-                    width="24"
-                    height="24" />
-                }
-              </span>
-              Sign out
+            <Dropdown.Item
+                className="profile-dropdown-links"
+                id="sign-out"
+                onClick={CMbtnShow} >
+                  
+                  { <Icon
+                      icon="ic:round-log-out"
+                      color="#900"
+                      width="24"
+                      height="24" />  }
+                
+                      Sign out
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
@@ -662,7 +653,7 @@ function Header() {
         <div class="burger_drop-container">
           <ul class="burger-links">
             <li>
-              <NavLink to="/greenhousepage" ClassName="active-link">
+              <NavLink to="/" ClassName="active-link">
                 Green House
               </NavLink>
             </li>

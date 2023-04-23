@@ -62,17 +62,72 @@
   --bs-dropdown-link-active-bg: #e7e7e7 !important;
 
 }
-  .disable{
+.table{
+    color: var(--main-text-color) !important;
+}
+body{
+  background-color: var(--main-color);
+  color: var(--main-text-color);
+}
+
+/*DARK MODE CSS*/
+  .dark-mode {
+    background-color: var(--darkmode-color) !important;
+    color: var(--darkmode-text-color) !important;
+  }
+  .dark-mode .nav_bar-container{
+    border-bottom:1px solid #30e1c3 !important;
+  }
+      .dark-mode .name{
+        color: #30e1c3 !important;
+        }
+        .dark-mode .profile-dropdowMenu-container{
+          background-color: #545454 !important;
+        }
+        .dark-mode .nav-buttons{
+          border: 1px solid #30e1c3;
+        }
+        .dark-mode .bar{
+          background-color: var(--darkmode-text-color);
+        }
+
+  .dark-mode .table{
+    color: var(--darkmode-text-color) !important;
+  }
+      .dark-mode .table-hover > tbody > tr:hover >*{
+        background-color: #555555 !important;
+        color:var(--darkmode-text-color)!important;
+      }
+
+
+  .dark-mode a{
+    color: var(--darkmode-text-color) !important;
+  }
+
+  .dark-mode .modal{
+    --bs-modal-bg: #545454 !important;
+  }
+  .dark-mode .modal-header{
+    border-bottom: 1px solid #747474 !important;
+  }
+  .dark-mode .modal-footer{
+    border-top: 1px solid #747474 !important;
+  }
+
+
+/* .btn-primary{
+  --bs-btn-active-border-color:;
+} */
+
+.disable{
     background-color: #e8e8e8;
   }
 .nav_bar-container{
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   border-bottom: 1px solid var(--third-color);
   box-shadow: 0px 5px 1em  rgba(72, 72, 72, 0.119);
-  background-color: var(--main-color);
 } 
 .ham_logo-container{
   display: flex;
@@ -232,7 +287,10 @@ ul.nav-links{
 
 
     /* DROPDOWN MENU */
-
+    .dropdown-item.active,
+    .dropdown-item:active {
+      --bs-dropdown-link-active-bg: transparent;
+    }
     .profile-dropdowMenu-container{
       margin-top:1.5em !important;
       background-color:var(--main-color) !important;
@@ -251,9 +309,14 @@ ul.nav-links{
       letter-spacing: 1px !important;
       text-align: left !important;
       color: var(--main-text-color) !important;
-
-      
+ 
     }
+      .profile-dropdown-links  .iconify{
+        width: 24px;
+      text-align: left;
+      margin-right: 1.5em;
+        
+      }
     .profile-dropdown-links:hover{
       font-weight: 600;
     }
@@ -908,16 +971,6 @@ input:focus {
 
 /* Drop down Menu ___________________________________________*/
 
-.dropdown-menu{
-  position: absolute;
-  top: 76px;
-  right: 70px;
-  background-color: #fff;
-  border-radius: var(--border-radius);
-  border: solid black 0.5px;
-  padding: 10px 20px;
-  /* width: 200px; */
-}
 
 .dropdown-menu::before{
   content: '';
@@ -1062,6 +1115,10 @@ input:focus {
     color: var(--main-color);
   }
 
+  .log-nav-container p a.active{
+    font-weight: 600;
+
+  }
 
   /*INSTRICTION CSS*/
   .ins-row{
@@ -1085,10 +1142,10 @@ input:focus {
     
   }
   .ins-caps p{
-    color: var(--main-text-color);
     text-align: justify;
   }
   .carousel-caption{
+    color: var(--main-text-color) !important;
     position: static !important;
   }
   .carousel-control-next{
@@ -1127,8 +1184,14 @@ input:focus {
   font-weight: bold;
   
 }
+.login-form span{
 
-
+  color:#F15555;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+}
 /* BOOTSTRAP MODAL  -> HEADER*/
   .MngRow label, input{
     width: 100%;  
@@ -1218,3 +1281,4 @@ input:focus {
       display: none;
     }
   }
+

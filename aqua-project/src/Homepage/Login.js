@@ -6,6 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import { auth, app } from '../firebase';
 
 import imgCar1 from '../img/car1.jpg';
+import LoginIMG from '../img/imgLog.svg';
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -67,18 +68,18 @@ const handleSubmit = useCallback(async event=>{
   <>
       <Container>
         <Row>
-          <Col lg={6} xs={12} className='img-system'>
+          <Col lg={7} md={6} sm={6} xs={12} className='img-system'>
             <img
                   className='mt-1'
-                  src={imgCar1}
+                  src={LoginIMG}
                   width="100%"
-                  height="350px"
+                  height="300px"
                   alt="System"
               />
           </Col>
-          <Col lg={6} xs={12} className='login-container'>
+          <Col lg={5} md={6} sm={6} xs={12} className='login-container'>
               <div className='login-form'>
-                  {error}
+                  <span>{error}</span>      
                   <form onSubmit={handleSubmit}>
                       <p>Username</p>
                         <input type="text" ref={emailRef} className="Uname"/>
