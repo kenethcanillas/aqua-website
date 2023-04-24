@@ -9,6 +9,7 @@ import LoginHeader from "./LoginHeader";
 import Homepage from "./Homepage";
 import Instructions from './Instructions';
 import Login from './Login';
+import CarouselItem from './Carouseltem';
 
 
 

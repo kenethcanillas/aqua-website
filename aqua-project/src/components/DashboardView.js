@@ -200,17 +200,46 @@ function DashboardView() {
   const currentItems = tempListData.slice(startIndex, endIndex);
 
   const paginationItems = [];
-  for (let pageNumber = 1; pageNumber <= 10; pageNumber++) {
-    paginationItems.push(
-      <Pagination.Item
-        key={pageNumber}
-        active={pageNumber === currentTempPage}
-        onClick={() => handlePageChange(pageNumber)}
-      >
-        {pageNumber}
-      </Pagination.Item>
-    );
+
+  let leftEllipsis = false;
+  let rightEllipsis = false;
+  let rangeStart = 1;
+  let rangeEnd = totalPages;
+
+  for (let pageNumber = 1; pageNumber <=totalPages; pageNumber++) {
+    if (
+      (pageNumber <= 2 || pageNumber >= totalPages - 1)
+      || (pageNumber >= currentTempPage - 1 && pageNumber <= currentTempPage + 1)
+    ) {
+        paginationItems.push(
+          <Pagination.Item
+            key={pageNumber}
+            active={pageNumber === currentTempPage}
+            onClick={() => handlePageChange(pageNumber)}
+          >
+            {pageNumber}
+          </Pagination.Item>
+        );
   }
+  else if (pageNumber < currentTempPage && !leftEllipsis) {
+    paginationItems.push(<Pagination.Ellipsis key="leftEllipsis" />);
+    leftEllipsis = true;
+    rangeStart = pageNumber;
+  } else if (pageNumber > currentTempPage && !rightEllipsis) {
+    paginationItems.push(<Pagination.Ellipsis key="rightEllipsis" />);
+    rightEllipsis = true;
+    rangeEnd = pageNumber;
+  }
+}
+
+
+// if (rangeStart > 2) {
+//   paginationItems.unshift(<Pagination.Item key={1} onClick={() => handlePageChange(1)}>1</Pagination.Item>);
+// }
+
+// if (rangeEnd < totalPages - 1) {
+//   paginationItems.push(<Pagination.Item key={totalPages} onClick={() => handlePageChange(totalPages)}>{totalPages}</Pagination.Item>);
+// }
 
   /* HUMIDITY PAGINATION */
 

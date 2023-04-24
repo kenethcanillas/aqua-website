@@ -13,7 +13,13 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 
 function Member(props) {
+  // const [ManageModalShow, setManageModalShow] = React.useState(false);
+
   const [ManageModalShow, setManageModalShow] = React.useState(false);
+
+  // const [MemberModalShow, setMemberModalShow] = React.useState(false);
+
+  console.log(props);
 
   return (
     <>
