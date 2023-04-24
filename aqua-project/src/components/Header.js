@@ -272,7 +272,7 @@ function Header() {
     return (
       <Modal
         {...props}
-        size="lg"
+        size="md"
         backdrop="static"
         aria-labelledby="contained-modal-title-vcenter"
         centered
@@ -293,7 +293,7 @@ function Header() {
           <Modal.Body>
             <Container>
               <Row className="profile-reverse">
-                <Col lg={6} xs={12}>
+                <Col lg={12} xs={12}>
                   <ul className="modal-content-column">
                     {/* <li>
                     <label>User ID</label>
