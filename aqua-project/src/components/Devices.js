@@ -200,9 +200,9 @@ function Devices() {
               <h3>Devices</h3>
               <div className="device-icon" > 
                     {<Icon icon="fa6-solid:lightbulb"  width="72" height="72" style={{color: glowLightCheck ? "yellow": "black"}} />}
-                    {<Icon icon="fa6-solid:fan" width="72" height="72" style={{animation: coolingFanCheck ? "rotation 2s infinite linear" : "none"}}/>}
+                    {<Icon icon="fa6-solid:fan" width="72" height="72" style={{animation: coolingFanCheck ? "rotation 2s infinite linear": "none"}}/>}
                 </div>
-                <div className="device-text"> {console.log(coolingFanCheck)}
+                <div className="device-text"> 
                     <p>GLow Light : <span>{glowLightCheck ? ' ON' : ' OFF'} </span></p>
                     <p>Cooling Fan : <span>{coolingFanCheck ? ' ON' : ' OFF'} </span></p>
                 </div>
