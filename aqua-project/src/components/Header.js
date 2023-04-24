@@ -22,10 +22,10 @@ import useRunOnce from "../utility/useRunOnce";
 import Member from "../adminmodal/Member";
 import UserLog from "../adminmodal/UserLog";
 import { Table } from "react-bootstrap";
-
+import lodash from "lodash";
 
 function Header() {
-  const { logout, verifyEmail , resetPassword} = useAuth();
+  const { logout, verifyEmail, resetPassword } = useAuth();
 
   const [userInfo, setUserInfo] = useState({});
   const functions = getFunctions(app, "asia-southeast1");
@@ -35,10 +35,10 @@ function Header() {
   const email = useRef();
 
   useEffect(() => {
-      getInfo().then((result) => {
-        setUserInfo(result.data);
-      });
-  },[]);
+    getInfo().then((result) => {
+      setUserInfo(result.data);
+    });
+  }, []);
 
   const signOut = () => {
     logout();
@@ -48,22 +48,34 @@ function Header() {
 
   const updateProfile = (e) => {
     e.preventDefault();
-    updateInfo({ name: name.current.value, email: email.current.value }).then(
-      (result) => {
+    let info = {
+      ...(email.current.value != userInfo.email &&
+        (email.current.value != "" || email.current.value != null) && {
+          email: email.current.value,
+        }),
+      ...(name.current.value != userInfo.name &&
+        (name.current.value != "" || name.current.value != null) && {
+          name: name.current.value,
+        }),
+    };
+    console.log(info);
+    if (!lodash.isEmpty(info)) {
+      updateInfo(info).then((result) => {
         getInfo().then((data) => {
           setUserInfo(data.data);
         });
         setEditProfileModalShow(false);
-      }
-    );
-    return Swal.fire({
-      position: "center",
-      icon: "success",
-      title: "Update Success",
-      showConfirmButton: false,
-      timer: 1500,
-    });
+      });
+      return Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Update Success",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
   };
+
   const closeModalProfile = () => {
     setProfileModalShow(false);
     setEditProfileModalShow(true);
@@ -79,7 +91,6 @@ function Header() {
         timer: 1500,
       });
     });
-    
   };
   const checkVerification = (isVerify) => {
     if (!isVerify) {
@@ -106,9 +117,9 @@ function Header() {
       return;
     }
   };
-  const resetPasswordBtn = () =>{
+  const resetPasswordBtn = () => {
     setProfileModalShow(false);
-    resetPassword(userInfo.email  ).then(()=>{
+    resetPassword(userInfo.email).then(() => {
       return Swal.fire({
         position: "center",
         icon: "success",
@@ -116,9 +127,50 @@ function Header() {
         showConfirmButton: false,
         timer: 1500,
       });
-    })
-    
-  }
+    });
+  };
+
+  // IF ADMIN OR USER
+
+  const showAdminAction = (userLevel) => {
+    if (userLevel === "admin") {
+      return (
+        <>
+          {" "}
+          <Dropdown.Item
+            className="profile-dropdown-links"
+            onClick={handleShow}
+          >
+            <Member show={show} handleCloseBtn={() => setShow(false)}></Member>
+            <span className="px-2">
+              {
+                <Icon
+                  icon="fluent:people-add-20-filled"
+                  width="24"
+                  height="24"
+                />
+              }
+              Member
+            </span>
+          </Dropdown.Item>
+          <Dropdown.Item
+            className="profile-dropdown-links"
+            onClick={userLogShow}
+          >
+            <UserLog
+              show={userLog}
+              onHideBtn={() => setUserLog(false)}
+            ></UserLog>
+
+            <span className="px-2">
+              {<Icon icon="octicon:log-16" width="24" height="24" />} User Log
+            </span>
+          </Dropdown.Item>
+        </>
+      );
+    }
+  };
+
   /*  HAMBURGER TOGGLE */
   const [open, opened] = useState(false);
 
@@ -130,8 +182,7 @@ function Header() {
   const disableBG = {
     backgroundColor: "#e8e8e8",
   };
-  
-  
+
   /* PROFILE MODAL -------------------------> */
 
   function ProfileModal(props) {
@@ -160,9 +211,7 @@ function Header() {
                     <label>User ID</label>
                     <input type="input" placeholder="20-1234" disabled />
                   </li> */}
-                  {
-                  checkVerification(userInfo.isEmailVerified)
-                  }
+                  {checkVerification(userInfo.isEmailVerified)}
 
                   <li>
                     <label>Name</label>
@@ -199,10 +248,10 @@ function Header() {
                     <a onClick={closeModalProfile}>
                       <u>Change Profile Information ? </u>
                     </a>
-                    <a 
-                    style={{cursor: "pointer"}}
-                    onClick={resetPasswordBtn}
-                    // onClick={() => setChangePasswordModalShow(true)}
+                    <a
+                      style={{ cursor: "pointer" }}
+                      onClick={resetPasswordBtn}
+                      // onClick={() => setChangePasswordModalShow(true)}
                     >
                       <u>Reset Password </u>
                     </a>
@@ -382,65 +431,65 @@ function Header() {
       </Modal>
     );
   }
-  const [ChangePasswordModalShow, setChangePasswordModalShow] = React.useState(false);
-   
+  const [ChangePasswordModalShow, setChangePasswordModalShow] =
+    React.useState(false);
 
-// /*MEMBER MODAL */
-// function MemberModal(props) {
-//     return (
-//       <Modal
-//         {...props}
-//         size="lg"
-//         backdrop="static"
-//         aria-labelledby="contained-modal-title-vcenter"
-//         centered
-        
-//       >
-//         <Modal.Header closeButton>
-//           <Modal.Title id="contained-modal-title-vcenter">
-//             <span className="px-2">
-//               <Icon
-//                 icon="material-symbols:edit-square-outline-rounded"
-//                 width="24px"
-//                 height="24px"
-//               />
-//             </span>{" "}
-//             Member List
-//           </Modal.Title>
-//         </Modal.Header>
-//         <Modal.Body>
-//         <div style={{ height: '400px', overflowY: 'scroll' }}>
-//               <h3></h3>
-//               <Table bordered hover>
-//                   <thead className="p-2">
-//                     <tr>
-//                       <th>Name</th>
-//                       <th>Email</th>
-//                       <th>Actions</th>
-//                     </tr>
-//                   </thead>
-//                   <tbody>
-//                       <tr>
-//                         <td>John Doe</td>
-//                         <td>johndoe@gmail.com </td>
-//                         <td> 
-//                           <Button
-//                               variant="primary"
-//                               className="modalSaveBtn py-2 "
-//                               onClick={() => setManageModalShow(true)} >
-                           
-//                               Manage
-//                             </Button>
-//                         </td>                        
-//                       </tr>
-//                   </tbody>            
-//                 </Table>
-//                 </div>
-//         </Modal.Body>
-       
-//       </Modal>
-//     );
-//   }
+  // /*MEMBER MODAL */
+  // function MemberModal(props) {
+  //     return (
+  //       <Modal
+  //         {...props}
+  //         size="lg"
+  //         backdrop="static"
+  //         aria-labelledby="contained-modal-title-vcenter"
+  //         centered
+
+  //       >
+  //         <Modal.Header closeButton>
+  //           <Modal.Title id="contained-modal-title-vcenter">
+  //             <span className="px-2">
+  //               <Icon
+  //                 icon="material-symbols:edit-square-outline-rounded"
+  //                 width="24px"
+  //                 height="24px"
+  //               />
+  //             </span>{" "}
+  //             Member List
+  //           </Modal.Title>
+  //         </Modal.Header>
+  //         <Modal.Body>
+  //         <div style={{ height: '400px', overflowY: 'scroll' }}>
+  //               <h3></h3>
+  //               <Table bordered hover>
+  //                   <thead className="p-2">
+  //                     <tr>
+  //                       <th>Name</th>
+  //                       <th>Email</th>
+  //                       <th>Actions</th>
+  //                     </tr>
+  //                   </thead>
+  //                   <tbody>
+  //                       <tr>
+  //                         <td>John Doe</td>
+  //                         <td>johndoe@gmail.com </td>
+  //                         <td>
+  //                           <Button
+  //                               variant="primary"
+  //                               className="modalSaveBtn py-2 "
+  //                               onClick={() => setManageModalShow(true)} >
+
+  //                               Manage
+  //                             </Button>
+  //                         </td>
+  //                       </tr>
+  //                   </tbody>
+  //                 </Table>
+  //                 </div>
+  //         </Modal.Body>
+
+  //       </Modal>
+  //     );
+  //   }
   // const [MemberModalShow, setMemberModalShow] = React.useState(false);
 
   /**MANAGE MEMBER*/
@@ -489,19 +538,19 @@ function Header() {
   //                    <Button
   //                     variant="primary"
   //                     className="btn  "
-  //                     onClick="" 
+  //                     onClick=""
   //                   > Verify </Button>
   //                    <Button
   //                     variant="primary"
   //                     className="btn  "
-  //                     onClick="" 
+  //                     onClick=""
   //                   > Reset Password </Button>
   //                    <Button
   //                     variant="danger"
   //                     className="btn "
-  //                     onClick= "" 
+  //                     onClick= ""
   //                   > Deactiveate </Button>
-                            
+
   //             </Col>
   //           </Row>
   //         </Container>
@@ -511,18 +560,17 @@ function Header() {
   // }
   // const [ManageModalShow, setManageModalShow] = React.useState(false);
 
-    
   // THEME BUTTON USESTATE
   const [themeBtnCheck, themeBtnIsChecked] = useState(false);
 
-      const themeBtn = () => {
-        themeBtnIsChecked(!themeBtnCheck);
-      };
+  const themeBtn = () => {
+    themeBtnIsChecked(!themeBtnCheck);
+  };
 
-      const [themeModal, themeSetShow] = useState(false);
+  const [themeModal, themeSetShow] = useState(false);
 
-      const themebtnClose = () => themeSetShow(false);
-      const themebtnShow = () => themeSetShow(true);
+  const themebtnClose = () => themeSetShow(false);
+  const themebtnShow = () => themeSetShow(true);
 
   // SIGN OUT USESTATE
 
@@ -534,15 +582,14 @@ function Header() {
   // MANAGE MEMBER
 
   const [show, setShow] = useState(false);
-           const handleClose = () => setShow(false);
-           const handleShow = () => setShow(true); 
-
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const [userLog, setUserLog] = useState(false);
-           const userLogClose = () => setUserLog(false);
-           const userLogShow = () => setUserLog(true); 
+  const userLogClose = () => setUserLog(false);
+  const userLogShow = () => setUserLog(true);
   return (
-    <> 
+    <>
       {/* <> *MEMBER MODAL -> ADMIN FILE     
       
           <Button variant="primary" onClick={handleShow}>
@@ -554,7 +601,6 @@ function Header() {
               >
               </Member>
       </> */}
-    
 
       <ProfileModal
         show={ProfileModalShow}
@@ -570,69 +616,70 @@ function Header() {
         show={ChangePasswordModalShow}
         onHide={() => setChangePasswordModalShow(false)}
       />
-        {/* <MemberModal
+      {/* <MemberModal
         show={MemberModalShow}
         onHide={() => setMemberModalShow(false)}
       /> */}
-         {/* <ManageModal
+      {/* <ManageModal
         show={ManageModalShow}
         onHide={() => setManageModalShow(false)}
       /> */}
 
-
- {/**THEME MODAL */}
-<>
-    <Modal
+      {/**THEME MODAL */}
+      <>
+        <Modal
           show={themeModal}
           onHide={themebtnClose}
           backdrop="static"
           keyboard={false}
         >
-        <Modal.Header closeButton>
-          <Modal.Title>Theme</Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="theme-body">
-          <p>Dark Mode :</p>
-          <label class="switch">
-            <input type="checkbox" checked={themeBtnCheck} onClick={themeBtn} />
-            <span class="slider round" />
-          </label>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="light" onClick={themebtnClose}>
-            Cancel
-          </Button>
-          <Button variant="success" onClick={themebtnClose}>
-            Save
-          </Button>
-        </Modal.Footer>
-      </Modal>
-  </>
-      
-  {/*CLOSE MODAL */} 
-  <>  
-    <Modal
-        show={closeModal}
-        onHide={CMbtnClose}
-        backdrop="static"
-        keyboard={false}
-      >
-        <Modal.Header closeButton>
-        </Modal.Header>
-        <Modal.Body>Continue to Sign out?</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={CMbtnClose}>
-            Cancel
-          </Button>
-          <Button variant="danger" onClick={signOut}>
-            Sign out
-          </Button>
-        </Modal.Footer>
-      </Modal>
-  </>
- 
- 
-    <div className=" nav_bar-container ">
+          <Modal.Header closeButton>
+            <Modal.Title>Theme</Modal.Title>
+          </Modal.Header>
+          <Modal.Body className="theme-body">
+            <p>Dark Mode :</p>
+            <label class="switch">
+              <input
+                type="checkbox"
+                checked={themeBtnCheck}
+                onClick={themeBtn}
+              />
+              <span class="slider round" />
+            </label>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="light" onClick={themebtnClose}>
+              Cancel
+            </Button>
+            <Button variant="success" onClick={themebtnClose}>
+              Save
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </>
+
+      {/*CLOSE MODAL */}
+      <>
+        <Modal
+          show={closeModal}
+          onHide={CMbtnClose}
+          backdrop="static"
+          keyboard={false}
+        >
+          <Modal.Header closeButton></Modal.Header>
+          <Modal.Body>Continue to Sign out?</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={CMbtnClose}>
+              Cancel
+            </Button>
+            <Button variant="danger" onClick={signOut}>
+              Sign out
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </>
+
+      <div className=" nav_bar-container ">
         <div class="ham_logo-container">
           <div class="hamburger-menu" onClick={hamburger}>
             <div class={`hamburger ${open ? "open" : ""}`}>
@@ -651,7 +698,7 @@ function Header() {
             />
           </div>
         </div>
-  
+
         <ul className="nav-links">
           <li>
             <NavLink to="/" ClassName="active-link">
@@ -699,7 +746,8 @@ function Header() {
           <Dropdown.Menu className="profile-dropdowMenu-container">
             <Dropdown.Item
               className="profile-dropdown-links"
-              onClick={() => setProfileModalShow(true)} >
+              onClick={() => setProfileModalShow(true)}
+            >
               <span className="px-2">
                 {<Icon icon="mdi:account" width="24" height="24" />}
               </span>{" "}
@@ -711,7 +759,6 @@ function Header() {
             </Dropdown.Item>
 
             <Dropdown.Item
-
               className="profile-dropdown-links"
               onClick={themebtnShow}
             >
@@ -721,48 +768,21 @@ function Header() {
             </Dropdown.Item>
 
             {/*Admin Button ----------------------------*/}
-
+            {/* {showAdminAction(userInfo.userLevel) */}
+            {showAdminAction(userInfo.userLevel)}
             <Dropdown.Item
-              className="profile-dropdown-links"
-              onClick={handleShow} >
-              <Member 
-                  show={show} 
-                  handleCloseBtn={()=> setShow(false)}
-              >
-              </Member>
-              <span className="px-2">
-                {<Icon  icon="fluent:people-add-20-filled" width="24" height="24" />}Member
-              </span>
-           
-            </Dropdown.Item>
-            <Dropdown.Item
-              className="profile-dropdown-links"
-              onClick={userLogShow} >
-            
-              <UserLog 
-                  show={userLog} 
-                  onHideBtn={() => setUserLog(false)}>
-              </UserLog>
-
-                <span className="px-2">
-                  {<Icon icon="octicon:log-16" width="24" height="24" />} User Log
-                </span>
-            
-            </Dropdown.Item>
-
-            <Dropdown.Item
-              
               className="profile-dropdown-links"
               id="sign-out"
-              onClick={CMbtnShow} >
-
+              onClick={CMbtnShow}
+            >
               <span className="px-2">
                 {
                   <Icon
                     icon="ic:round-log-out"
                     color="#900"
                     width="24"
-                    height="24" />
+                    height="24"
+                  />
                 }
               </span>
               Sign out
@@ -770,7 +790,7 @@ function Header() {
           </Dropdown.Menu>
         </Dropdown>
       </div>
-      
+
       {open && (
         <div class="burger_drop-container">
           <ul class="burger-links">
