@@ -90,6 +90,9 @@ body{
         .dark-mode .bar{
           background-color: var(--darkmode-text-color);
         }
+        .dark-mode .dropdown-item:focus, .dropdown-item:hover {
+          background-color: #606060 !important;
+        }
 
   .dark-mode .table{
     color: var(--darkmode-text-color) !important;
@@ -1079,7 +1082,9 @@ input:focus {
     padding: 0 !important;
   }
   */
-
+  .active-background {
+    background-color: blue;
+  }
 /*LOGIN HEADER*/
 .log-nav-container{
    display:flex;
@@ -1087,9 +1092,17 @@ input:focus {
    justify-content: space-between !important;
    align-items: center;
   }
-.log-nav-container .active-link{
-  text-decoration: none;
-}
+
+  .log-nav-container .active-link{
+    text-decoration: none;
+    color: #110606;
+  }
+  .dark-mode .log-nav-container .active-link{
+    color: #110606 !important;
+  }
+  .log-nav-container p.active{
+    background-color: #1C7A6A;
+  }
   .log-nav-home{
     letter-spacing: 1px;
     font-size: 16px;
@@ -1118,6 +1131,20 @@ input:focus {
   .log-nav-container p a.active{
     font-weight: 600;
 
+  }
+  .device-icon{
+    display: flex;
+    justify-content:space-around ;
+    align-items: center;
+    padding-bottom: 2.5em;
+  }
+  .device-text{
+    display: flex;
+    justify-content:space-around ;
+    align-items: center;
+  }
+  .device-text span{
+    font-weight: 600;
   }
 
   /*INSTRICTION CSS*/
