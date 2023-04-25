@@ -13,7 +13,6 @@ function UserLog(props){
             show={props.show}
             onHide={props.onHideBtn}
             size="lg"
-            backdrop="static"
             centered
        
     >
@@ -39,14 +38,20 @@ function UserLog(props){
 
     <div className='userlog-div' style={{ height: '400px', overflowY: 'scroll' }}>   
           <Table bordered hover className="userlog-tbl">
+          <thead className="p-2">
+                <tr>
+                  <th>Email</th>
+                  <th>Date</th>
+                  <th>Date</th>
+                  <th>Activity</th>
+                </tr>
+              </thead>
               <tbody>
                   <tr>
-                    <td >
-                        <span> Email :</span>
-                        <span> Date :</span>
-                        <span> Time :</span>
-                        <span> Activity :</span>
-                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                   </tr>
               </tbody>            
             </Table>

@@ -11,6 +11,8 @@ import { app, db } from "../firebase";
 import { getFunctions, httpsCallable } from "firebase/functions";
 import Swal from "sweetalert2";
 
+import ViewLogsModal from "./ViewLogsModal";
+
 function Devices() {
   
 
@@ -117,79 +119,24 @@ function Devices() {
     const airPumpBtn = () => {
         setIsChecked4(!airCheck);
       };
+    
 
-  /**REPORT MODAL*/
-    function ReportModal(props) {
-      return (
-        <Modal 
-          {...props}
-          size="lg"
-          backdrop="static"
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-        >
-        <Modal.Header closeButton>
-          <Modal.Title>
-              Reports
-          </Modal.Title>
-        </Modal.Header>
-          <Modal.Body >
-          <div className="Report-Options mb-3">
-            <div className="dropdown">
-              <Dropdown variant="light" className="d-inline mx-2">
-                <Dropdown.Toggle id="dropdown-autoclose-true">
-                  Temperature
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                  <Dropdown.Item href="#">Humidity</Dropdown.Item>
-                  <Dropdown.Item href="#">PH Level</Dropdown.Item>
-                  <Dropdown.Item href="#">Electrical Conductivity</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
-            <div className='search'>
-              {<Icon icon="ic:outline-filter-alt" width="24" height="24"/>}
-              <input type="text" placeholder="Search" className="mx-2"/>
-              <button type="button" className="bg-success ">Search</button>
-
-            </div>
-          </div>
-            <div style={{ height: '400px', overflowY: 'scroll' }}>
-              <h3></h3>
-              <Table bordered hover>
-                  <thead className="p-2">
-                    <tr>
-                      <th>#</th>
-                      <th>Date</th>
-                      <th>Value Data </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {/* REPORT MODAL  */}
-                    {/* {tempListData.map((data) => (
-                      <tr>
-                        <td>{data.id}</td>
-                        <td>{data.datetime}</td>
-                        <td>{data.value} {<Icon icon="tabler:temperature-celsius" width="16" height="16" />}</td>                        
-                      </tr>
-                    ))} */}
-                  </tbody>            
-                </Table>
-                </div>
-          </Modal.Body>
-        </Modal>
-      );
-    }
-      
-    const [ReportModalShow, setReportModalShow] = React.useState(false);
+    const [ViewLogShow, setViewLogShow] = React.useState(false);
 
   return (
 <> 
+    <ViewLogsModal
+      show={ViewLogShow}
+      onHide={() =>setViewLogShow(false)}
+    />
+    
     <div class="db-greenhouse">
         <div class="db-buttons">
-       
-          <a href="#/reports" onClick={() => setReportModalShow(true)}>
+
+          <a 
+            onClick={() => setViewLogShow(true)}
+            style={{ cursor: "pointer" }}
+          >
             {<Icon icon="fluent-mdl2:report-document" width="16" height="16" />}{" "}
             View Logs 
           </a>
@@ -245,7 +192,7 @@ function Devices() {
               <h3>Pumps</h3>
                 <div className="device-icon" > 
                     {<Icon icon="mdi:water-pump"  width="72" height="72" />}
-                    {<Icon icon="ic:round-heat-pump" width="72" height="72" />}
+                    {<Icon icon="mdi:pump"  width="72" height="72"/>}
                 </div>
                 <div className="device-text"> 
                     <p>Water Pump : <span>{waterCheck ? ' ON' : ' OFF'} </span></p>

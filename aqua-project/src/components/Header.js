@@ -189,7 +189,7 @@ function Header() {
     return (
       <Modal
         {...props}
-        size="lg"
+        size="md"
         backdrop="static"
         aria-labelledby="contained-modal-title-vcenter"
         centered
@@ -197,7 +197,7 @@ function Header() {
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
             <span className="px-2">
-              {<Icon icon="mdi:account" width="24" height="24" />}
+              {<Icon icon="mdi:account" width="26" height="26" />}
             </span>
             Profile
           </Modal.Title>
@@ -205,12 +205,9 @@ function Header() {
         <Modal.Body>
           <Container>
             <Row className="profile-reverse">
-              <Col lg={6} xs={12}>
-                <ul className="modal-content-column">
-                  {/* <li>
-                    <label>User ID</label>
-                    <input type="input" placeholder="20-1234" disabled />
-                  </li> */}
+              <Col lg={12} xs={12}>
+                <ul className="modal-content-column profile">
+
                   {checkVerification(userInfo.isEmailVerified)}
 
                   <li>
@@ -242,21 +239,9 @@ function Header() {
                   </li>
                 </ul>
               </Col>
-              <Col lg={6} xs={12} className="modal-links ">
-                <ul className="modal-content-column">
-                  <li>
-                    <a onClick={closeModalProfile}>
-                      <u>Change Profile Information ? </u>
-                    </a>
-                    <a
-                      style={{ cursor: "pointer" }}
-                      onClick={resetPasswordBtn}
-                      // onClick={() => setChangePasswordModalShow(true)}
-                    >
-                      <u>Reset Password </u>
-                    </a>
-                  </li>
-                </ul>
+              <Col lg={12} xs={12} className="modal-links p-4 ">
+                  <Button variant="primary" className="p-3 mb-3" onClick={closeModalProfile}> Edit Profile </Button>
+                  <Button variant="danger" className="p-3" onClick={resetPasswordBtn}> Reset Password </Button>             
               </Col>
             </Row>
           </Container>
@@ -295,15 +280,6 @@ function Header() {
               <Row className="profile-reverse">
                 <Col lg={12} xs={12}>
                   <ul className="modal-content-column">
-                    {/* <li>
-                    <label>User ID</label>
-                    <input
-                      type="input"
-                      placeholder="20-1234"
-                      disabled
-                      style={disableBG}
-                    />
-                  </li> */}
                     <li>
                       <form>
                         <label>Name</label>
@@ -316,12 +292,12 @@ function Header() {
                       </form>
                     </li>
                     <li>
-                      <Form.Select aria-label="Default select example" disabled>
-                        <option defaultValue={userInfo.userLevel}>
-                          {userInfo.userLevel}
-                        </option>
-                        <option value="Admin">Admin</option>
-                        <option value="Member">Member</option>
+                      <Form.Select aria-label="Default select example" className="mt-4 py-3" disabled>
+                          <option defaultValue={userInfo.userLevel}>
+                            {userInfo.userLevel}
+                          </option>
+                          <option value="Admin">Admin</option>
+                          <option value="Member">Member</option>
                       </Form.Select>
                     </li>
                     <li>
@@ -335,27 +311,27 @@ function Header() {
                     </li>
                   </ul>
                 </Col>
-                <Col lg={6} xs={12} className="modal-links "></Col>
+                <Col lg={12} xs={12} className="modal-links px-4">
+                  <Button
+                      variant="success"
+                      className="modalSaveBtn p-3 mb-3 "
+                      onClick={updateProfile}
+                    >
+                      Save
+                  </Button>
+                   <Button
+                      type="submit"
+                      variant="secondary"
+                      className="modalSaveBtn py-3 "
+                      onClick={props.onHide}
+                    >
+                      Cancel
+                    </Button>
+            
+                </Col>
               </Row>
             </Container>
           </Modal.Body>
-          <Modal.Footer>
-            <Button
-              type="submit"
-              variant="light"
-              className="modalSaveBtn py-3 "
-              onClick={props.onHide}
-            >
-              Cancel
-            </Button>
-            <Button
-              variant="success"
-              className="modalSaveBtn py-3 px-5 "
-              onClick={updateProfile}
-            >
-              Save
-            </Button>
-          </Modal.Footer>
         </Form>
       </Modal>
     );
@@ -536,10 +512,10 @@ const [darkMode, setDarkMode] = useState(false);
           keyboard={false}
         >
         <Modal.Header closeButton>
-          <Modal.Title>Theme</Modal.Title>
+          <Modal.Title> <Icon icon="fluent:dark-theme-20-filled" width="26px" height="26px"/> Theme</Modal.Title>
         </Modal.Header>
         <Modal.Body className="theme-body">
-          <p>Dark Mode :</p>
+          <p>{darkMode ? 'Dark mode':'Light Mode'}</p>
             <label class="switch">
                 {/* <input type="checkbox" checked={darkMode} onClick={() => setDarkMode(!darkMode)} /> */}
                 <input type="checkbox" checked={darkMode} onClick={handleToggleDarkMode} />
@@ -547,14 +523,6 @@ const [darkMode, setDarkMode] = useState(false);
                 <span class="slider round" />
           </label>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="danger" onClick={themebtnClose}>
-            Cancel
-          </Button>
-          <Button variant="success" onClick={themebtnClose}>
-            Save
-          </Button>
-        </Modal.Footer>
       </Modal>
   </>
       
@@ -567,6 +535,9 @@ const [darkMode, setDarkMode] = useState(false);
         keyboard={false}
       >
         <Modal.Header closeButton>
+          <Modal.Title>
+            Sign Out
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>Confirm Sign Out?</Modal.Body>
         <Modal.Footer>
@@ -604,7 +575,7 @@ const [darkMode, setDarkMode] = useState(false);
         <ul className="nav-links">
           <li>
             <NavLink to="/" ClassName="active-link">
-              Green House
+              Hydro Farm
             </NavLink>
           </li>
           <li>
@@ -656,7 +627,7 @@ const [darkMode, setDarkMode] = useState(false);
               onClick={themebtnShow}
             >
               <span className="px-2">
-                {<Icon icon="circum:dark" width="24" height="24" />}Theme
+                {<Icon icon="fluent:dark-theme-20-filled" width="24" height="24" />}Theme
               </span>
             </Dropdown.Item>
 

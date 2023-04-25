@@ -90,7 +90,7 @@ body{
         .dark-mode .bar{
           background-color: var(--darkmode-text-color);
         }
-        .dark-mode .dropdown-item:focus, .dropdown-item:hover {
+        .dark-mode .dropdown-item:focus,.dark-mode .dropdown-item:hover {
           background-color: #606060 !important;
         }
 
@@ -116,7 +116,17 @@ body{
   .dark-mode .modal-footer{
     border-top: 1px solid #747474 !important;
   }
-
+  .dark-mode .container{
+    color: var(--darkmode-text-color) !important;
+  }
+  .dark-mode .modal-content-column input{
+    background-color: #f3f3f3;
+    color:var(--main-text-color);
+  }
+  .dark-mode .profile input{
+    background-color: #cecdcd;
+    color:var(--main-text-color);
+  }
 
 /* .btn-primary{
   --bs-btn-active-border-color:;
@@ -481,16 +491,22 @@ ul.nav-links{
   justify-content: space-between;
   align-items: center;
 }
-.search input{
-  padding:0.5em;
-  border-radius:10px;
-  border:1px solid black;
+.search{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
-.search button{
-  padding:0.5em;
-  border-radius:10px;
+.search form{
+  display: flex;
+}
+.search input{
+  border-radius:50px;
+  border:1px solid rgb(62, 62, 62);
+}
+.search Button{
+  border-radius:180px;
   border: none;
-  color:white;
   
 }
 
@@ -1069,6 +1085,8 @@ input:focus {
     align-items: center;
   }
   .home-container h3{
+    width: 60%;
+    text-align: center;
     margin-top: 1em;
     letter-spacing: 0.5px;
     font-weight: 600;
@@ -1249,14 +1267,17 @@ input:focus {
     border: 1px solid #3f3f3f;
   }
   .MngRow .col2{
-    margin-top:2em ;
     display: flex;
     flex-direction: column;
+    justify-content: flex-end;
+    align-items:center;
+    
   }
   .col2 .btn{
+    width: 100%;
     padding: 1em;
     border-radius: 5px;
-    margin-bottom: 1em;
+    margin-top: 1em;
   }
 
   .search-con{
@@ -1283,6 +1304,9 @@ input:focus {
   flex-direction: column;
   padding:0.2em 2em;
 }
+
+
+
   @media only screen and (max-width:640px){
     .RH-container{
       width: 100%;
@@ -1307,6 +1331,7 @@ input:focus {
       display: none;
     }
     .home-container h3{
+      width: 100%;
       text-align: center;
     }
     .home-container p{
@@ -1319,3 +1344,8 @@ input:focus {
     }
   }
 
+
+  .mod-title{
+    display: flex !important;
+    align-items: center !important;
+  }

@@ -3,7 +3,9 @@ import Button from "react-bootstrap/Button";
 import Dropdown from "react-bootstrap/Dropdown";
 import { Icon } from "@iconify/react";
 import Table from "react-bootstrap/Table";
+
 function ReportModal(props) {
+  
   return (
     <Modal
       {...props}
@@ -16,19 +18,22 @@ function ReportModal(props) {
         <Modal.Title>Reports</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div className="Report-Options mb-3">
+        <div className="Report-Options mb-2">
           <div className="dropdown">
-            <Dropdown variant="light" className="d-inline mx-2">
+            <Dropdown variant="light" className="d-inline">
               <Dropdown.Toggle
                 id="dropdown-autoclose-true"
-                style={{ width: "100px" }}
+                className=" bg-success p-3"
+                // style={{ width: "100px" }}
               >
-                {props.selectedSensor}
+                {props.selectedSensor}  
+                <Icon icon="gridicons:dropdown" width="24" height="24" />
+
               </Dropdown.Toggle>
               <Dropdown.Menu>
-                <Dropdown.Item
+                <Dropdown.Item 
                   onClick={() => {
-                    props.setSelectedSensor("Temperature");
+                  props.setSelectedSensor("Temperature");
                   }}
                 >
                   Temperature
@@ -52,18 +57,17 @@ function ReportModal(props) {
             </Dropdown>
           </div>
           <div className="search">
-            {<Icon icon="ic:outline-filter-alt" width="24" height="24" />}
             <form onSubmit={props.searchSubmit}>
               <input
                 type="text"
                 placeholder="Search"
-                className="mx-2"
+                className="p-3"
                 onChange={props.searchReportFunc}
                 value={props.searchReport}
               />
-              <button type="submit" className="bg-success ">
-                Search
-              </button>
+            <Button type="submit" className="mx-1 my-1 btn">
+                  <Icon icon="material-symbols:search-rounded" width="24" height="24" />
+              </Button>
             </form>
           </div>
         </div>
@@ -89,22 +93,6 @@ function ReportModal(props) {
           </Table>
         </div>
       </Modal.Body>
-      <Modal.Footer>
-        <Button
-          variant="light"
-          className="modalSaveBtn py-3 "
-          onClick={props.onHide}
-        >
-          Cancel
-        </Button>
-        <Button
-          variant="success"
-          className="modalSaveBtn py-3 px-5 "
-          onClick={props.onHide}
-        >
-          Download
-        </Button>
-      </Modal.Footer>
     </Modal>
   );
 }

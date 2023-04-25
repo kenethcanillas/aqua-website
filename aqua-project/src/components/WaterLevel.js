@@ -8,9 +8,6 @@ import {
 import "../App.css";
 import "./Header.js";
 
-// import { Icon } from "@iconify/react";
-// import Table from "react-bootstrap/esm/Table";
-// import React, { useEffect, useState } from "react";
 import { app, db } from "../firebase";
 // import { getFunctions, httpsCallable } from "firebase/functions";
 import Swal from "sweetalert2";
@@ -24,79 +21,17 @@ import Pagination from "react-bootstrap/Pagination";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
-
 import PageItem from 'react-bootstrap/PageItem';
 
-  {/** TEMPERATURE PAGINATION */} 
+import { getStorage, ref, listAll, getDownloadURL } from "firebase/storage";
+import TempReport from "./Report/TempReport";
+import HumReport from "./Report/HumReport";
+import EcReport from "./Report/EcReport";
+import PhReport from "./Report/PhReport";
+import AllReport from "./Report/AllReport";
+import ReportModal from "./ReportModal";
 
-//   tempListData.forEach((item, i) => {
-//     item.id = i+ 1;
-//   });
-  
-//   const [currentTempPage, setCurrentPage] = useState(1);
-//   const [itemsTempPerPage, setItemsPerPage] = useState(10);
-//   const totalItems = tempListData.length;
-//   const totalPages = Math.ceil(totalItems / itemsTempPerPage);
-
-//   const handlePageChange = (page) => {
-//     setCurrentPage(page);
-//   };
-  
-//   const startIndex = (currentTempPage - 1) * itemsTempPerPage;
-//   const endIndex = startIndex + itemsTempPerPage;
-
-//   // slice the array of items to display only the items for the current page
-//   const currentItems = tempListData.slice(startIndex, endIndex);
-
-//   const paginationItems = [];
-//   for (let pageNumber = 1; pageNumber <= 10; pageNumber++) {
-//     paginationItems.push(
-//       <Pagination.Item
-//         key={pageNumber}
-//         active={pageNumber === currentTempPage}
-//         onClick={() => handlePageChange(pageNumber)}
-//       >
-//         {pageNumber}
-//       </Pagination.Item>
-//     );
-//   }
-
-
-//   /* HUMIDITY PAGINATION */
-
-//   humListData.forEach((item, i) => {
-//     item.id = i+ 1;
-//   });
-  
-//   const [HUMcurrentPage, HUMsetCurrentPage] = useState(1);
-//   const [HUMitemsPerPage, HUMsetItemsPerPage] = useState(10);
-//   const HUMtotalItems = humListData.length;
-//   const HUMtotalPages = Math.ceil(HUMtotalItems / HUMitemsPerPage);
-
-//   const HUMhandlePageChange = (page) => {
-//     HUMsetCurrentPage(page);
-//   };
-  
-//   const HUMstartIndex = (HUMcurrentPage - 1) * HUMitemsPerPage;
-//   const HUMendIndex = HUMstartIndex + HUMitemsPerPage;
-
-//   // slice the array of items to display only the items for the current page
-//   const HUMcurrentItems = tempListData.slice(HUMstartIndex, HUMendIndex);
-
-//   const HUMpaginationItems = [];
-//   for (let HUMpageNumber = 1; HUMpageNumber <= 10; HUMpageNumber++) {
-//     HUMpaginationItems.push(
-//       <Pagination.Item
-//         key={HUMpageNumber}
-//         active={HUMpageNumber === HUMcurrentPage}
-//         onClick={() => HUMhandlePageChange(HUMpageNumber)}
-//       >
-//         {HUMpageNumber}
-//       </Pagination.Item>
-//     );
-//   }
-
-
+ 
 function WaterLevel() {
     const [waterData, setWaterData] = useState({});
     const w = query(collection(db,'water_level'), orderBy('datetime','asc'));
@@ -110,70 +45,108 @@ function WaterLevel() {
         });
     });
 
-  /**REPORT MODAL*/
-    function ReportModal(props) {
-      return (
-        <Modal 
-          {...props}
-          size="lg"
-          backdrop="static"
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-        >
-        <Modal.Header closeButton>
-          <Modal.Title>
-              Reports
-          </Modal.Title>
-        </Modal.Header>
-          <Modal.Body >
-          <div className="Report-Options mb-3">
-            <div className="dropdown">
-              <Dropdown variant="light" className="d-inline mx-2">
-                <Dropdown.Toggle id="dropdown-autoclose-true">
-                  Temperature
-                </Dropdown.Toggle>
+    const functions = getFunctions(app, "asia-southeast1");
+    const getAllSensorData = httpsCallable(functions, "getAllSensorData");
+    const [tempData, setTempData] = useState({});
+    const [humData, setHumData] = useState({});
+    const [humListData, setHumListData] = useState([]);
+    const [tempListData, setTempListData] = useState([]);
+    const [isFirst, setIsFirst] = useState(true);
+    const t = query(collection(db, "temperature"), orderBy("datetime", "asc"));
+    const h = query(collection(db, "humidity"), orderBy("datetime", "asc"));
+  
+    const [selectedSensor, setSelectedSensor] = useState("All");
+    const [reports, setRerpots] = useState([]);
+  
+    const storage = getStorage();
+    const [pageCount, setPageCount] = useState(0);
+    const limitData = 10;
+    const [currentPage, setCurrentTempPage] = useState(0);
+    const [humPageCounts, setHumPageCounts] = useState(0);
+    const [humCurrentPage, setHumCurrentPage] = useState(0);
 
-                <Dropdown.Menu>
-                  <Dropdown.Item href="#">Humidity</Dropdown.Item>
-                  <Dropdown.Item href="#">PH Level</Dropdown.Item>
-                  <Dropdown.Item href="#">Electrical Conductivity</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
-            <div className='search'>
-              {<Icon icon="ic:outline-filter-alt" width="24" height="24"/>}
-              <input type="text" placeholder="Search" className="mx-2"/>
-              <button type="button" className="bg-success ">Search</button>
 
-            </div>
-          </div>
-            <div style={{ height: '400px', overflowY: 'scroll' }}>
-              <h3></h3>
-              <Table bordered hover>
-                  <thead className="p-2">
-                    <tr>
-                      <th>#</th>
-                      <th>Date</th>
-                      <th>Value Data </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {/* REPORT MODAL  */}
-                    {/* {tempListData.map((data) => (
-                      <tr>
-                        <td>{data.id}</td>
-                        <td>{data.datetime}</td>
-                        <td>{data.value} {<Icon icon="tabler:temperature-celsius" width="16" height="16" />}</td>                        
-                      </tr>
-                    ))} */}
-                  </tbody>            
-                </Table>
-                </div>
-          </Modal.Body>
-        </Modal>
-      );
+    useEffect(() => {
+      const listRef = ref(storage, "daily-reports/temperature");
+      listAll(listRef).then((result) => {
+        setRerpots(result.items);
+      });
+      getTemp();
+      //
+      onSnapshot(t, (snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+          if (change.type === "added") {
+            setTempData(change.doc.data());
+          }
+        });
+      });
+      getHum();
+      onSnapshot(h, (snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+          if (change.type === "added") {
+            setHumData(change.doc.data());
+          }
+        });
+      });
+    }, []);
+    const getTemp = (pageIndex = 0) => {
+      getAllSensorData({
+        collectionName: "temperature",
+        pageIndex,
+        limit: limitData,
+      }).then((result) => {
+        console.log(result);
+        setTempListData(
+          result.data.data.map((temperature) => ({
+            ...temperature,
+            datetime: toDateTime(temperature.datetime._seconds),
+          }))
+        );
+        setPageCount(result.data.count / limitData);
+      });
+    };
+    const getHum = (pageIndex = 0) => {
+      getAllSensorData({
+        collectionName: "humidity",
+        pageIndex,
+        limit: limitData,
+      }).then((result) => {
+        setHumListData(
+          result.data.data.map((humidity) => ({
+            ...humidity,
+            datetime: toDateTime(humidity.datetime._seconds),
+          }))
+        );
+        setHumPageCounts(result.data.count / limitData);
+      });
+    };
+    console.log(currentPage);
+    const [searchReport, setSearchReport] = useState("");
+  
+    const searchReportFunc = (event) => {
+      event.preventDefault();
+      setSearchReport(event.target.value);
+    };
+  
+    const searchSubmit = (event) => {
+      event.preventDefault();
+      setSearchReport(event.target[0].value);
+    };
+    function displayReport(searchReport) {
+      if (selectedSensor === "Temperature") {
+        return <TempReport data={searchReport} />;
+      } else if (selectedSensor === "Humidity") {
+        return <HumReport data={searchReport} />;
+      } else if (selectedSensor === "Ec Level") {
+        return <EcReport data={searchReport} />;
+      } else if (selectedSensor === "pH Level") {
+        return <PhReport data={searchReport} />;
+      } else {
+        return <AllReport data={searchReport} />;
+      }
     }
-      
+  
+
     const [ReportModalShow, setReportModalShow] = React.useState(false);
 
   return (
@@ -181,12 +154,21 @@ function WaterLevel() {
       <ReportModal
         show={ReportModalShow}
         onHide={() => setReportModalShow(false)}
+          searchReport={searchReport}
+        searchReportFunc={searchReportFunc}
+        setSelectedSensor={setSelectedSensor}
+        selectedSensor={selectedSensor}
+        displayReport={displayReport}
+        searchSubmit={searchSubmit}
       />
 
       <div class="db-greenhouse">
         <div class="db-buttons">
        
-          <a href="#/reports" onClick={() => setReportModalShow(true)}>
+          <a 
+            onClick={() => setReportModalShow(true)}
+            style={{ cursor: "pointer" }}
+          >
             {<Icon icon="fluent-mdl2:report-document" width="16" height="16" />}{" "}
             Reports 
           </a>

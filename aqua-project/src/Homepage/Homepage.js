@@ -13,10 +13,13 @@ function Homepage() {
                     height="120"
                     alt='Aqua Logo'
                 />
-                <h3 >Cross Platform Hydroponics System</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut aliquet massa velit, at feugiat augue dictum vitae. Mauris lobortis enim eget sem placerat, nec dapibus dolor dignissim. 
-                    Pellentesque ac suscipit lorem. Cras lacinia, erat eget sagittis tincidunt, mauris orci congue odio, et aliquet orci dui at libero. Phasellus augue tellus, 
-                    condimentum rutrum commodo et, congue ut nibh. Maecenas eu imperdiet velit, a blandit neque. Nulla vel aliquam risus. In elementum ligula a dui pharetra, vel egestas felis gravida.
+                <h3 > A Cross-Platform Application for Hydroponics Monitoring System</h3>
+                <p>
+                AQUA is a Cross-platform Application for Hydroponics Monitoring System employs information technology to
+                improve efficiency and prevent plant damage caused by delays in administering therapeutic measures such as watering, 
+                opening vents, or emitting light, as well as to improve and increase production. The proposed system aims to be convenient 
+                because it can be monitored from afar, a solution can be given immediately if there is insufficient measurement of the plant's 
+                nutrients, and if further action is needed, it will be dealt with as soon as possible.
                 </p>
                 <img 
                     src={SanBartolomeHS}
