@@ -49,7 +49,7 @@ function DashboardView() {
     listAll(listRef).then((result) => {
       setRerpots(result.items);
     });
-    // getTemp();
+    getTemp();
     //
     onSnapshot(t, (snapshot) => {
       snapshot.docChanges().forEach((change) => {
@@ -58,7 +58,7 @@ function DashboardView() {
         }
       });
     });
-    // getHum();
+    getHum();
     onSnapshot(h, (snapshot) => {
       snapshot.docChanges().forEach((change) => {
         if (change.type === "added") {
@@ -206,7 +206,7 @@ function DashboardView() {
     } else {
       return tempListData.map((data) => (
         <tr>
-          <td>{data.id}</td>
+          
           <td>{data.datetime}</td>
           <td>
             {data.value}{" "}
@@ -236,7 +236,7 @@ function DashboardView() {
     } else {
       return humListData.map((data) => (
         <tr>
-          <td>{data.id}</td>
+          {/* <td>{data.id}</td> */}
           <td>{data.datetime}</td>
           <td>
             {data.value}{" "}
@@ -386,7 +386,7 @@ function DashboardView() {
               <Table bordered hover className="table-container-bootstrap">
                 <thead className="p-2">
                   <tr>
-                    <th>#</th>
+                    {/* <th>#</th> */}
                     <th>Date</th>
                     <th>Value Data </th>
                   </tr>
@@ -446,7 +446,7 @@ function DashboardView() {
               <Table bordered hover className="table-container-bootstrap">
                 <thead className="p-2">
                   <tr>
-                    <th>#</th>
+                    {/* <th>#</th> */}
                     <th>Date</th>
                     <th>Value Data </th>
                   </tr>

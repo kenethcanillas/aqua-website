@@ -41,6 +41,7 @@ function App() {
                 </Col>
                 <Col xxl={9} xl={9} lg={9} md={9} sm={12} xs={12}>
                   <Routes>
+                  <Route path="*" element={<GreenHousePages />} />
                     <Route path="/" element={<GreenHousePages />} />
                     <Route path="/waterconditionpage" Component={WaterConditionPages}/>
                     <Route path="/waterlevelpage" Component={WaterLevelPage} />
@@ -53,6 +54,7 @@ function App() {
         </Router>
       ) : (
         <Router>
+         
           <RoutesHome  />
         </Router>
       )}

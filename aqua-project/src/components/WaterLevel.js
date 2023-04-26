@@ -88,8 +88,8 @@ function WaterLevel() {
     listAll(listRef).then((result) => {
       setRerpots(result.items);
     });
-    // getWater();
-    // getLight();
+    getWater();
+    getLight();
   }, []);
 
   const getWater = (pageIndex = 0) => {
@@ -166,7 +166,7 @@ function WaterLevel() {
     } else {
       return waterListData.map((data) => (
         <tr>
-          <td>{data.id}</td>
+          {/* <td>{data.id}</td> */}
           <td>{data.datetime}</td>
           <td>
             {data.value}{" "}
@@ -185,7 +185,7 @@ function WaterLevel() {
     } else {
       return lightListData.map((data) => (
         <tr>
-          <td>{data.id}</td>
+          {/* <td>{data.id}</td> */}
           <td>{data.datetime}</td>
           <td>
             {data.value}{" "}
@@ -264,7 +264,7 @@ function WaterLevel() {
               <Table bordered hover className="table-container-bootstrap">
                 <thead className="p-2">
                   <tr>
-                    <th>#</th>
+                    {/* <th>#</th> */}
                     <th>Date</th>
                     <th>Value Data </th>
                   </tr>
@@ -315,7 +315,7 @@ function WaterLevel() {
               <Table bordered hover className="table-container-bootstrap">
                 <thead className="p-2">
                   <tr>
-                    <th>#</th>
+                    {/* <th>#</th> */}
                     <th>Date</th>
                     <th>Value Data </th>
                   </tr>

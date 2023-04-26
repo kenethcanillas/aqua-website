@@ -35,7 +35,7 @@ function WaterCondition() {
   useEffect(() => {
     const q = query(collection(db, "ec_level"), orderBy("datetime", "asc"));
     const p = query(collection(db, "ph_level"), orderBy("datetime", "asc"));
-    // getEc();
+    getEc();
     onSnapshot(q, (snapshot) => {
       snapshot.docChanges().forEach((change) => {
         if (change.type === "added") {
@@ -43,7 +43,7 @@ function WaterCondition() {
         }
       });
     });
-    // getPh();
+    getPh();
     onSnapshot(p, (snapshot) => {
       snapshot.docChanges().forEach((change) => {
         if (change.type === "added") {
@@ -168,7 +168,7 @@ function WaterCondition() {
     } else {
       return phListData.map((data) => (
         <tr>
-          <td>{data.id}</td>
+          {/* <td>{data.id}</td> */}
           <td>{data.datetime}</td>
           <td>
             {data.value}{" "}
@@ -183,7 +183,7 @@ function WaterCondition() {
     } else {
       return ecListData.map((data) => (
         <tr>
-          <td>{data.id}</td>
+          {/* <td>{data.id}</td> */}
           <td>{data.datetime}</td>
           <td>
             {data.value}{" "}
@@ -228,7 +228,7 @@ function WaterCondition() {
               <Table bordered hover className="table-container-bootstrap">
                 <thead className="p-2">
                   <tr>
-                    <th>#</th>
+                    {/* <th>#</th> */}
                     <th>Date</th>
                     <th>Value Data </th>
                   </tr>
@@ -287,7 +287,7 @@ function WaterCondition() {
               <Table bordered hover className="table-container-bootstrap">
                 <thead className="p-2">
                   <tr>
-                    <th>#</th>
+                    {/* <th>#</th> */}
                     <th>Date</th>
                     <th>Value Data </th>
                   </tr>
