@@ -170,8 +170,11 @@ function WaterLevel() {
           <td>{data.datetime}</td>
           <td>
             {data.value}{" "}
-            {<Icon icon="tabler:temperature-celsius" width="16" height="16" />}
-          </td>
+            <Icon
+                  icon="material-symbols:percent-rounded"
+                  width="16"
+                  height="16"
+                />          </td>
         </tr>
       ));
     }
@@ -186,7 +189,6 @@ function WaterLevel() {
           <td>{data.datetime}</td>
           <td>
             {data.value}{" "}
-            {<Icon icon="tabler:temperature-celsius" width="16" height="16" />}
           </td>
         </tr>
       ));

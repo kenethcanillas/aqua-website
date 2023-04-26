@@ -172,7 +172,6 @@ function WaterCondition() {
           <td>{data.datetime}</td>
           <td>
             {data.value}{" "}
-            {<Icon icon="tabler:temperature-celsius" width="16" height="16" />}
           </td>
         </tr>
       ));
@@ -188,7 +187,6 @@ function WaterCondition() {
           <td>{data.datetime}</td>
           <td>
             {data.value}{" "}
-            {<Icon icon="tabler:temperature-celsius" width="16" height="16" />}
           </td>
         </tr>
       ));
@@ -224,11 +222,6 @@ function WaterCondition() {
               <h3>PH Level</h3>
               <h2>
                 {Object.keys(phData).length !== 0 ? phData.value : ""}{" "}
-                <Icon
-                  icon="material-symbols:water-ph-outline-rounded"
-                  width="42"
-                  height="42"
-                />
               </h2>
             </div>
             <div class="temperature-data">

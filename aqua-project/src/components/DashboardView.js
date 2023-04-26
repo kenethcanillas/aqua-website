@@ -240,6 +240,11 @@ function DashboardView() {
           <td>{data.datetime}</td>
           <td>
             {data.value}{" "}
+            <Icon
+                  icon="material-symbols:percent-rounded"
+                  width="16"
+                  height="16"
+                />  
           </td>
         </tr>
       ));
