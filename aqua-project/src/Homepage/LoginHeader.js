@@ -15,8 +15,8 @@ function LoginHeader(){
                 <span className='Home'>Home</span></p>
             </NavLink>
                     <div className='log-nav'>
-                        <NavLink to="/instructions" className="active-link">
-                            <button className='use'> Instruction</button>
+                        <NavLink to="/infographics" className="active-link">
+                            <button className='use'> Info Graphics</button>
                         </NavLink>
                         <NavLink to="/" className='active-link'>
                             <button className='sign'>Sign in</button>

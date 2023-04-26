@@ -170,8 +170,11 @@ function WaterLevel() {
           <td>{data.datetime}</td>
           <td>
             {data.value}{" "}
-            {<Icon icon="tabler:temperature-celsius" width="16" height="16" />}
-          </td>
+            <Icon
+                  icon="material-symbols:percent-rounded"
+                  width="16"
+                  height="16"
+                />          </td>
         </tr>
       ));
     }
@@ -186,7 +189,6 @@ function WaterLevel() {
           <td>{data.datetime}</td>
           <td>
             {data.value}{" "}
-            {<Icon icon="tabler:temperature-celsius" width="16" height="16" />}
           </td>
         </tr>
       ));
@@ -257,7 +259,6 @@ function WaterLevel() {
                   height="42"
                 />
               </h2>
-              <p>Condition: Good</p>
             </div>
             <div class="temperature-data">
               <Table bordered hover className="table-container-bootstrap">
@@ -309,7 +310,6 @@ function WaterLevel() {
                   : ""}
                 {/* <Icon icon="material-symbols:percent-rounded" width="42" height="42" /> */}
               </h2>
-              <p>Condition: Good</p>
             </div>
             <div class="humidity-data">
               <Table bordered hover className="table-container-bootstrap">
