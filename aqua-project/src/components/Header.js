@@ -19,8 +19,8 @@ import Swal from "sweetalert2";
 import { Stack } from "@mui/material";
 import useRunOnce from "../utility/useRunOnce";
 
-import Member from "../adminmodal/Member";
-import UserLog from "../adminmodal/UserLog";
+// import Member from "../adminmodal/Member";
+// import UserLog from "../adminmodal/UserLog";
 import { Table } from "react-bootstrap";
 import lodash from "lodash";
 
@@ -128,47 +128,6 @@ function Header() {
         timer: 1500,
       });
     });
-  };
-
-  // IF ADMIN OR USER
-
-  const showAdminAction = (userLevel) => {
-    if (userLevel === "admin") {
-      return (
-        <>
-          {" "}
-          <Dropdown.Item
-            className="profile-dropdown-links"
-            onClick={handleShow}
-          >
-            <Member show={show} handleCloseBtn={() => setShow(false)}></Member>
-            <span className="px-2">
-              {
-                <Icon
-                  icon="fluent:people-add-20-filled"
-                  width="24"
-                  height="24"
-                />
-              }
-              Member
-            </span>
-          </Dropdown.Item>
-          <Dropdown.Item
-            className="profile-dropdown-links"
-            onClick={userLogShow}
-          >
-            <UserLog
-              show={userLog}
-              onHideBtn={() => setUserLog(false)}
-            ></UserLog>
-
-            <span className="px-2">
-              {<Icon icon="octicon:log-16" width="24" height="24" />} User Log
-            </span>
-          </Dropdown.Item>
-        </>
-      );
-    }
   };
 
   /*  HAMBURGER TOGGLE */
@@ -339,75 +298,75 @@ function Header() {
 
   const [EditProfileModalShow, setEditProfileModalShow] = React.useState(false);
 
-  /* CHANGE PASSWORD MODAL */
-  function ChangePasswordModal(props) {
-    return (
-      <Modal
-        {...props}
-        size="lg"
-        backdrop="static"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            <span className="px-2">
-              <Icon
-                icon="material-symbols:edit-square-outline-rounded"
-                width="24px"
-                height="24px"
-              />
-            </span>{" "}
-            Change Password
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Container>
-            <Row className="profile-reverse">
-              <Col lg={6} xs={12}>
-                <ul className="modal-content-column">
-                  <li>
-                    <label>Type Old Password</label>
-                    <input type="input" />
-                  </li>
-                  <li>
-                    <label>Type New Password</label>
-                    <input type="input" />
-                  </li>
-                  <li>
-                    <label>Re-type New Password</label>
-                    <input type="input" />
-                  </li>
-                  <li>
-                    <label></label>
-                    <label></label>
-                  </li>
-                </ul>
-              </Col>
-              <Col lg={6} xs={12} className="modal-links "></Col>
-            </Row>
-          </Container>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant="light"
-            className="modalSaveBtn py-3 "
-            onClick={props.onHide}
-          >
-            Cancel
-          </Button>
-          <Button
-            variant="success"
-            className="modalSaveBtn py-3 px-5 "
-            onClick={props.onHide}
-          >
-            Save
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    );
-  }
-  const [ChangePasswordModalShow, setChangePasswordModalShow] = React.useState(false);
+  // /* CHANGE PASSWORD MODAL */
+  // function ChangePasswordModal(props) {
+  //   return (
+  //     <Modal
+  //       {...props}
+  //       size="lg"
+  //       backdrop="static"
+  //       aria-labelledby="contained-modal-title-vcenter"
+  //       centered
+  //     >
+  //       <Modal.Header closeButton>
+  //         <Modal.Title id="contained-modal-title-vcenter">
+  //           <span className="px-2">
+  //             <Icon
+  //               icon="material-symbols:edit-square-outline-rounded"
+  //               width="24px"
+  //               height="24px"
+  //             />
+  //           </span>{" "}
+  //           Change Password
+  //         </Modal.Title>
+  //       </Modal.Header>
+  //       <Modal.Body>
+  //         <Container>
+  //           <Row className="profile-reverse">
+  //             <Col lg={6} xs={12}>
+  //               <ul className="modal-content-column">
+  //                 <li>
+  //                   <label>Type Old Password</label>
+  //                   <input type="input" />
+  //                 </li>
+  //                 <li>
+  //                   <label>Type New Password</label>
+  //                   <input type="input" />
+  //                 </li>
+  //                 <li>
+  //                   <label>Re-type New Password</label>
+  //                   <input type="input" />
+  //                 </li>
+  //                 <li>
+  //                   <label></label>
+  //                   <label></label>
+  //                 </li>
+  //               </ul>
+  //             </Col>
+  //             <Col lg={6} xs={12} className="modal-links "></Col>
+  //           </Row>
+  //         </Container>
+  //       </Modal.Body>
+  //       <Modal.Footer>
+  //         <Button
+  //           variant="light"
+  //           className="modalSaveBtn py-3 "
+  //           onClick={props.onHide}
+  //         >
+  //           Cancel
+  //         </Button>
+  //         <Button
+  //           variant="success"
+  //           className="modalSaveBtn py-3 px-5 "
+  //           onClick={props.onHide}
+  //         >
+  //           Save
+  //         </Button>
+  //       </Modal.Footer>
+  //     </Modal>
+  //   );
+  // }
+  // const [ChangePasswordModalShow, setChangePasswordModalShow] = React.useState(false);
     
 
   // SIGN OUT USESTATE
@@ -419,13 +378,7 @@ function Header() {
 
   // MANAGE MEMBER
 
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  const [userLog, setUserLog] = useState(false);
-           const userLogClose = () => setUserLog(false);
-           const userLogShow = () => setUserLog(true); 
+  
            
   // THEME BUTTON USESTATE
   // const [themeBtnCheck, themeBtnIsChecked] = useState(false);
@@ -465,6 +418,70 @@ const [darkMode, setDarkMode] = useState(false);
       setDarkMode(!darkMode);
     };
 
+  // MEMBER MODAL 
+  const [memberModal, setMemberShow] = useState(false);
+  const memberShow = () => setMemberShow(true);
+  const memberClose = () => setMemberShow(false);
+
+  // USER LOG
+  const [userLogModal, setUserLog] = useState(false);
+           const userLogClose = () => setUserLog(false);
+           const userLogShow = () => setUserLog(true);     
+  
+const [ManageModalShow, setManageModalShow] = React.useState(false);
+const [AddMemberShow, setAddMemberShow] = React.useState(false);
+  
+  const closeMemberModal = () => {
+      setMemberShow(false);
+      setManageModalShow(true);
+      
+  } 
+  const closeAddMemberModal = () => {
+    setMemberShow(false);
+    setAddMemberShow(true);
+    
+} 
+  
+           // IF ADMIN OR USER
+
+  const showAdminAction = (userLevel) => {
+    if (userLevel === "admin") {
+      return (
+        <>
+          {" "}
+          <Dropdown.Item
+            className="profile-dropdown-links"
+            onClick={memberShow}
+          >
+           
+            <span className="px-2">
+              {
+                <Icon
+                  icon="fluent:people-add-20-filled"
+                  width="24"
+                  height="24"
+                />
+              }
+              Member
+            </span>
+          </Dropdown.Item>
+          <Dropdown.Item
+            className="profile-dropdown-links"
+            onClick={userLogShow}
+          >
+            {/* <UserLog
+              show={userLog}
+              onHideBtn={() => setUserLog(false)}
+            ></UserLog> */}
+
+            <span className="px-2">
+              {<Icon icon="octicon:log-16" width="24" height="24" />} User Log
+            </span>
+          </Dropdown.Item>
+        </>
+      );
+    }
+  };
 
   return (
     <>
@@ -490,18 +507,138 @@ const [darkMode, setDarkMode] = useState(false);
         onHide={() => setEditProfileModalShow(false)}
       />
 
-      <ChangePasswordModal
-        show={ChangePasswordModalShow}
-        onHide={() => setChangePasswordModalShow(false)}
+      <ManageModal
+          show={ManageModalShow}
+          onHide={() => setManageModalShow(false)}
       />
-      {/* <MemberModal
-        show={MemberModalShow}
-        onHide={() => setMemberModalShow(false)}
-      /> */}
-      {/* <ManageModal
-        show={ManageModalShow}
-        onHide={() => setManageModalShow(false)}
-      /> */}
+      <AddMember 
+            show = {AddMemberShow}
+            onHide = {() => setAddMemberShow(false)}
+      />
+
+    <>
+    <Modal
+          show={memberModal}
+          onHide={memberClose}
+          size="lg"
+          backdrop="static"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+            <Modal.Header closeButton>
+              <Modal.Title id="contained-modal-title-vcenter">
+                <span className="pr-2">
+                {
+                    <Icon
+                      icon="fluent:people-add-20-filled"
+                      width="26"
+                      height="26"
+                    />
+                  }
+                </span>{" "}
+                Member List
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Button 
+                className="addMember mb-3" 
+                variant="success" 
+                onClick={closeAddMemberModal}>
+                {<Icon icon="mdi:account-multiple-plus" width="24" height="24" className="mx-1"/>} 
+                Add member
+                </Button> 
+
+              <div style={{ height: "400px", overflowY: "scroll" }}>
+                <Table bordered hover>
+                  <thead className="p-2">
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>John Doe</td>
+                      <td>johndoe@gmail.com </td>
+                      <td className="action-btn">
+                          <Button
+                            variant="primary"
+                            className="modalSaveBtn py-2 m-1 "
+                            onClick={closeMemberModal} 
+                            >
+                                Edit
+                          </Button>
+                        
+                        <Button
+                          variant="danger"
+                          className="deactive-btn py-2 m-1"
+                          onClick={""}  >
+                              Deactivate
+                        </Button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </Table>
+              </div>
+            </Modal.Body>
+          </Modal>
+    </>
+
+{/* USER LOG*/}
+     <>
+        <Modal
+             show={userLogModal}
+             onHide={userLogClose}
+             size="lg"
+             backdrop="static"
+             aria-labelledby="contained-modal-title-vcenter"
+             centered
+       
+    >
+    <Modal.Header closeButton>
+      <Modal.Title id="contained-modal-title-vcenter">
+        <span className="px-2">
+          <Icon
+            icon="octicon:log-16"
+            width="24px"
+            height="24px"
+          />
+        </span>{" "}
+       User Log
+      </Modal.Title>
+    </Modal.Header>
+    <Modal.Body>
+        <div className="search-con">
+                    <input type="text" placeholder="Search"  /> 
+                    <Button type="submit" className="btn">
+                        <Icon icon="material-symbols:search-rounded" width="24" height="24" />
+                    </Button>
+                </div>
+
+    <div className='userlog-div' style={{ height: '400px', overflowY: 'scroll' }}>   
+          <Table bordered hover className="userlog-tbl">
+          <thead className="p-2">
+                <tr>
+                  <th>Email</th>
+                  <th>Date</th>
+                  <th>Date</th>
+                  <th>Activity</th>
+                </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+              </tbody>            
+            </Table>
+        </div>
+    </Modal.Body>
+    </Modal>  
+</>
 
       {/**THEME MODAL */}
       <>
@@ -660,7 +797,7 @@ const [darkMode, setDarkMode] = useState(false);
           <ul class="burger-links">
             <li>
               <NavLink to="/" ClassName="active-link">
-                Green House
+                Hydro Farm
               </NavLink>
             </li>
             <li>
@@ -684,4 +821,114 @@ const [darkMode, setDarkMode] = useState(false);
     </>
   );
 }
+ 
+ 
+function ManageModal(props) {
+  return (
+    <Modal
+      {...props}
+      size="lg"
+      backdrop="static"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+          <span className="px-2">
+            <Icon
+              icon="material-symbols:edit-square-outline-rounded"
+              width="24px"
+              height="24px"
+            />
+          </span>{" "}
+          Manage User
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Container>
+          <Row className="MngRow p-2">
+            <Col md={8} sm={12}>
+              <label>Name</label>
+              <input type="text" placeholder="Alexis" required="required"/>
+              <label>Email</label>
+              <input type="email" placeholder="Alexis" required="required" />
+              <label>User Level</label>
+                <Form.Select aria-label="Default select example">
+                  <option value="User">User</option>
+                  <option value="Admin">Admin</option>
+                </Form.Select>
+            </Col>
+            <Col md={4} sm={12} className="col2">
+              <Button variant="success" className="btn  " onClick="">
+                {" "} 
+                Update{" "}
+              </Button>
+              <Button variant="primary" className="btn  " onClick="">
+                {" "}
+                Verify{" "}
+              </Button>
+              <Button variant="primary" className="btn  " onClick="">
+                {" "}
+                Reset Password{" "}
+              </Button>
+            </Col>
+          </Row>
+        </Container>
+      </Modal.Body>
+    </Modal>
+  );
+  }
+
+function AddMember(props) {
+  return (
+    <Modal
+      {...props}
+      size="lg"
+      backdrop="static"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+          <span className="px-2">
+            <Icon
+              icon="material-symbols:edit-square-outline-rounded"
+              width="24px"
+              height="24px"
+            />
+          </span>{" "}
+         Add Member
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Container>
+          <Row className="MngRow p-2">
+            <Col md={8} sm={12}>
+              <label>Name</label>
+              <input type="text" placeholder="Enter Name" required="required"/>
+              <label>Email</label>
+              <input type="email" placeholder="Enter Email" required="required" />
+              <label>User Level</label>
+                <Form.Select aria-label="Default select example">
+                  <option value="User">User</option>
+                  <option value="Admin">Admin</option>
+                </Form.Select>
+            </Col>
+            <Col md={4} sm={12} className="col2">
+              <Button variant="success" className="btn  " onClick="">
+                {" "} 
+                Add Member{" "}
+              </Button>
+              <Button variant="light" className="btn  " onClick={props.onHide}>
+                {" "}
+                Cancel{" "}
+              </Button>
+            </Col>
+          </Row>
+        </Container>
+      </Modal.Body>
+    </Modal>
+  );
+}
+
 export default Header;
