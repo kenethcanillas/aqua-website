@@ -252,7 +252,7 @@ function Devices() {
                 </thead>
                 <tbody>
                   <tr>
-                    <td>Glow Light</td>
+                    <td>Grow Light</td>
                     <td>
                       <label class="switch">
                         <input
@@ -321,7 +321,7 @@ function Devices() {
                     </td>
                   </tr>
                   <tr>
-                    <td>Cooling Fan</td>
+                    <td>Air Pump</td>
                     <td>
                       <label class="switch">
                         <input
