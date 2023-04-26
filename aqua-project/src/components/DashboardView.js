@@ -49,7 +49,7 @@ function DashboardView() {
     listAll(listRef).then((result) => {
       setRerpots(result.items);
     });
-    getTemp();
+    // getTemp();
     //
     onSnapshot(t, (snapshot) => {
       snapshot.docChanges().forEach((change) => {
@@ -58,7 +58,7 @@ function DashboardView() {
         }
       });
     });
-    getHum();
+    // getHum();
     onSnapshot(h, (snapshot) => {
       snapshot.docChanges().forEach((change) => {
         if (change.type === "added") {

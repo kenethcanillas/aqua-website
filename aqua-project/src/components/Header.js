@@ -16,13 +16,13 @@ import { useAuth } from "../context/AuthContext";
 import { app } from "../firebase";
 import { getFunctions, httpsCallable } from "firebase/functions";
 import Swal from "sweetalert2";
-import { Stack, capitalize } from "@mui/material";
 import useRunOnce from "../utility/useRunOnce";
 
 // import Member from "../adminmodal/Member";
 // import UserLog from "../adminmodal/UserLog";
 import { Table } from "react-bootstrap";
-import lodash, { result } from "lodash";
+import lodash, { result, set, startCase } from "lodash";
+import { capitalize } from "lodash";
 
 function Header() {
   const { logout, verifyEmail, resetPassword } = useAuth();
@@ -33,12 +33,61 @@ function Header() {
   const updateInfo = httpsCallable(functions, "updateUserInfo");
   const updateUsers = httpsCallable(functions, "updateUser");
   const getMemberList = httpsCallable(functions, "listUsers");
+  const addUserAccount = httpsCallable(functions, "signUp");
+  const getSensorLogs = httpsCallable(functions, "getAllUserLogs");
 
+  const deactivate = httpsCallable(
+    functions,
+    "activationAndDeactivationOfUser"
+  );
+  const [activateInfo, setActivateInfo] = useState({});
+  const deactivateBtn = (e) => {
+    e.preventDefault();
+    setActivateInfo({ disable: editUser.isActive, id: editUser.id });
+   let active; 
+   if(editUser.isActive){
+    active = false
+   }else{
+    active = true
+   }
+    console.log(editUser.id)
+    let data = { 
+      disable: active,
+      id: editUser.id
+    }
+    console.log(data)
+    deactivate(data).then(() => {
+      return Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "text",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    });
+
+    // console.log(data);
+  };
   const [memberList, setMemberList] = useState([]);
   const [editUser, setEditUser] = useState({});
   const name = useRef();
   const email = useRef();
+  const [logList, setLogList] = useState([]);
+  const [search, setSearch] = useState("");
+  useEffect(() => {
+    getSensorLogs().then((result) => setLogList(result.data));
+  }, []);
 
+  useEffect(() => {
+    getSensorLogs({ keyword: search }).then((result) =>
+      setLogList(result.data)
+    );
+  }, [search]);
+
+  const searchFunc = (e) => {
+    e.preventDefault();
+    setSearch(startCase(e.target.value));
+  };
   useEffect(() => {
     getInfo().then((result) => {
       setUserInfo(result.data);
@@ -139,6 +188,35 @@ function Header() {
     });
   };
 
+  const [newAccount, setNewAccount] = useState({});
+  const addAccountBtn = (e) => {
+    e.preventDefault();
+
+    if (
+      e.target.form[0].value != null &&
+      e.target.form[1].value != null &&
+      e.target.form[2].value != null &&
+      e.target.form[3].value != null
+    ) {
+      setNewAccount({
+        name: e.target.form[0].value,
+        email: e.target.form[1].value,
+        password: e.target.form[2].value,
+        userLevel: e.target.form[3].value,
+      });
+    }
+    addUserAccount(newAccount).then(() => {
+      setAddMemberShow(false);
+      return Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Add Member Successfully",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    });
+    console.log(newAccount);
+  };
   /*  HAMBURGER TOGGLE */
   const [open, opened] = useState(false);
 
@@ -163,33 +241,34 @@ function Header() {
     };
     if (
       e.target.form[0].value != null &&
-      e.target.form[0].value != userInfo.name
+      e.target.form[0].value != editUser.name
     ) {
       data.name = e.target.form[0].value;
     } else {
-      data.name = userInfo.name;
+      data.name = editUser.name;
     }
 
     if (
       e.target.form[1].value != null &&
-      e.target.form[1].value != userInfo.email
+      e.target.form[1].value != editUser.email
     ) {
       data.email = e.target.form[1].value;
     } else {
-      data.email = userInfo.email;
+      data.email = editUser.email;
     }
 
     if (
       e.target.form[2].value != null &&
-      e.target.form[2].value != userInfo.userLevel
+      e.target.form[2].value != editUser.userLevel
     ) {
       data.userLevel = e.target.form[2].value;
     } else {
-      data.userLevel = userInfo.userLevel;
+      data.userLevel = editUser.userLevel;
     }
 
+    // console.log(data)
     updateUsers(data).then(() => {
-      setManageModalShow(false)
+      setManageModalShow(false);
       return Swal.fire({
         position: "center",
         icon: "success",
@@ -199,6 +278,7 @@ function Header() {
       });
     });
   };
+  let text;
 
   /* PROFILE MODAL -------------------------> */
 
@@ -264,14 +344,14 @@ function Header() {
                   {" "}
                   Edit Profile{" "}
                 </Button>
-                <Button
+                {/* <Button
                   variant="danger"
                   className="p-3"
                   onClick={resetPasswordBtn}
                 >
                   {" "}
                   Reset Password{" "}
-                </Button>
+                </Button> */}
               </Col>
             </Row>
           </Container>
@@ -501,10 +581,16 @@ function Header() {
   const [ManageModalShow, setManageModalShow] = React.useState(false);
   const [AddMemberShow, setAddMemberShow] = React.useState(false);
 
-  const closeMemberModal = (id, name, email, userLevel) => {
+  const closeMemberModal = (id, name, email, userLevel, isActive) => {
     setMemberShow(false);
     setManageModalShow(true);
-    setEditUser({ id: id, name: name, email: email, userLevel: userLevel });
+    setEditUser({
+      id: id,
+      name: name,
+      email: email,
+      userLevel: userLevel,
+      isActive,
+    });
   };
   const closeAddMemberModal = () => {
     setMemberShow(false);
@@ -582,8 +668,14 @@ function Header() {
         onHide={() => setManageModalShow(false)}
         editUser={editUser}
         updateUser={updateUser}
+        resetPasswordBtn={resetPasswordBtn}
+        deactivateBtn={deactivateBtn}
       />
-      <AddMember show={AddMemberShow} onHide={() => setAddMemberShow(false)} />
+      <AddMember
+        show={AddMemberShow}
+        onHide={() => setAddMemberShow(false)}
+        addAccountBtn={addAccountBtn}
+      />
 
       <>
         <Modal
@@ -593,6 +685,7 @@ function Header() {
           backdrop="static"
           aria-labelledby="contained-modal-title-vcenter"
           deactivateBtn={deactivateBtn}
+          closeAddMemberModal={closeAddMemberModal}
           centered
         >
           <Modal.Header closeButton>
@@ -613,7 +706,7 @@ function Header() {
             <Button
               className="addMember mb-3"
               variant="success"
-              onClick={() => closeAddMemberModal}
+              onClick={closeAddMemberModal}
             >
               {
                 <Icon
@@ -649,19 +742,12 @@ function Header() {
                               data.id,
                               data.name,
                               data.email,
-                              data.userLevel
+                              data.userLevel,
+                              data.isActive
                             )
                           }
                         >
                           Edit
-                        </Button>
-
-                        <Button
-                          variant="danger"
-                          className="deactive-btn py-2 m-1"
-                          onClick={props.deactivateBtn}
-                        >
-                          Deactivate
                         </Button>
                       </td>
                     </tr>
@@ -674,6 +760,7 @@ function Header() {
       </>
 
       {/* USER LOG*/}
+
       <>
         <Modal
           show={userLogModal}
@@ -693,8 +780,12 @@ function Header() {
           </Modal.Header>
           <Modal.Body>
             <div className="search-con">
-              <input type="text" placeholder="Search" />
-              <Button type="submit" className="btn">
+              <input
+                type="text"
+                placeholder="Search Activity"
+                onChange={searchFunc}
+              />
+              <Button type="submit" className="btn" onClick={searchFunc}>
                 <Icon
                   icon="material-symbols:search-rounded"
                   width="24"
@@ -712,17 +803,17 @@ function Header() {
                   <tr>
                     <th>Email</th>
                     <th>Date</th>
-                    <th>Date</th>
                     <th>Activity</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
+                  {logList.map((data) => (
+                    <tr>
+                      <td>{data.email}</td>
+                      <td>{data.datetime}</td>
+                      <td>{data.activity}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </Table>
             </div>
@@ -992,9 +1083,21 @@ function ManageModal(props) {
                   {" "}
                   Update{" "}
                 </Button>
-                <Button variant="primary" className="btn  " onClick="">
-                  {" "}
-                  Reset Password{" "}
+                <Button
+                  type="button"
+                  variant="danger"
+                  className="deactive-btn py-2 m-1"
+                  onClick={props.deactivateBtn}
+                >
+                  Deactivate
+                </Button>
+                <Button
+                  type="button"
+                  variant="primary"
+                  className="btn  "
+                  onClick={props.resetPasswordBtn}
+                >
+                  Reset Password
                 </Button>
               </Col>
             </Row>
@@ -1028,33 +1131,53 @@ function AddMember(props) {
       </Modal.Header>
       <Modal.Body>
         <Container>
-          <Row className="MngRow p-2">
-            <Col md={8} sm={12}>
-              <label>Name</label>
-              <input type="text" placeholder="Enter Name" required="required" />
-              <label>Email</label>
-              <input
-                type="email"
-                placeholder="Enter Email"
-                required="required"
-              />
-              <label>User Level</label>
-              <Form.Select aria-label="Default select example">
-                <option value="User">User</option>
-                <option value="Admin">Admin</option>
-              </Form.Select>
-            </Col>
-            <Col md={4} sm={12} className="col2">
-              <Button variant="success" className="btn  " onClick="">
-                {" "}
-                Add Member{" "}
-              </Button>
-              <Button variant="light" className="btn  " onClick={props.onHide}>
-                {" "}
-                Cancel{" "}
-              </Button>
-            </Col>
-          </Row>
+          <form>
+            <Row className="MngRow p-2">
+              <Col md={8} sm={12}>
+                <label>Name</label>
+                <input
+                  type="text"
+                  placeholder="Enter Name"
+                  required="required"
+                />
+                <label>Email</label>
+                <input
+                  type="email"
+                  placeholder="Enter Email"
+                  required="required"
+                />
+                <label>Email</label>
+                <input
+                  type="password"
+                  placeholder="Enter Password"
+                  required="required"
+                />
+                <label>User Level</label>
+                <Form.Select aria-label="Default select example">
+                  <option value="user">User</option>
+                  <option value="admin">Admin</option>
+                </Form.Select>
+              </Col>
+              <Col md={4} sm={12} className="col2">
+                <Button
+                  variant="success"
+                  className="btn  "
+                  onClick={props.addAccountBtn}
+                >
+                  {" "}
+                  Add Member{" "}
+                </Button>
+                <Button
+                  variant="light"
+                  className="btn  "
+                  onClick={props.onHide}
+                >
+                  {" "}
+                  Cancel{" "}
+                </Button>
+              </Col>
+            </Row>
+          </form>
         </Container>
       </Modal.Body>
     </Modal>

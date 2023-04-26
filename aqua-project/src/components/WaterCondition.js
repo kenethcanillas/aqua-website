@@ -35,7 +35,7 @@ function WaterCondition() {
   useEffect(() => {
     const q = query(collection(db, "ec_level"), orderBy("datetime", "asc"));
     const p = query(collection(db, "ph_level"), orderBy("datetime", "asc"));
-    getEc();
+    // getEc();
     onSnapshot(q, (snapshot) => {
       snapshot.docChanges().forEach((change) => {
         if (change.type === "added") {
@@ -43,7 +43,7 @@ function WaterCondition() {
         }
       });
     });
-    getPh();
+    // getPh();
     onSnapshot(p, (snapshot) => {
       snapshot.docChanges().forEach((change) => {
         if (change.type === "added") {

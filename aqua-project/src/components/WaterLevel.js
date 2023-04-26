@@ -88,8 +88,8 @@ function WaterLevel() {
     listAll(listRef).then((result) => {
       setRerpots(result.items);
     });
-    getWater();
-    getLight();
+    // getWater();
+    // getLight();
   }, []);
 
   const getWater = (pageIndex = 0) => {
