@@ -21,7 +21,7 @@ return(
             <Col lg={12}>
                 <LoginHeader/>
             </Col>
-            <Col lg={12} className='mt-4'>
+            <Col lg={12} className='mt-4 xs-m-2'>
                 <Routes>
                     {/* <Route path="/" element ={<Homepage/>} /> */}
                     <Route path="/home" element={<Homepage/>}></Route>

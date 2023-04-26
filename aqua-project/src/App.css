@@ -1342,6 +1342,12 @@ input:focus {
     .img-system{
       display: none;
     }
+    
+    video{
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+    }
   }
 
 
