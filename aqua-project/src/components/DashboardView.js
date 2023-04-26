@@ -376,7 +376,6 @@ function DashboardView() {
                   height="42"
                 />
               </h2>
-              <p>Condition: Good</p>
             </div>
             <div class="temperature-data">
               <Table bordered hover className="table-container-bootstrap">
@@ -437,7 +436,6 @@ function DashboardView() {
                   height="42"
                 />
               </h2>
-              <p>Condition: Good</p>
             </div>
             <div class="humidity-data">
               <Table bordered hover className="table-container-bootstrap">

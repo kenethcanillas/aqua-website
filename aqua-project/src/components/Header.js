@@ -52,7 +52,7 @@ function Header() {
   const signOut = () => {
     logout();
     CMbtnClose();
-    <Navigate to="/login" />;
+    <Navigate to="/" />;
   };
 
   const updateProfile = (e) => {
@@ -372,75 +372,7 @@ function Header() {
 
   const [EditProfileModalShow, setEditProfileModalShow] = React.useState(false);
 
-  // /* CHANGE PASSWORD MODAL */
-  // function ChangePasswordModal(props) {
-  //   return (
-  //     <Modal
-  //       {...props}
-  //       size="lg"
-  //       backdrop="static"
-  //       aria-labelledby="contained-modal-title-vcenter"
-  //       centered
-  //     >
-  //       <Modal.Header closeButton>
-  //         <Modal.Title id="contained-modal-title-vcenter">
-  //           <span className="px-2">
-  //             <Icon
-  //               icon="material-symbols:edit-square-outline-rounded"
-  //               width="24px"
-  //               height="24px"
-  //             />
-  //           </span>{" "}
-  //           Change Password
-  //         </Modal.Title>
-  //       </Modal.Header>
-  //       <Modal.Body>
-  //         <Container>
-  //           <Row className="profile-reverse">
-  //             <Col lg={6} xs={12}>
-  //               <ul className="modal-content-column">
-  //                 <li>
-  //                   <label>Type Old Password</label>
-  //                   <input type="input" />
-  //                 </li>
-  //                 <li>
-  //                   <label>Type New Password</label>
-  //                   <input type="input" />
-  //                 </li>
-  //                 <li>
-  //                   <label>Re-type New Password</label>
-  //                   <input type="input" />
-  //                 </li>
-  //                 <li>
-  //                   <label></label>
-  //                   <label></label>
-  //                 </li>
-  //               </ul>
-  //             </Col>
-  //             <Col lg={6} xs={12} className="modal-links "></Col>
-  //           </Row>
-  //         </Container>
-  //       </Modal.Body>
-  //       <Modal.Footer>
-  //         <Button
-  //           variant="light"
-  //           className="modalSaveBtn py-3 "
-  //           onClick={props.onHide}
-  //         >
-  //           Cancel
-  //         </Button>
-  //         <Button
-  //           variant="success"
-  //           className="modalSaveBtn py-3 px-5 "
-  //           onClick={props.onHide}
-  //         >
-  //           Save
-  //         </Button>
-  //       </Modal.Footer>
-  //     </Modal>
-  //   );
-  // }
-  // const [ChangePasswordModalShow, setChangePasswordModalShow] = React.useState(false);
+
 
   // SIGN OUT USESTATE
 
@@ -555,18 +487,7 @@ function Header() {
 
   return (
     <>
-      {/* <> *MEMBER MODAL -> ADMIN FILE     
-      
-          <Button variant="primary" onClick={handleShow}>
-            Launch static backdrop modal
-          </Button>
-            <Member 
-              show={show} 
-              handleCloseBtn={()=> setShow(false)}
-              >
-              </Member>
-      </> */}
-
+  
       <ProfileModal
         show={ProfileModalShow}
         onHide={() => setProfileModalShow(false)}
@@ -592,7 +513,7 @@ function Header() {
           size="lg"
           backdrop="static"
           aria-labelledby="contained-modal-title-vcenter"
-          deactivateBtn={deactivateBtn}
+          // deactivateBtn={deactivateBtn}
           centered
         >
           <Modal.Header closeButton>
@@ -659,7 +580,7 @@ function Header() {
                         <Button
                           variant="danger"
                           className="deactive-btn py-2 m-1"
-                          onClick={props.deactivateBtn}
+                          // onClick={deactivateBtn}
                         >
                           Deactivate
                         </Button>

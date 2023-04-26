@@ -452,18 +452,35 @@ ul.nav-links{
 .temperature-display{
   min-width: 50%;
   background-color: var(--second-color);
-  padding:3em 1em;
+  padding:4.8em 1em;
   border-radius: 10px 0 0px 10px;
 }
 .humidity-display{
   min-width: 50%;
   grid-area:humidity;
   background-color: var(--second-color);
-  padding:3em 1em;
+  padding:4.8em 1em;
   border-radius: 10px;
   border-radius: 0px 10px 10px 0px;
 }
+.devices-display{
+  min-width: 50%;
+  background-color: var(--second-color);
+  padding:3em 1em;
+  border-radius: 10px 0 0px 10px;
+}
+.pump-display{
+  min-width: 50%;
+  background-color: var(--second-color);
+  padding:3em 1em;
+  border-radius: 0px 10px 10px 0px;
+}
 .temperature-display h3, .humidity-display h3{
+  font-weight: 600;
+  font-size: var(--font-size);
+  display: block !important;
+}
+.devices-display h3, .pump-display h3{
   font-weight: 600;
   font-size: var(--font-size);
   display: block !important;
@@ -473,7 +490,6 @@ ul.nav-links{
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 0.3em;
 }
 .temperature-display h2 .iconify, .humidity-display h2 .iconify{
   align-self: flex-start;
@@ -1129,13 +1145,14 @@ input:focus {
      font-weight: 600;
   }
   .log-nav button{
-    width: 120px;
+    width: 130px;
     font-size: 16px;
     padding: 0.8em;
     border: none;
     border-radius:50px;
     margin-left:1em;
   }
+ 
   .log-nav .use{
     color: #1C7A6A;
     border: 1px solid var(--third-color);
@@ -1323,10 +1340,6 @@ input:focus {
       font-size: 14px;
     }
   
-    .log-nav button{
-      width: 100px;
-      
-    }
     .log-nav-home span{
       display: none;
     }
@@ -1349,3 +1362,4 @@ input:focus {
     display: flex !important;
     align-items: center !important;
   }
+

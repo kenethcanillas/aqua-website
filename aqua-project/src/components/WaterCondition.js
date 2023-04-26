@@ -230,7 +230,6 @@ function WaterCondition() {
                   height="42"
                 />
               </h2>
-              <p>Condition: Good</p>
             </div>
             <div class="temperature-data">
               <Table bordered hover className="table-container-bootstrap">
@@ -290,7 +289,6 @@ function WaterCondition() {
                   data-icon="tabler:temperature-celsius"
                 ></span>
               </h2>
-              <p>Condition: Good</p>
             </div>
             <div class="humidity-data">
               <Table bordered hover className="table-container-bootstrap">

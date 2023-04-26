@@ -38,7 +38,7 @@ function Devices() {
         return Swal.fire({
           position: "center",
           icon: "success",
-          title: "Grow Light is OFF",
+          title: "Glow Light is OFF",
           showConfirmButton: false,
           timer: 1500,
         });
@@ -55,7 +55,7 @@ function Devices() {
         return Swal.fire({
           position: "center",
           icon: "success",
-          title: "Grow Light is ON",
+          title: "Glow Light is ON",
           showConfirmButton: false,
           timer: 1500,
         });
@@ -209,7 +209,7 @@ function Devices() {
         </div>
         <div className="display-container">
           <div class="temperature-container">
-            <div class="temperature-display">
+            <div class="devices-display">
               <h3>Devices</h3>
               <div className="device-icon">
                 {
@@ -217,7 +217,7 @@ function Devices() {
                     icon="fa6-solid:lightbulb"
                     width="72"
                     height="72"
-                    style={{ color: glowLightCheck ? "yellow" : "black" }}
+                    style={{ color: glowLightCheck ? "white" : "black"}}
                   />
                 }
                 {
@@ -229,13 +229,14 @@ function Devices() {
                       animation: coolingFanCheck
                         ? "rotation 2s infinite linear"
                         : "none",
+                      color: coolingFanCheck ? "white" : "black"
                     }}
                   />
                 }
               </div>
               <div className="device-text">
                 <p>
-                  Grow Light : <span>{glowLightCheck ? " ON" : " OFF"} </span>
+                  Glow Light : <span>{glowLightCheck ? " ON" : " OFF"} </span>
                 </p>
                 <p>
                   Cooling Fan : <span>{coolingFanCheck ? " ON" : " OFF"} </span>
@@ -252,7 +253,7 @@ function Devices() {
                 </thead>
                 <tbody>
                   <tr>
-                    <td>Grow Light</td>
+                    <td>Glow Light</td>
                     <td>
                       <label class="switch">
                         <input
@@ -283,11 +284,16 @@ function Devices() {
           </div>
 
           <div class="humidity-container">
-            <div class="humidity-display">
+            <div class="pump-display">
               <h3>Pumps</h3>
               <div className="device-icon">
-                {<Icon icon="mdi:water-pump" width="72" height="72" />}
-                {<Icon icon="mdi:pump" width="72" height="72" />}
+                {<Icon icon="mdi:water-pump" width="72" height="72" 
+                        style={{ color: waterCheck ? "white" : "black"}}
+                                    />}
+                {<Icon icon="mdi:pump" width="72" height="72" 
+                        style={{ color: airCheck ? "white" : "black"}}
+ 
+                />}
               </div>
               <div className="device-text">
                 <p>
