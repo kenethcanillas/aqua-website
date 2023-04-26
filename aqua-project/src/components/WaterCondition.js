@@ -14,8 +14,12 @@ import HumReport from "./Report/HumReport";
 import EcReport from "./Report/EcReport";
 import PhReport from "./Report/PhReport";
 import AllReport from "./Report/AllReport";
+import { CircularProgress } from "@mui/material";
 
 function WaterCondition() {
+  
+  const [loading, setLoading] = useState(false);
+  const [lightLoad, setLightLoad] = useState(false);
   const functions = getFunctions(app, "asia-southeast1");
   const getAllSensorData = httpsCallable(functions, "getAllSensorData");
   const [ecData, setEcData] = useState({});
@@ -49,6 +53,7 @@ function WaterCondition() {
     });
   }, []);
   const getPh = (pageIndex = 0) => {
+    setLoading(true)
     getAllSensorData({
       collectionName: "ph_level",
       pageIndex,
@@ -60,6 +65,7 @@ function WaterCondition() {
           datetime: toDateTime(phLevel.datetime._seconds),
         }))
       );
+      setLoading(false)
       setPageCount(result.data.count / limitData);
     });
   };
@@ -80,6 +86,7 @@ function WaterCondition() {
     }
   };
   const getEc = (pageIndex = 0) => {
+    setLightLoad(true)
     getAllSensorData({
       collectionName: "ec_level",
       pageIndex,
@@ -91,6 +98,7 @@ function WaterCondition() {
           datetime: toDateTime(ecLevel.datetime._seconds),
         }))
       );
+      setLightLoad(false)
       setEcPageCounts(result.data.count / limitData);
     });
   };
@@ -117,33 +125,7 @@ function WaterCondition() {
     item.id = i + 1;
   });
 
-  const [PHcurrentPage, PHsetCurrentPage] = useState(1);
-  const [PHitemsPerPage, PHsetItemsPerPage] = useState(10);
-  const PHtotalItems = phListData.length;
-  const PHtotalPages = Math.ceil(PHtotalItems / PHitemsPerPage);
 
-  const PHhandlePageChange = (page) => {
-    PHsetCurrentPage(page);
-  };
-
-  const PHstartIndex = (PHcurrentPage - 1) * PHitemsPerPage;
-  const PHendIndex = PHstartIndex + PHitemsPerPage;
-
-  // slice the array of items to display only the items for the current page
-  const PHcurrentItems = phListData.slice(PHstartIndex, PHendIndex);
-
-  const PHpaginationItems = [];
-  for (let PHpageNumber = 1; PHpageNumber <= PHtotalPages; PHpageNumber++) {
-    PHpaginationItems.push(
-      <Pagination.Item
-        key={PHpageNumber}
-        active={PHpageNumber === PHcurrentPage}
-        onClick={() => PHhandlePageChange(PHpageNumber)}
-      >
-        {PHpageNumber}
-      </Pagination.Item>
-    );
-  }
 
   /*ECL PAGINATION*/
 
@@ -151,33 +133,7 @@ function WaterCondition() {
     item.id = i + 1;
   });
 
-  const [ECcurrentPage, ECsetCurrentPage] = useState(1);
-  const [ECitemsPerPage, ECsetItemsPerPage] = useState(10);
-  const ECtotalItems = ecListData.length;
-  const ECtotalPages = Math.ceil(ECtotalItems / ECitemsPerPage);
-
-  const EChandlePageChange = (page) => {
-    ECsetCurrentPage(page);
-  };
-
-  const ECstartIndex = (ECcurrentPage - 1) * ECitemsPerPage;
-  const ECendIndex = ECstartIndex + ECitemsPerPage;
-
-  // slice the array of items to display only the items for the current page
-  const ECcurrentItems = ecListData.slice(ECstartIndex, ECendIndex);
-
-  const ECpaginationItems = [];
-  for (let ECpageNumber = 1; ECpageNumber <= ECtotalPages; ECpageNumber++) {
-    ECpaginationItems.push(
-      <Pagination.Item
-        key={ECpageNumber}
-        active={ECpageNumber === ECcurrentPage}
-        onClick={() => EChandlePageChange(ECpageNumber)}
-      >
-        {ECpageNumber}
-      </Pagination.Item>
-    );
-  }
+ 
   const [ReportModalShow, setReportModalShow] = useState(false);
   const [searchReport, setSearchReport] = useState("");
   const [selectedSensor, setSelectedSensor] = useState("All");
@@ -205,6 +161,39 @@ function WaterCondition() {
       return <AllReport data={searchReport} />;
     }
   }
+
+  const checkLoad = () => {
+    if (loading) {
+      return <tr><td colSpan={3} ><div style={{display:"flex", justifyContent:"center"}}><CircularProgress /></div></td></tr>;
+    } else {
+      return phListData.map((data) => (
+        <tr>
+          <td>{data.id}</td>
+          <td>{data.datetime}</td>
+          <td>
+            {data.value}{" "}
+            {<Icon icon="tabler:temperature-celsius" width="16" height="16" />}
+          </td>
+        </tr>
+      ));
+    }
+  };
+  const checkLoadLight = () => {
+    if (lightLoad) {
+      return <tr><td colSpan={3} ><div style={{display:"flex", justifyContent:"center"}}><CircularProgress /></div></td></tr>;
+    } else {
+      return ecListData.map((data) => (
+        <tr>
+          <td>{data.id}</td>
+          <td>{data.datetime}</td>
+          <td>
+            {data.value}{" "}
+            {<Icon icon="tabler:temperature-celsius" width="16" height="16" />}
+          </td>
+        </tr>
+      ));
+    }
+  };
   return (
     <>
      <ReportModal
@@ -254,22 +243,16 @@ function WaterCondition() {
                 </thead>
                 <tbody>
                   {/* phlvel */}
-                  {PHcurrentItems.map((data) => (
-                    <tr>
-                      <td>{data.id}</td>
-                      <td>{data.datetime}</td>
-                      <td> {data.value}</td>
-                    </tr>
-                  ))}
+                  {checkLoad()}
                 </tbody>
                 <tfoot>
                   <tr>
                     <td colSpan={3}>
                       <Pagination size="md" className="pagination">
-                        <Pagination.First
+                        {/* <Pagination.First
                           disabled={PHcurrentPage === 1}
                           onClick={() => PHhandlePageChange(1)}
-                        />
+                        /> */}
                         <Pagination.Prev
                           disabled={currentPage === 0}
                           onClick={() => pagePh(false)}
@@ -285,11 +268,11 @@ function WaterCondition() {
                         >
                           Next
                         </Pagination.Next>
-
+{/* 
                         <Pagination.Last
                           disabled={PHcurrentPage === PHtotalPages}
                           onClick={() => PHhandlePageChange(PHtotalPages)}
-                        ></Pagination.Last>
+                        ></Pagination.Last> */}
                       </Pagination>
                     </td>
                   </tr>
@@ -320,22 +303,16 @@ function WaterCondition() {
                 </thead>
                 <tbody>
                   {/* eclevel table */}
-                  {ECcurrentItems.map((data) => (
-                    <tr>
-                      <td>{data.id}</td>
-                      <td>{data.datetime}</td>
-                      <td> {data.value}</td>
-                    </tr>
-                  ))}
+                  {checkLoadLight()}
                 </tbody>
                 <tfoot>
                   <tr>
                     <td colSpan={3}>
                       <Pagination size="md" className="pagination">
-                        <Pagination.First
+                        {/* <Pagination.First
                           disabled={ECcurrentPage === 1}
                           onClick={() => EChandlePageChange(1)}
-                        />
+                        /> */}
                         <Pagination.Prev
                           disabled={ecCurrentPage === 0}
                           onClick={() => pageEc(false)}
@@ -352,10 +329,10 @@ function WaterCondition() {
                           Next
                         </Pagination.Next>
 
-                        <Pagination.Last
+                        {/* <Pagination.Last
                           disabled={ECcurrentPage === ECtotalPages}
                           onClick={() => EChandlePageChange(ECtotalPages)}
-                        ></Pagination.Last>
+                        ></Pagination.Last> */}
                       </Pagination>
                     </td>
                   </tr>

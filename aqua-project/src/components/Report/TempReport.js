@@ -15,6 +15,7 @@ function TempReport(props) {
 
   useEffect(() => {
     listAll(listRef).then((result) => {
+      
       setRerpots(
         result.items.filter((report) => report.name.includes(props.data))
       );

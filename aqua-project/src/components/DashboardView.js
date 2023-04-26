@@ -19,6 +19,7 @@ import EcReport from "./Report/EcReport";
 import PhReport from "./Report/PhReport";
 import AllReport from "./Report/AllReport";
 import ReportModal from "./ReportModal";
+import { CircularProgress } from "@mui/material";
 
 function DashboardView() {
   const functions = getFunctions(app, "asia-southeast1");
@@ -40,6 +41,9 @@ function DashboardView() {
   const [currentPage, setCurrentTempPage] = useState(0);
   const [humPageCounts, setHumPageCounts] = useState(0);
   const [humCurrentPage, setHumCurrentPage] = useState(0);
+
+  const [loading, setLoading] = useState(false);
+  const [lightLoad, setLightLoad] = useState(false);
   useEffect(() => {
     const listRef = ref(storage, "daily-reports/temperature");
     listAll(listRef).then((result) => {
@@ -87,6 +91,7 @@ function DashboardView() {
   //   });
   // };
   const getTemp = (pageIndex = 0) => {
+    setLoading(true)
     getAllSensorData({
       collectionName: "temperature",
       pageIndex,
@@ -99,10 +104,12 @@ function DashboardView() {
           datetime: toDateTime(temperature.datetime._seconds),
         }))
       );
+      setLoading(false)
       setPageCount(result.data.count / limitData);
     });
   };
   const getHum = (pageIndex = 0) => {
+    setLightLoad(true)
     getAllSensorData({
       collectionName: "humidity",
       pageIndex,
@@ -114,6 +121,7 @@ function DashboardView() {
           datetime: toDateTime(humidity.datetime._seconds),
         }))
       );
+      setLightLoad(false)
       setHumPageCounts(result.data.count / limitData);
     });
   };
@@ -183,63 +191,117 @@ function DashboardView() {
       }
     }
   };
-  const [currentTempPage, setCurrentPage] = useState(1);
-  const [itemsTempPerPage, setItemsPerPage] = useState(10);
-  const totalItems = tempListData.length;
-  const totalPages = Math.ceil(totalItems / itemsTempPerPage);
 
-  const handlePageChange = () => {
-    // setCurrentPage(page);
-    // pageTemp(true);
+  const checkLoad = () => {
+    if (loading) {
+      return (
+        <tr>
+          <td colSpan={3}>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <CircularProgress />
+            </div>
+          </td>
+        </tr>
+      );
+    } else {
+      return tempListData.map((data) => (
+        <tr>
+          <td>{data.id}</td>
+          <td>{data.datetime}</td>
+          <td>
+            {data.value}{" "}
+            {
+              <Icon
+                icon="tabler:temperature-celsius"
+                width="16"
+                height="16"
+              />
+            }
+          </td>
+        </tr>
+      ))
+    }
+  };
+  const checkLoadLight = () => {
+    if (lightLoad) {
+      return (
+        <tr>
+          <td colSpan={3}>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <CircularProgress />
+            </div>
+          </td>
+        </tr>
+      );
+    } else {
+      return humListData.map((data) => (
+        <tr>
+          <td>{data.id}</td>
+          <td>{data.datetime}</td>
+          <td>
+            {data.value}{" "}
+          </td>
+        </tr>
+      ));
+    }
   };
 
-  const startIndex = (currentTempPage - 1) * itemsTempPerPage;
-  const endIndex = startIndex + itemsTempPerPage;
+  // const [currentTempPage, setCurrentPage] = useState(1);
+  // const [itemsTempPerPage, setItemsPerPage] = useState(10);
+  // const totalItems = tempListData.length;
+  // const totalPages = Math.ceil(totalItems / itemsTempPerPage);
 
-  // slice the array of items to display only the items for the current page
-  const currentItems = tempListData.slice(startIndex, endIndex);
+  // const handlePageChange = () => {
+  //   // setCurrentPage(page);
+  //   // pageTemp(true);
+  // };
 
-  const paginationItems = [];
+  // const startIndex = (currentTempPage - 1) * itemsTempPerPage;
+  // const endIndex = startIndex + itemsTempPerPage;
 
-//   let leftEllipsis = false;
-//   let rightEllipsis = false;
-//   let rangeStart = 1;
-//   let rangeEnd = totalPages;
+  // // slice the array of items to display only the items for the current page
+  // const currentItems = tempListData.slice(startIndex, endIndex);
 
-//   for (let pageNumber = 1; pageNumber <=totalPages; pageNumber++) {
-//     if (
-//       (pageNumber <= 2 || pageNumber >= totalPages - 1)
-//       || (pageNumber >= currentTempPage - 1 && pageNumber <= currentTempPage + 1)
-//     ) {
-//         paginationItems.push(
-//           <Pagination.Item
-//             key={pageNumber}
-//             active={pageNumber === currentTempPage}
-//             onClick={() => handlePageChange(pageNumber)}
-//           >
-//             {pageNumber}
-//           </Pagination.Item>
-//         );
-//   }
-//   else if (pageNumber < currentTempPage && !leftEllipsis) {
-//     paginationItems.push(<Pagination.Ellipsis key="leftEllipsis" />);
-//     leftEllipsis = true;
-//     rangeStart = pageNumber;
-//   } else if (pageNumber > currentTempPage && !rightEllipsis) {
-//     paginationItems.push(<Pagination.Ellipsis key="rightEllipsis" />);
-//     rightEllipsis = true;
-//     rangeEnd = pageNumber;
-//   }
-// }
+  // const paginationItems = [];
 
+  //   let leftEllipsis = false;
+  //   let rightEllipsis = false;
+  //   let rangeStart = 1;
+  //   let rangeEnd = totalPages;
 
-// if (rangeStart > 2) {
-//   paginationItems.unshift(<Pagination.Item key={1} onClick={() => handlePageChange(1)}>1</Pagination.Item>);
-// }
+  //   for (let pageNumber = 1; pageNumber <=totalPages; pageNumber++) {
+  //     if (
+  //       (pageNumber <= 2 || pageNumber >= totalPages - 1)
+  //       || (pageNumber >= currentTempPage - 1 && pageNumber <= currentTempPage + 1)
+  //     ) {
+  //         paginationItems.push(
+  //           <Pagination.Item
+  //             key={pageNumber}
+  //             active={pageNumber === currentTempPage}
+  //             onClick={() => handlePageChange(pageNumber)}
+  //           >
+  //             {pageNumber}
+  //           </Pagination.Item>
+  //         );
+  //   }
+  //   else if (pageNumber < currentTempPage && !leftEllipsis) {
+  //     paginationItems.push(<Pagination.Ellipsis key="leftEllipsis" />);
+  //     leftEllipsis = true;
+  //     rangeStart = pageNumber;
+  //   } else if (pageNumber > currentTempPage && !rightEllipsis) {
+  //     paginationItems.push(<Pagination.Ellipsis key="rightEllipsis" />);
+  //     rightEllipsis = true;
+  //     rangeEnd = pageNumber;
+  //   }
+  // }
 
-// if (rangeEnd < totalPages - 1) {
-//   paginationItems.push(<Pagination.Item key={totalPages} onClick={() => handlePageChange(totalPages)}>{totalPages}</Pagination.Item>);
-// }
+  // if (rangeStart > 2) {
+  //   paginationItems.unshift(<Pagination.Item key={1} onClick={() => handlePageChange(1)}>1</Pagination.Item>);
+  // }
+
+  // if (rangeEnd < totalPages - 1) {
+  //   paginationItems.push(<Pagination.Item key={totalPages} onClick={() => handlePageChange(totalPages)}>{totalPages}</Pagination.Item>);
+  // }
 
   /* HUMIDITY PAGINATION */
 
@@ -247,33 +309,33 @@ function DashboardView() {
     item.id = i + 1;
   });
 
-  const [HUMcurrentPage, HUMsetCurrentPage] = useState(1);
-  const [HUMitemsPerPage, HUMsetItemsPerPage] = useState(10);
-  const HUMtotalItems = humListData.length;
-  const HUMtotalPages = Math.ceil(HUMtotalItems / HUMitemsPerPage);
+  // const [HUMcurrentPage, HUMsetCurrentPage] = useState(1);
+  // const [HUMitemsPerPage, HUMsetItemsPerPage] = useState(10);
+  // const HUMtotalItems = humListData.length;
+  // const HUMtotalPages = Math.ceil(HUMtotalItems / HUMitemsPerPage);
 
-  const HUMhandlePageChange = (page) => {
-    HUMsetCurrentPage(page);
-  };
+  // const HUMhandlePageChange = (page) => {
+  //   HUMsetCurrentPage(page);
+  // };
 
-  const HUMstartIndex = (HUMcurrentPage - 1) * HUMitemsPerPage;
-  const HUMendIndex = HUMstartIndex + HUMitemsPerPage;
+  // const HUMstartIndex = (HUMcurrentPage - 1) * HUMitemsPerPage;
+  // const HUMendIndex = HUMstartIndex + HUMitemsPerPage;
 
-  // slice the array of items to display only the items for the current page
-  const HUMcurrentItems = humListData.slice(HUMstartIndex, HUMendIndex);
+  // // slice the array of items to display only the items for the current page
+  // const HUMcurrentItems = humListData.slice(HUMstartIndex, HUMendIndex);
 
-  const HUMpaginationItems = [];
-  for (let HUMpageNumber = 1; HUMpageNumber <= 10; HUMpageNumber++) {
-    HUMpaginationItems.push(
-      <Pagination.Item
-        key={HUMpageNumber}
-        active={HUMpageNumber === HUMcurrentPage}
-        onClick={() => HUMhandlePageChange(HUMpageNumber)}
-      >
-        {HUMpageNumber}
-      </Pagination.Item>
-    );
-  }
+  // const HUMpaginationItems = [];
+  // for (let HUMpageNumber = 1; HUMpageNumber <= 10; HUMpageNumber++) {
+  //   HUMpaginationItems.push(
+  //     <Pagination.Item
+  //       key={HUMpageNumber}
+  //       active={HUMpageNumber === HUMcurrentPage}
+  //       onClick={() => HUMhandlePageChange(HUMpageNumber)}
+  //     >
+  //       {HUMpageNumber}
+  //     </Pagination.Item>
+  //   );
+  // }
 
   /**REPORT MODAL*/
 
@@ -327,31 +389,16 @@ function DashboardView() {
                 </thead>
                 <tbody>
                   {/* temperature */}
-                  {tempListData.map((data) => (
-                    <tr>
-                      <td>{data.id}</td>
-                      <td>{data.datetime}</td>
-                      <td>
-                        {data.value}{" "}
-                        {
-                          <Icon
-                            icon="tabler:temperature-celsius"
-                            width="16"
-                            height="16"
-                          />
-                        }
-                      </td>
-                    </tr>
-                  ))}
+                  {checkLoad()}
                 </tbody>
                 <tfoot>
                   <tr>
                     <td colSpan={3}>
                       <Pagination size="md" className="pagination">
-                        <Pagination.First
+                        {/* <Pagination.First
                           // disabled={currentTempPage === 1}
                           onClick={() => handlePageChange(1)}
-                        />
+                        /> */}
                         <Pagination.Prev
                           disabled={currentPage === 0}
                           onClick={() => pageTemp(false)}
@@ -368,10 +415,10 @@ function DashboardView() {
                           Next
                         </Pagination.Next>
 
-                        <Pagination.Last
+                        {/* <Pagination.Last
                           disabled={currentTempPage === totalPages}
                           onClick={() => handlePageChange(totalPages)}
-                        ></Pagination.Last>
+                        ></Pagination.Last> */}
                       </Pagination>
                     </td>
                   </tr>
@@ -403,13 +450,7 @@ function DashboardView() {
                 </thead>
                 <tbody>
                   {/* humidty table */}
-                  {humListData.map((data) => (
-                    <tr>
-                      <td>{data.id}</td>
-                      <td>{data.datetime}</td>
-                      <td>{data.value}</td>
-                    </tr>
-                  ))}
+                  {checkLoadLight()}
                 </tbody>
                 <tfoot>
                   <tr>
@@ -421,10 +462,10 @@ function DashboardView() {
                         //  totalPages={totalPages}
                         //  onChange={handlePageChange}
                       >
-                        <Pagination.First
+                        {/* <Pagination.First
                           // disabled={HUMcurrentPage === 1}
                           onClick={() => HUMhandlePageChange(1)}
-                        />
+                        /> */}
                         <Pagination.Prev
                           disabled={humCurrentPage === 0}
                           onClick={() => pageHum(false)}
@@ -441,10 +482,10 @@ function DashboardView() {
                           Next
                         </Pagination.Next>
 
-                        <Pagination.Last
+                        {/* <Pagination.Last
                           // disabled={(currentPage === 0)}
                           onClick={() => HUMhandlePageChange(HUMtotalPages)}
-                        ></Pagination.Last>
+                        ></Pagination.Last> */}
                       </Pagination>
                     </td>
                   </tr>
@@ -457,6 +498,5 @@ function DashboardView() {
     </>
   );
 }
-
 
 export default DashboardView;

@@ -132,7 +132,7 @@ function Header() {
 
   // IF ADMIN OR USER
 
-  const showAdminAction = (userLevel) => {
+  const showAdminAction = (userLevel, setShow, show) => {
     if (userLevel === "admin") {
       return (
         <>
@@ -157,10 +157,7 @@ function Header() {
             className="profile-dropdown-links"
             onClick={userLogShow}
           >
-            <UserLog
-              show={userLog}
-              onHideBtn={() => setUserLog(false)}
-            ></UserLog>
+            <UserLog show={userLog} onHideBtn={() => setUserLog(false)} />
 
             <span className="px-2">
               {<Icon icon="octicon:log-16" width="24" height="24" />} User Log
@@ -207,7 +204,6 @@ function Header() {
             <Row className="profile-reverse">
               <Col lg={12} xs={12}>
                 <ul className="modal-content-column profile">
-
                   {checkVerification(userInfo.isEmailVerified)}
 
                   <li>
@@ -240,8 +236,22 @@ function Header() {
                 </ul>
               </Col>
               <Col lg={12} xs={12} className="modal-links p-4 ">
-                  <Button variant="primary" className="p-3 mb-3" onClick={closeModalProfile}> Edit Profile </Button>
-                  <Button variant="danger" className="p-3" onClick={resetPasswordBtn}> Reset Password </Button>             
+                <Button
+                  variant="primary"
+                  className="p-3 mb-3"
+                  onClick={closeModalProfile}
+                >
+                  {" "}
+                  Edit Profile{" "}
+                </Button>
+                <Button
+                  variant="danger"
+                  className="p-3"
+                  onClick={resetPasswordBtn}
+                >
+                  {" "}
+                  Reset Password{" "}
+                </Button>
               </Col>
             </Row>
           </Container>
@@ -280,6 +290,15 @@ function Header() {
               <Row className="profile-reverse">
                 <Col lg={12} xs={12}>
                   <ul className="modal-content-column">
+                    {/* <li>
+                    <label>User ID</label>
+                    <input
+                      type="input"
+                      placeholder="20-1234"
+                      disabled
+                      style={disableBG}
+                    />
+                  </li> */}
                     <li>
                       <form>
                         <label>Name</label>
@@ -292,12 +311,16 @@ function Header() {
                       </form>
                     </li>
                     <li>
-                      <Form.Select aria-label="Default select example" className="mt-4 py-3" disabled>
-                          <option defaultValue={userInfo.userLevel}>
-                            {userInfo.userLevel}
-                          </option>
-                          <option value="Admin">Admin</option>
-                          <option value="Member">Member</option>
+                      <Form.Select
+                        aria-label="Default select example"
+                        className="mt-4 py-3"
+                        disabled
+                      >
+                        <option defaultValue={userInfo.userLevel}>
+                          {userInfo.userLevel}
+                        </option>
+                        <option value="Admin">Admin</option>
+                        <option value="Member">Member</option>
                       </Form.Select>
                     </li>
                     <li>
@@ -313,21 +336,20 @@ function Header() {
                 </Col>
                 <Col lg={12} xs={12} className="modal-links px-4">
                   <Button
-                      variant="success"
-                      className="modalSaveBtn p-3 mb-3 "
-                      onClick={updateProfile}
-                    >
-                      Save
+                    variant="success"
+                    className="modalSaveBtn p-3 mb-3 "
+                    onClick={updateProfile}
+                  >
+                    Save
                   </Button>
-                   <Button
-                      type="submit"
-                      variant="secondary"
-                      className="modalSaveBtn py-3 "
-                      onClick={props.onHide}
-                    >
-                      Cancel
-                    </Button>
-            
+                  <Button
+                    type="submit"
+                    variant="secondary"
+                    className="modalSaveBtn py-3 "
+                    onClick={props.onHide}
+                  >
+                    Cancel
+                  </Button>
                 </Col>
               </Row>
             </Container>
@@ -407,8 +429,8 @@ function Header() {
       </Modal>
     );
   }
-  const [ChangePasswordModalShow, setChangePasswordModalShow] = React.useState(false);
-    
+  const [ChangePasswordModalShow, setChangePasswordModalShow] =
+    React.useState(false);
 
   // SIGN OUT USESTATE
 
@@ -424,9 +446,9 @@ function Header() {
   const handleShow = () => setShow(true);
 
   const [userLog, setUserLog] = useState(false);
-           const userLogClose = () => setUserLog(false);
-           const userLogShow = () => setUserLog(true); 
-           
+  const userLogClose = () => setUserLog(false);
+  const userLogShow = () => setUserLog(true);
+
   // THEME BUTTON USESTATE
   // const [themeBtnCheck, themeBtnIsChecked] = useState(false);
 
@@ -439,32 +461,30 @@ function Header() {
   const themebtnClose = () => themeSetShow(false);
   const themebtnShow = () => themeSetShow(true);
 
-  
-const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
     // Set the dark mode state to the value stored in the session storage
-    const storedDarkMode = sessionStorage.getItem('darkMode');
+    const storedDarkMode = sessionStorage.getItem("darkMode");
     if (storedDarkMode) {
       setDarkMode(JSON.parse(storedDarkMode));
     }
   }, []);
 
-    useEffect(() => {
-      if (darkMode) {
-        document.body.classList.add('dark-mode');
-      } else {
-        document.body.classList.remove('dark-mode');
-      }
-    
-       // Store the dark mode state in the session storage
-        sessionStorage.setItem('darkMode', JSON.stringify(darkMode));
-    }, [darkMode]);
-      
-    const handleToggleDarkMode = () => {
-      setDarkMode(!darkMode);
-    };
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add("dark-mode");
+    } else {
+      document.body.classList.remove("dark-mode");
+    }
 
+    // Store the dark mode state in the session storage
+    sessionStorage.setItem("darkMode", JSON.stringify(darkMode));
+  }, [darkMode]);
+
+  const handleToggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
 
   return (
     <>
@@ -511,48 +531,57 @@ const [darkMode, setDarkMode] = useState(false);
           backdrop="static"
           keyboard={false}
         >
-        <Modal.Header closeButton>
-          <Modal.Title> <Icon icon="fluent:dark-theme-20-filled" width="26px" height="26px"/> Theme</Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="theme-body">
-          <p>{darkMode ? 'Dark mode':'Light Mode'}</p>
+          <Modal.Header closeButton>
+            <Modal.Title>
+              {" "}
+              <Icon
+                icon="fluent:dark-theme-20-filled"
+                width="26px"
+                height="26px"
+              />{" "}
+              Theme
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body className="theme-body">
+            <p>{darkMode ? "Dark mode" : "Light Mode"}</p>
             <label class="switch">
-                {/* <input type="checkbox" checked={darkMode} onClick={() => setDarkMode(!darkMode)} /> */}
-                <input type="checkbox" checked={darkMode} onClick={handleToggleDarkMode} />
+              {/* <input type="checkbox" checked={darkMode} onClick={() => setDarkMode(!darkMode)} /> */}
+              <input
+                type="checkbox"
+                checked={darkMode}
+                onClick={handleToggleDarkMode}
+              />
 
-                <span class="slider round" />
-          </label>
-        </Modal.Body>
-      </Modal>
-  </>
-      
-  {/*CLOSE MODAL */} 
-  <>  
-    <Modal
-        show={closeModal}
-        onHide={CMbtnClose}
-        backdrop="static"
-        keyboard={false}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>
-            Sign Out
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Confirm Sign Out?</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={CMbtnClose}>
-            Cancel
-          </Button>
-          <Button variant="danger" onClick={signOut}>
-            Sign out
-          </Button>
-        </Modal.Footer>
-      </Modal>
-  </>
- 
- 
-    <div className=" nav_bar-container ">
+              <span class="slider round" />
+            </label>
+          </Modal.Body>
+        </Modal>
+      </>
+
+      {/*CLOSE MODAL */}
+      <>
+        <Modal
+          show={closeModal}
+          onHide={CMbtnClose}
+          backdrop="static"
+          keyboard={false}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Sign Out</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Confirm Sign Out?</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={CMbtnClose}>
+              Cancel
+            </Button>
+            <Button variant="danger" onClick={signOut}>
+              Sign out
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </>
+
+      <div className=" nav_bar-container ">
         <div class="ham_logo-container">
           <div class="hamburger-menu" onClick={hamburger}>
             <div class={`hamburger ${open ? "open" : ""}`}>
@@ -602,7 +631,8 @@ const [darkMode, setDarkMode] = useState(false);
           <Dropdown.Toggle
             id="dropdown-basic"
             variant="success"
-            className="nav-buttons-button d-flex" >
+            className="nav-buttons-button d-flex"
+          >
             <span>
               {
                 <Icon
@@ -610,24 +640,32 @@ const [darkMode, setDarkMode] = useState(false);
                   color="#fafafa"
                   width="48"
                   height="48"
-                  hFlip={true}  />
+                  hFlip={true}
+                />
               }
             </span>
           </Dropdown.Toggle>
           <Dropdown.Menu className="profile-dropdowMenu-container">
-            
             <Dropdown.Item
-                className="profile-dropdown-links prof-btn"
-                onClick={() => setProfileModalShow(true)} >
-                {<Icon icon="mdi:account" width="24" height="24" />}
-                Profile
+              className="profile-dropdown-links prof-btn"
+              onClick={() => setProfileModalShow(true)}
+            >
+              {<Icon icon="mdi:account" width="24" height="24" />}
+              Profile
             </Dropdown.Item>
             <Dropdown.Item
               className="profile-dropdown-links"
               onClick={themebtnShow}
             >
               <span className="px-2">
-                {<Icon icon="fluent:dark-theme-20-filled" width="24" height="24" />}Theme
+                {
+                  <Icon
+                    icon="fluent:dark-theme-20-filled"
+                    width="24"
+                    height="24"
+                  />
+                }
+                Theme
               </span>
             </Dropdown.Item>
 
@@ -684,4 +722,5 @@ const [darkMode, setDarkMode] = useState(false);
     </>
   );
 }
+
 export default Header;

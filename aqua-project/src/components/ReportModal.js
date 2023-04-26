@@ -31,6 +31,13 @@ function ReportModal(props) {
 
               </Dropdown.Toggle>
               <Dropdown.Menu>
+              <Dropdown.Item 
+                  onClick={() => {
+                  props.setSelectedSensor("All");
+                  }}
+                >
+                  All
+                </Dropdown.Item>
                 <Dropdown.Item 
                   onClick={() => {
                   props.setSelectedSensor("Temperature");
