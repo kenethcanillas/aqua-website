@@ -58,7 +58,7 @@ const handleSubmit = useCallback(async event=>{
   
       
     }catch(e){
-      console.log(e)
+      // console.log(e)
       setError("Failed to log in")
     }
 

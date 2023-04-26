@@ -97,7 +97,7 @@ function DashboardView() {
       pageIndex,
       limit: limitData,
     }).then((result) => {
-      console.log(result);
+      // console.log(result);
       setTempListData(
         result.data.data.map((temperature) => ({
           ...temperature,
@@ -125,7 +125,7 @@ function DashboardView() {
       setHumPageCounts(result.data.count / limitData);
     });
   };
-  console.log(currentPage);
+  // console.log(currentPage);
   const [searchReport, setSearchReport] = useState("");
 
   const searchReportFunc = (event) => {

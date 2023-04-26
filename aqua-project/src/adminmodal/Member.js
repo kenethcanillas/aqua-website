@@ -35,9 +35,9 @@ function Member(props) {
     setManageModalShow(true);
     setUserEditData({ id: id, name: name, email: email, userLevel: userLevel });
   };
-  const updateUserFunc = (event) => {
-    console.log(event.target.form)
-  };
+  // const updateUserFunc = (event) => {
+  //   console.log(event.target.form)
+  // };
 
   return (
     <>
