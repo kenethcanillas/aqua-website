@@ -761,7 +761,7 @@ function Header() {
           <Dropdown.Toggle
               id="dropdown-basic"
               variant="light"
-              className="notif-btn "
+              className="notif-btn"
             >
               {<Icon icon="clarity:notification-solid" width="30" height="30" style={{position:"relative"}}/>}
               <div className="notif-color"/>    
@@ -769,12 +769,9 @@ function Header() {
             
             <Dropdown.Menu className="notif-container scrollable-menu" style={{ maxHeight: '400px'}}>
                 <div className="notif-title p-4">
-                <h5>Notification </h5>
-                  <div className="notif-title-btn">
-                      <span className="mx-2" >Select </span>
-                      {<Icon icon="tabler:trash-x-filled" color="#3f3f3f" width="28" height="28"/>}
-                  </div>
-                  </div>
+                  <h5>Notification </h5>
+                  <a style={{color:"blue",cursor:"pointer"}}> Mark All as read </a>
+                </div>
                     <Dropdown.Item className="notif-item px-4 py-2">
                       <div className="notif-header d-flex">
                         <p style={{fontWeight:'600'}}>Switch Notice</p>       
