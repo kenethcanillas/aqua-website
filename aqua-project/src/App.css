@@ -338,6 +338,94 @@ ul.nav-links{
     }
 
 
+/*NOTIF DROPDOWN*/
+/* .btn.show{
+  background-color: none !important;
+  border: none !important;
+  
+}
+.btn.show.active{
+  background-color:#c8c8c8;
+  border-radius: 90px;
+}
+
+.notif-btn .btn{
+  border-radius: 90px;
+
+} */
+  
+/* .notif{
+    border-radius: 50 !important;
+  } */
+.notif-btn{
+  border-radius: 90% !important;
+}
+  
+.notif-container{
+  margin-top:2em !important;
+  background-color:var(--main-color) !important;
+  padding: 0.1em !important;
+  border-radius: 5px !important;   
+  text-align: left !important;
+  box-shadow: 0px 5px 1em  rgba(72, 72, 72, 0.119);
+}
+.scrollable-menu {
+  height: auto;
+  max-height: 400px;
+  overflow-x: hidden;
+
+} 
+.notif-container .dropdown-item{
+  width: 400px !important;
+  
+}
+
+.notif-title{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--main-text-color);
+}
+.notif-color{
+  width: 12px;
+  height:12px;
+  background-color: var(--close-color);
+  z-index: 1000 !important;
+  border-radius: 90px;
+  position: absolute;
+  top: 5px;
+  left: 12px;
+}
+.notif-btn .btn-light{
+  --bs-btn-active-bg:var;
+}
+.notif-title-btn{
+  display: flex;
+  justify-content:space-evenly;
+  align-items: center;
+}
+
+.notif-item .time{
+  text-align: right;
+  margin-left: 4em;
+  font-size: 12px;
+}
+.notif-header{
+  justify-content: space-between;
+  align-items: center;
+}
+.scrollable-menu::-webkit-scrollbar {
+  width: 5px;
+}
+
+.scrollable-menu::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+.scrollable-menu::-webkit-scrollbar-thumb {
+  background-color: var(--third-color);
+  border-radius: 5px;
+}
 /*SideView _______________________________________________________________*/
 .sideview-container{
   color:var(--main-text-color);
@@ -599,6 +687,11 @@ ul.nav-links{
   width: 0;
   height: 0;
 }
+.devices-control{
+  display: flex;
+  justify-content:space-between;
+  align-items: center;
+}
 
 /* The slider */
 .slider {
@@ -805,205 +898,9 @@ input:checked + .slider:before {
   }
 }
 
-/* Login Form ___________________________________________
-
-.container-login{
-  display: grid;
-  background-color:var(--second-color);
-  height: 100vh;
-  grid-template-columns: 0.5fr 3fr 0.5fr;
-  grid-template-areas:"col-1 login-form col-3";
-  
-  }
-.col-1{
-  grid-area: col-1;
-}
-.login-form{
-  width: 100%;
-  height: 100%;
-  margin-bottom:2em;
-  grid-area: login-form;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  
-}
-.login-form-2{
-  width:25em;
-  min-height: 80%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  border-radius: 10px;
-  background-color: var(--main-color);
-  font-size: var(--font-size);
-  position: relative;
-  box-shadow: 0px 10px 1em  rgba(72, 72, 72, 0.238);
-}
-
-#logo-login{
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  border:5px solid var(--second-color);
-  position: absolute;
-  top: 4%;
-  bottom: 0;
-  z-index: 1000000000;
-}
-.form{
-  width: 100%;
-  padding: 74px 50px;
-  margin-top: 2em;
-}
-.form li{
-  width: 100%;
-  list-style: none;
-  margin-bottom: 1em;
-
-}
-.form input{
-  width: 100%;
-  height: 54px;
-  border-radius: 5px;
-  border:1px solid var(--third-color);
-  border-radius: 5px;
-  padding-left: 1em;
-}
-.login-button{
-  width: 100%;
-  height: 54px;
-  border-radius: 5px;
-  border: none;
-  color: var(--main-color);
-  letter-spacing: 2px;
-  background-color:var(--third-color);
-  font-size: var(--font-size);
-  font-weight: bold;
-}
-.login-button:hover{
-  background-color:#259a86;
-}
-
-.form a{
-  font-size: 12px;
-}
-
-button:active{
-  transform: translateY(1px);
-}
-.col-3{
-  grid-area: col-3;
-}
-#active{
-  background-color: var(--third-color);
-  border: none;
-  color: var(--second-text-color);
-}
-.user{
-  padding-top: 50px;
-}
-*/
-    /* LOGIN CSS 
-.main {
-  text-align: center;
-  justify-content: center;
-  display: flex; 
-  padding-top: 90px;
-  padding-bottom: 90px;
-  padding-left: 90px;
-  padding-right: 90px;
-}
-.sub-main {
-  display: flex;
-  justify-content: center;
-  height: 550px;
-  width: 450px;
-  box-shadow: 2px 1px 10px 2px rgb(99, 99, 99);
-  padding-top: 30px;
-  border-radius: 5px; 
-  background-color: white;
-}
-.imgs {
-    justify-content: center;
-    display: flex;
-  }
-.container-image {
-  background-color: rgb(255, 255, 255); 
-  border-radius: 150px;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  height: 115px;
-  width: 115px;
-}
-
-.profile {
-  height: 130px;
-  width: 130px;
-  align-items: center;
-  display: flex;
-  margin-bottom: 150px;
-  border: solid #2EBDDA 1px;
-  border-radius: 180px;
-  background-color: #2EBDDA;
-} 
-
-input{
-    width: 380px;
-    height: 50px;
-    border-radius: 5px;
-    display: flex;
-    border: solid #2DB29C 2px;
-    background-color: #ffffff;
-}
-
-input:focus {
-  outline-color: #2EBDDA;
-}
-
-.email{
-    height: 25px;
-    width: 25px;
-    position: absolute;
-    padding: 14px 0 0 25px;
-}
-
-.Uname{
-    padding-left: 20px;
-    font-size: 20px;
-}
-
-.Pname{
-  padding-left: 20px;
-  font-size: 20px;
-}
-.second-input{
-    text-align: left;
-}
-.second-input p{
-  margin-top: 19px;
-  font-family:arial;
-  font-size:18px;
-  padding-bottom: 10px;
-} */
-
-/* button{
-    width: 380px;
-    height: 50px;
-    border-radius: 5px;
-    background-color: #1C7A6A;
-    color: white;
-    font-size: 25px;
-    border: none;
-} */
 .login-button{
     padding-top: 25px;
 }
-
-
 /* Drop down Menu ___________________________________________*/
 
 
@@ -1031,16 +928,6 @@ input:focus {
   transform: translateY(-20px);
   transition: all 0.5 ease;
 }
-/* h3{
-  width: 100%;
-  text-align: center;
-  font-size: 18px;
-  padding: 20px 0;
-  font-weight: 500;
-  font-size: 18px;
-  color: var(--primary-text-color);
-  line-height: 1.2rem;
-} */
 
 .dropdown-menu ul li{
   padding: 10px  0;
@@ -1143,6 +1030,11 @@ input:focus {
     margin-bottom: 0 !important;
     cursor: pointer;
      font-weight: 600;
+     padding: 8px;
+  }
+  .log-nav-home:active{
+    border-radius: 90px;  
+    box-shadow: 0px 5px 1em  rgba(11, 100, 82, 0.431);
   }
   .log-nav button{
     width: 130px;
@@ -1151,6 +1043,9 @@ input:focus {
     border: none;
     border-radius:50px;
     margin-left:1em;
+  }
+  .log-nav button:active{
+    box-shadow: 0px 5px 1em  rgba(11, 100, 82, 0.431);
   }
  
   .log-nav .use{

@@ -24,6 +24,7 @@ import useRunOnce from "../utility/useRunOnce";
 import { Table } from "react-bootstrap";
 import lodash, { result } from "lodash";
 
+
 function Header() {
   const { logout, verifyEmail, resetPassword } = useAuth();
 
@@ -504,7 +505,11 @@ function Header() {
         editUser={editUser}
         updateUser={updateUser}
       />
-      <AddMember show={AddMemberShow} onHide={() => setAddMemberShow(false)} />
+      <AddMember 
+        show={AddMemberShow} 
+        onHide={() => setAddMemberShow(false)} 
+        
+        />
 
       <>
         <Modal
@@ -534,7 +539,7 @@ function Header() {
             <Button
               className="addMember mb-3"
               variant="success"
-              onClick={() => closeAddMemberModal}
+              onClick={() => closeAddMemberModal(false)}
             >
               {
                 <Icon
@@ -751,74 +756,102 @@ function Header() {
             </NavLink>
           </li>
         </ul>
-
-        <Dropdown className="nav-buttons">
-          <Dropdown.ItemText className="name px-2">
-            <>{userInfo.name ? userInfo.name.toUpperCase() : ""}</>
-          </Dropdown.ItemText>
+        <div className="d-flex">
+          <Dropdown className="notif mx-2">
           <Dropdown.Toggle
-            id="dropdown-basic"
-            variant="success"
-            className="nav-buttons-button d-flex"
-          >
-            <span>
-              {
-                <Icon
-                  icon="gg:profile"
-                  color="#fafafa"
-                  width="48"
-                  height="48"
-                  hFlip={true}
-                />
-              }
-            </span>
-          </Dropdown.Toggle>
-          <Dropdown.Menu className="profile-dropdowMenu-container">
-            <Dropdown.Item
-              className="profile-dropdown-links prof-btn"
-              onClick={() => setProfileModalShow(true)}
+              id="dropdown-basic"
+              variant="light"
+              className="notif-btn "
             >
-              {<Icon icon="mdi:account" width="24" height="24" />}
-              Profile
-            </Dropdown.Item>
-            <Dropdown.Item
-              className="profile-dropdown-links"
-              onClick={themebtnShow}
+              {<Icon icon="clarity:notification-solid" width="30" height="30" style={{position:"relative"}}/>}
+              <div className="notif-color"/>    
+          </Dropdown.Toggle> 
+            
+            <Dropdown.Menu className="notif-container scrollable-menu" style={{ maxHeight: '400px'}}>
+                <div className="notif-title p-4">
+                <h5>Notification </h5>
+                  <div className="notif-title-btn">
+                      <span className="mx-2" >Select </span>
+                      {<Icon icon="tabler:trash-x-filled" color="#3f3f3f" width="28" height="28"/>}
+                  </div>
+                  </div>
+                    <Dropdown.Item className="notif-item px-4 py-2">
+                      <div className="notif-header d-flex">
+                        <p style={{fontWeight:'600'}}>Switch Notice</p>       
+                        <p className="time">2 mins ago...</p>
+                      </div>
+                        <p >Turn ON the Cooling Fan Switch</p>
+                    </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>                
+          <Dropdown className="nav-buttons">
+            <Dropdown.ItemText className="name px-2">
+              <>{userInfo.name ? userInfo.name.toUpperCase() : ""}</>
+            </Dropdown.ItemText>
+            <Dropdown.Toggle
+              id="dropdown-basic"
+              variant="success"
+              className="nav-buttons-button d-flex"
             >
-              <span className="px-2">
+              <span>
                 {
                   <Icon
-                    icon="fluent:dark-theme-20-filled"
-                    width="24"
-                    height="24"
+                    icon="gg:profile"
+                    color="#fafafa"
+                    width="48"
+                    height="48"
+                    hFlip={true}
                   />
                 }
-                Theme
               </span>
-            </Dropdown.Item>
+            </Dropdown.Toggle>
+            <Dropdown.Menu className="profile-dropdowMenu-container">
+              <Dropdown.Item
+                className="profile-dropdown-links prof-btn"
+                onClick={() => setProfileModalShow(true)}
+              >
+                {<Icon icon="mdi:account" width="24" height="24" />}
+                Profile
+              </Dropdown.Item>
+              <Dropdown.Item
+                className="profile-dropdown-links"
+                onClick={themebtnShow}
+              >
+                <span className="px-2">
+                  {
+                    <Icon
+                      icon="fluent:dark-theme-20-filled"
+                      width="24"
+                      height="24"
+                    />
+                  }
+                  Theme
+                </span>
+              </Dropdown.Item>
 
-            {/*Admin Button ----------------------------*/}
-            {/* {showAdminAction(userInfo.userLevel) */}
-            {showAdminAction(userInfo.userLevel)}
-            <Dropdown.Item
-              className="profile-dropdown-links"
-              id="sign-out"
-              onClick={CMbtnShow}
-            >
-              <span className="px-2">
-                {
-                  <Icon
-                    icon="ic:round-log-out"
-                    color="#900"
-                    width="24"
-                    height="24"
-                  />
-                }
-              </span>
-              Sign out
-            </Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
+              {/*Admin Button ----------------------------*/}
+              {/* {showAdminAction(userInfo.userLevel) */}
+              {showAdminAction(userInfo.userLevel)}
+              <Dropdown.Item
+                className="profile-dropdown-links"
+                id="sign-out"
+                onClick={CMbtnShow}
+              >
+                <span className="px-2">
+                  {
+                    <Icon
+                      icon="ic:round-log-out"
+                      color="#900"
+                      width="24"
+                      height="24"
+                    />
+                  }
+                </span>
+                Sign out
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+          </div>
       </div>
 
       {open && (

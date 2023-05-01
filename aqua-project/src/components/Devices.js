@@ -12,6 +12,7 @@ import { getFunctions, httpsCallable } from "firebase/functions";
 import Swal from "sweetalert2";
 
 import ViewLogsModal from "./ViewLogsModal";
+import { Button } from "react-bootstrap";
 
 function Devices() {
   const functions = getFunctions(app, "asia-southeast1");
@@ -245,16 +246,16 @@ function Devices() {
             </div>
             <div class="temperature-data">
               <Table bordered>
-                <thead>
+                <thead >
                   <tr>
-                    <th className="title-column">Devices Controls</th>
+                    <th className="title-column" colSpan="2">Devices Controls</th>
                     <th className="title-status">Status</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>Glow Light</td>
-                    <td>
+                    <td colSpan="2">Glow Light</td>
+                    <td className="devices-control"> 
                       <label class="switch">
                         <input
                           type="checkbox"
@@ -263,11 +264,15 @@ function Devices() {
                         />
                         <span class="slider round" />
                       </label>
-                    </td>
+                        <a style={{cursor:"pointer"}}>
+                          <Icon icon="material-symbols:video-camera-back-rounded" className="mx-2" width="24px" height="24px" /> 
+                          Camera
+                          </a>
+                      </td>
                   </tr>
                   <tr>
-                    <td>Cooling Fan</td>
-                    <td>
+                    <td colSpan="2">Cooling Fan</td>
+                    <td className="devices-control">
                       <label class="switch">
                         <input
                           type="checkbox"
@@ -276,6 +281,10 @@ function Devices() {
                         />
                         <span class="slider round" />
                       </label>
+                      <a style={{cursor:"pointer"}}>
+                          <Icon icon="material-symbols:video-camera-back-rounded" className="mx-2" width="24px" height="24px" /> 
+                          Camera
+                      </a>                    
                     </td>
                   </tr>
                 </tbody>
@@ -308,14 +317,14 @@ function Devices() {
               <Table bordered>
                 <thead>
                   <tr>
-                    <th className="title-column">Pumps</th>
+                    <th className="title-column" colSpan="2">Pumps</th>
                     <th className="title-status">Status</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>Water Pumps</td>
-                    <td>
+                    <td colSpan="2">Water Pumps</td>
+                    <td className="devices-control">
                       <label class="switch">
                         <input
                           type="checkbox"
@@ -324,11 +333,15 @@ function Devices() {
                         />
                         <span class="slider round" />
                       </label>
+                      <a style={{cursor:"pointer"}}>
+                          <Icon icon="material-symbols:video-camera-back-rounded" className="mx-2" width="24px" height="24px" /> 
+                          Camera
+                      </a>
                     </td>
                   </tr>
                   <tr>
-                    <td>Air Pump</td>
-                    <td>
+                    <td colSpan="2">Air Pump</td>
+                    <td className="devices-control">
                       <label class="switch">
                         <input
                           type="checkbox"
@@ -337,6 +350,10 @@ function Devices() {
                         />
                         <span class="slider round" />
                       </label>
+                      <a style={{cursor:"pointer"}}>
+                          <Icon icon="material-symbols:video-camera-back-rounded" className="mx-2" width="24px" height="24px" /> 
+                           Camera
+                      </a>
                     </td>
                   </tr>
                 </tbody>
