@@ -755,6 +755,11 @@ function Header() {
               Devices & Pumps
             </NavLink>
           </li>
+          <li>
+            <NavLink to="/plants" ClassName="active-link">
+              Plants
+            </NavLink>
+          </li>
         </ul>
         <div className="d-flex">
           <Dropdown className="notif mx-2">

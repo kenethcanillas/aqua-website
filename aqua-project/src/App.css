@@ -742,7 +742,61 @@ input:checked + .slider:before {
 .nav_bar-container{
   padding: 0.5rem 3rem;
 }
+/*Plants */
+.dark-mode .plants-col{
+  background-color:#edd35d;
+}
+  .plants-row{
+    height: 80vh;
+    display: flex;
+    justify-content: stretch;
+    align-items: center;
+  }
+  .plants-col{
+    display: flex;
+    flex-wrap: wrap-reverse;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom: 20px solid #FF9839;
+    padding: 1em;
+  }
+  .plants-col img{
+    width: 80px;
+    height: 100px;
+  }
+  .col-2 .iconify{
+    width: 80px;
+    height: 80px;
+  }
+  .enlarge {
+    width:100px;
+    height: 100px;
+  }
+  .plant-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  .col-1{
+    border-top: 40px solid #02d39b;
+  }
+  .lettuce-info{
+    font-size: 16px;
+    padding: 0.5em 1em;
+    border-radius: 0.5em;
+    background-color:rgb(223, 223, 223) ;
+    margin-top: 1em;
+   text-align: justify;
 
+  }
+  /* .plants-col .iconify:hover{
+    width: 84px;
+    height: 84px;
+    color: #259a86;
+    transition: 2s ease;
+  } */
 
 /* Profile Modal */
 .modal-content-column{

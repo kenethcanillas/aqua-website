@@ -8,6 +8,7 @@ import GreenHousePages from "./pages/GreenHousePages";
 import WaterConditionPages from "./pages/WaterConditionPage";
 import WaterLevelPage from "./pages/WaterLevelPage";
 import DevicesPage from "./pages/DevicesPage";
+import Plants from "./components/Plants";
 
 import "./App.css";
 import {
@@ -45,6 +46,7 @@ function App() {
                     <Route path="/waterconditionpage" Component={WaterConditionPages}/>
                     <Route path="/waterlevelpage" Component={WaterLevelPage} />
                     <Route path="/devicespage" Component={DevicesPage} />
+                    <Route path="/plants" Component={Plants} />
                   </Routes>
                 </Col>
               </Row>
