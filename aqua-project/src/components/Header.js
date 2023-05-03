@@ -61,9 +61,9 @@ function Header() {
       setMemberList(result.data.users);
     });
   }, []);
-  const signOut = () => {
+  const signOut = async () => {
     const washingtonRef = doc(db, "users", currentUser.uid);
-    updateDoc(washingtonRef, {
+    await updateDoc(washingtonRef, {
       isLogin: false,
     });
     logout();
@@ -489,6 +489,19 @@ function Header() {
   const closeNotif = () => {
     setNewNotif(false);
   };
+  const showTitle = (name)=>{
+    if (
+      name == "Cooling Fan" ||
+      name == "Grow Light" ||
+      name == "Air Pump" ||
+      name == "Water Pump"
+    ) {
+      return "Switch Notice!"
+    }else{
+      return "Plant Slots Notice!"
+    }
+  
+  }
 
   /* PROFILE MODAL -------------------------> */
 
@@ -1039,7 +1052,7 @@ function Header() {
           </li>
           <li>
             <NavLink to="/plants" ClassName="active-link">
-              Plants
+              Plant Slots
             </NavLink>
           </li>
         </ul>
@@ -1078,7 +1091,7 @@ function Header() {
                 {notif != "" ? notif.map((result) => (
                   <>
                     <div className="notif-header d-flex">
-                      <p style={{ fontWeight: "600" }}>Switch Notice</p>
+                      <p style={{ fontWeight: "600" }}>{showTitle(result.name)}</p>
                       <p className="time">{moment(result.date).fromNow()}</p>
                     </div>
                     <div style={{ borderBottom: "solid 2px" }}>
@@ -1183,7 +1196,12 @@ function Header() {
             </li>
             <li>
               <NavLink to="/devicespage" ClassName="active-link">
-                Devices
+                Devices & Pumps
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/plants" ClassName="active-link">
+                Plant Spots
               </NavLink>
             </li>
           </ul>

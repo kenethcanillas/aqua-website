@@ -58,15 +58,18 @@ function Login() {
         auth,
         emailRef.current.value,
         passwordRef.current.value
-      ).then((userCredentials) => {
+      ).then(async (userCredentials) => {
+        console.log(userCredentials.user.uid)
         const docRef = doc(db, "users", userCredentials.user.uid);
         const docSnap = getDoc(docRef);
-        docSnap.then((result) => {
-          console.log(result.data().isLogin);
+       await docSnap.then((result) => {
+          console.log(result.data())
           if(result.data().isLogin){
-            logout();
+            console.log(result.data().isLogin);
+            return logout();
           }else{
-            updateDoc(docRef,{
+            console.log(result.data().isLogin);
+           return  updateDoc(docRef,{
               isLogin: true
             })
           }
@@ -81,7 +84,18 @@ function Login() {
 
     setLoading(false);
   });
-
+  if (loading) {
+    return (
+      <>
+        {" "}
+        <Box  height="100vh" sx={{ display: "flex", justifyContent:"center", flexDirection: "column", alignItems:"center"}}>
+          <img src={Logo} width={200} />
+          <br></br>
+          <CircularProgress/>
+        </Box>
+      </>
+    );
+  }
   return (
     <>
       <Container>

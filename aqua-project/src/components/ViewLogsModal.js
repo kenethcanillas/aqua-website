@@ -10,7 +10,7 @@ import { isEqual, result } from "lodash";
 
 function ViewLogsModal(props) {
   const functions = getFunctions(app, "asia-southeast1");
-  // const getSensorLogs = httpsCallable(functions, "getAllUserLogs");
+  const getSensorLogs = httpsCallable(functions, "getAllUserLogs");
   const [selectedSensor, setSelectedSensor] = useState("Select Device or Pump");
   const [logList, setLogList] = useState([]);
   const [searchLogs, setSearchLogs] = useState();
@@ -26,15 +26,17 @@ function ViewLogsModal(props) {
   } else {
     sensor = "Grow";
   }
-
+const [object, setObject] = useState({keyword: sensor, date: searchLogs})
   let objec = {
     keyword: sensor,
     date: searchLogs
   };
 
   useEffect(() => {
-    // getSensorLogs(objec).then((result) => setLogList(result.data));
-  }, [objec]);
+    getSensorLogs({keyword: sensor, date:searchLogs }).then((result) => setLogList(result.data));
+
+    
+  }, [sensor, searchLogs]);
 
 
 

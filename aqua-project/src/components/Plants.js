@@ -74,65 +74,58 @@ function Plants() {
               src={slot1 ? emptyPlant : lettuce}
               onClick={() => setClicked(!clicked)}
             />
-            {clicked ? (
+           
               <div className="lettuce-info">
                 <h6 style={{ fontWeight: 600 }}>Slot : 1 </h6>
               </div>
-            ) : (
-              " "
-            )}
+           
+           
           </div>
           <div className="plant-info">
             <img
               src={slot2 ? emptyPlant : lettuce}
               onClick={() => setClicked(!clicked)}
             />
-            {clicked ? (
+           
               <div className="lettuce-info">
                 <h6 style={{ fontWeight: 600 }}>Slot: 2 </h6>
               </div>
-            ) : (
-              " "
-            )}
+         
           </div>
           <div className="plant-info">
             <img
               src={slot3 ? emptyPlant : lettuce}
               onClick={() => setClicked(!clicked)}
             />
-            {clicked ? (
+           
               <div className="lettuce-info">
-                <h6 style={{ fontWeight: 600, color: "red" }}> Removed </h6>
+                <h6 style={{ fontWeight: 600}}> Slot: 3 </h6>
               </div>
-            ) : (
-              " "
-            )}
+            
+          
           </div>
           <div className="plant-info">
             <img
               src={slot4 ? emptyPlant : lettuce}
               onClick={() => setClicked(!clicked)}
             />
-            {clicked ? (
+          
               <div className="lettuce-info">
                 <h6 style={{ fontWeight: 600 }}>Slot: 4 </h6>
               </div>
-            ) : (
-              " "
-            )}
+          
+         
           </div>
           <div className="plant-info">
             <img
               src={slot5 ? emptyPlant : lettuce}
               onClick={() => setClicked(!clicked)}
             />
-            {clicked ? (
+           
               <div className="lettuce-info">
-                <h6 style={{ fontWeight: 600, color: "red" }}> Removed </h6>
+                <h6 style={{ fontWeight: 600}}> Slot: 5 </h6>
               </div>
-            ) : (
-              " "
-            )}
+          
           </div>
         </Col>
         <Col className="plants-col col-2" lg={12} xs={12}>
@@ -141,65 +134,56 @@ function Plants() {
               src={slot6 ? emptyPlant : lettuce}
               onClick={() => setClicked(!clicked)}
             />
-            {clicked ? (
+           
               <div className="lettuce-info">
                 <h6 style={{ fontWeight: 600 }}>Slot: 6 </h6>
               </div>
-            ) : (
-              " "
-            )}
+       
+         
           </div>
           <div className="plant-info">
             <img
               src={slot7 ? emptyPlant : lettuce}
               onClick={() => setClicked(!clicked)}
             />
-            {clicked ? (
+           
               <div className="lettuce-info">
                 <h6 style={{ fontWeight: 600 }}>Slot: 7 </h6>
               </div>
-            ) : (
-              " "
-            )}
+          
           </div>
           <div className="plant-info">
             <img
               src={slot8 ? emptyPlant : lettuce}
               onClick={() => setClicked(!clicked)}
             />
-            {clicked ? (
+           
               <div className="lettuce-info">
-                <h6 style={{ fontWeight: 600, color: "red" }}> Removed </h6>
+                <h6 style={{ fontWeight: 600}}> Slot: 8 </h6>
               </div>
-            ) : (
-              " "
-            )}
+           
           </div>
           <div className="plant-info">
             <img
               src={slot9 ? emptyPlant : lettuce}
               onClick={() => setClicked(!clicked)}
             />
-            {clicked ? (
+          
               <div className="lettuce-info">
-                <h6 style={{ fontWeight: 600 }}>Slot: 8 </h6>
+                <h6 style={{ fontWeight: 600 }}>Slot: 9 </h6>
               </div>
-            ) : (
-              " "
-            )}
+          
           </div>
           <div className="plant-info">
             <img
               src={slot10 ? emptyPlant : lettuce}
               onClick={() => setClicked(!clicked)}
             />
-            {clicked ? (
+            
               <div className="lettuce-info">
-                <h6 style={{ fontWeight: 600, color: "red" }}> Removed </h6>
+                <h6 style={{ fontWeight: 600,}}> Slot: 10 </h6>
               </div>
-            ) : (
-              " "
-            )}
+          
           </div>
         </Col>
       </Row>
