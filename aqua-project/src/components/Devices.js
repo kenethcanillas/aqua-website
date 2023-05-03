@@ -264,10 +264,10 @@ function Devices() {
                         />
                         <span class="slider round" />
                       </label>
-                        <a style={{cursor:"pointer"}}>
+                        {/* <a style={{cursor:"pointer"}}>
                           <Icon icon="material-symbols:video-camera-back-rounded" className="mx-2" width="24px" height="24px" /> 
                           Camera
-                          </a>
+                          </a> */}
                       </td>
                   </tr>
                   <tr>
@@ -281,10 +281,10 @@ function Devices() {
                         />
                         <span class="slider round" />
                       </label>
-                      <a style={{cursor:"pointer"}}>
+                      {/* <a style={{cursor:"pointer"}}>
                           <Icon icon="material-symbols:video-camera-back-rounded" className="mx-2" width="24px" height="24px" /> 
                           Camera
-                      </a>                    
+                      </a>                     */}
                     </td>
                   </tr>
                 </tbody>
@@ -333,10 +333,10 @@ function Devices() {
                         />
                         <span class="slider round" />
                       </label>
-                      <a style={{cursor:"pointer"}}>
+                      {/* <a style={{cursor:"pointer"}}>
                           <Icon icon="material-symbols:video-camera-back-rounded" className="mx-2" width="24px" height="24px" /> 
                           Camera
-                      </a>
+                      </a> */}
                     </td>
                   </tr>
                   <tr>
@@ -350,10 +350,10 @@ function Devices() {
                         />
                         <span class="slider round" />
                       </label>
-                      <a style={{cursor:"pointer"}}>
+                      {/* <a style={{cursor:"pointer"}}>
                           <Icon icon="material-symbols:video-camera-back-rounded" className="mx-2" width="24px" height="24px" /> 
                            Camera
-                      </a>
+                      </a> */}
                     </td>
                   </tr>
                 </tbody>

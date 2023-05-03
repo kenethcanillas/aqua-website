@@ -757,7 +757,7 @@ function Header() {
           </li>
           <li>
             <NavLink to="/plants" ClassName="active-link">
-              Plants
+              Plant Slots
             </NavLink>
           </li>
         </ul>
@@ -876,7 +876,12 @@ function Header() {
             </li>
             <li>
               <NavLink to="/devicespage" ClassName="active-link">
-                Devices
+                Devices & Pumps
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/plants" ClassName="active-link">
+                Plant Spots
               </NavLink>
             </li>
           </ul>
