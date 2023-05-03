@@ -24,6 +24,7 @@ return(
             <Col lg={12} className='mt-4'>
                 <Routes>
                     {/* <Route path="/" element ={<Homepage/>} /> */}
+                    <Route path="*" element={<Homepage/>}></Route>
                     <Route path="/home" element={<Homepage/>}></Route>
                     <Route path="/infographics" element={<Instructions/>}></Route>
                     <Route path="/" element={<Login/>}></Route>

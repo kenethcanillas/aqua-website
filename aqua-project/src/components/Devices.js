@@ -23,7 +23,6 @@ function Devices() {
   const [waterCheck, setIsChecked3] = useState(false);
   const [airCheck, setIsChecked4] = useState(false);
 
-
   const glowLightBtn = (event) => {
     event.preventDefault();
 
@@ -102,22 +101,23 @@ function Devices() {
       });
     }
   };
-
+  
   useEffect(() => {
     onSnapshot(doc(db, "scheduler", "grow_light"), (data) => {
       setIsChecked1(data.data().switch);
+      let text = data.data().switch ? "ON" : "OFF";
     });
     onSnapshot(doc(db, "scheduler", "cooling_fan"), (data) => {
       setIsChecked2(data.data().switch);
     });
     onSnapshot(doc(db, "scheduler", "water_pump"), (data) => {
-      setIsChecked3(data.data().switch)
+      setIsChecked3(data.data().switch);
     });
     onSnapshot(doc(db, "scheduler", "air_pump"), (data) => {
-      setIsChecked4(data.data().switch)
+      setIsChecked4(data.data().switch);
     });
   });
-  
+
   const waterPumpBtn = (event) => {
     event.preventDefault();
     if (waterCheck) {
@@ -218,7 +218,7 @@ function Devices() {
                     icon="fa6-solid:lightbulb"
                     width="72"
                     height="72"
-                    style={{ color: glowLightCheck ? "white" : "black"}}
+                    style={{ color: glowLightCheck ? "white" : "black" }}
                   />
                 }
                 {
@@ -230,7 +230,7 @@ function Devices() {
                       animation: coolingFanCheck
                         ? "rotation 2s infinite linear"
                         : "none",
-                      color: coolingFanCheck ? "white" : "black"
+                      color: coolingFanCheck ? "white" : "black",
                     }}
                   />
                 }
@@ -246,16 +246,18 @@ function Devices() {
             </div>
             <div class="temperature-data">
               <Table bordered>
-                <thead >
+                <thead>
                   <tr>
-                    <th className="title-column" colSpan="2">Devices Controls</th>
+                    <th className="title-column" colSpan="2">
+                      Devices Controls
+                    </th>
                     <th className="title-status">Status</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td colSpan="2">Glow Light</td>
-                    <td className="devices-control"> 
+                    <td className="devices-control">
                       <label class="switch">
                         <input
                           type="checkbox"
@@ -264,11 +266,16 @@ function Devices() {
                         />
                         <span class="slider round" />
                       </label>
-                        <a style={{cursor:"pointer"}}>
-                          <Icon icon="material-symbols:video-camera-back-rounded" className="mx-2" width="24px" height="24px" /> 
-                          Camera
-                          </a>
-                      </td>
+                      <a style={{ cursor: "pointer" }}>
+                        <Icon
+                          icon="material-symbols:video-camera-back-rounded"
+                          className="mx-2"
+                          width="24px"
+                          height="24px"
+                        />
+                        Camera
+                      </a>
+                    </td>
                   </tr>
                   <tr>
                     <td colSpan="2">Cooling Fan</td>
@@ -281,10 +288,15 @@ function Devices() {
                         />
                         <span class="slider round" />
                       </label>
-                      <a style={{cursor:"pointer"}}>
-                          <Icon icon="material-symbols:video-camera-back-rounded" className="mx-2" width="24px" height="24px" /> 
-                          Camera
-                      </a>                    
+                      <a style={{ cursor: "pointer" }}>
+                        <Icon
+                          icon="material-symbols:video-camera-back-rounded"
+                          className="mx-2"
+                          width="24px"
+                          height="24px"
+                        />
+                        Camera
+                      </a>
                     </td>
                   </tr>
                 </tbody>
@@ -296,13 +308,22 @@ function Devices() {
             <div class="pump-display">
               <h3>Pumps</h3>
               <div className="device-icon">
-                {<Icon icon="mdi:water-pump" width="72" height="72" 
-                        style={{ color: waterCheck ? "white" : "black"}}
-                                    />}
-                {<Icon icon="mdi:pump" width="72" height="72" 
-                        style={{ color: airCheck ? "white" : "black"}}
- 
-                />}
+                {
+                  <Icon
+                    icon="mdi:water-pump"
+                    width="72"
+                    height="72"
+                    style={{ color: waterCheck ? "white" : "black" }}
+                  />
+                }
+                {
+                  <Icon
+                    icon="mdi:pump"
+                    width="72"
+                    height="72"
+                    style={{ color: airCheck ? "white" : "black" }}
+                  />
+                }
               </div>
               <div className="device-text">
                 <p>
@@ -317,7 +338,9 @@ function Devices() {
               <Table bordered>
                 <thead>
                   <tr>
-                    <th className="title-column" colSpan="2">Pumps</th>
+                    <th className="title-column" colSpan="2">
+                      Pumps
+                    </th>
                     <th className="title-status">Status</th>
                   </tr>
                 </thead>
@@ -333,9 +356,14 @@ function Devices() {
                         />
                         <span class="slider round" />
                       </label>
-                      <a style={{cursor:"pointer"}}>
-                          <Icon icon="material-symbols:video-camera-back-rounded" className="mx-2" width="24px" height="24px" /> 
-                          Camera
+                      <a style={{ cursor: "pointer" }}>
+                        <Icon
+                          icon="material-symbols:video-camera-back-rounded"
+                          className="mx-2"
+                          width="24px"
+                          height="24px"
+                        />
+                        Camera
                       </a>
                     </td>
                   </tr>
@@ -350,9 +378,14 @@ function Devices() {
                         />
                         <span class="slider round" />
                       </label>
-                      <a style={{cursor:"pointer"}}>
-                          <Icon icon="material-symbols:video-camera-back-rounded" className="mx-2" width="24px" height="24px" /> 
-                           Camera
+                      <a style={{ cursor: "pointer" }}>
+                        <Icon
+                          icon="material-symbols:video-camera-back-rounded"
+                          className="mx-2"
+                          width="24px"
+                          height="24px"
+                        />
+                        Camera
                       </a>
                     </td>
                   </tr>

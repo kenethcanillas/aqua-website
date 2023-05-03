@@ -3,7 +3,7 @@ import Logo from "../img/aquaLogo.png";
 
 import { Icon } from "@iconify/react";
 import React, { useState, useEffect, useRef } from "react";
-import { NavLink, Navigate } from "react-router-dom";
+import { NavLink, Navigate, json } from "react-router-dom";
 
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
@@ -13,7 +13,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import { useAuth } from "../context/AuthContext";
-import { app } from "../firebase";
+import { app, db } from "../firebase";
 import { getFunctions, httpsCallable } from "firebase/functions";
 import Swal from "sweetalert2";
 import { Stack, capitalize } from "@mui/material";
@@ -23,10 +23,21 @@ import useRunOnce from "../utility/useRunOnce";
 // import UserLog from "../adminmodal/UserLog";
 import { Table } from "react-bootstrap";
 import lodash, { result } from "lodash";
-
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  limit,
+  onSnapshot,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
+import moment from "moment/moment";
 
 function Header() {
-  const { logout, verifyEmail, resetPassword } = useAuth();
+  const { logout, verifyEmail, resetPassword, currentUser } = useAuth();
 
   const [userInfo, setUserInfo] = useState({});
   const functions = getFunctions(app, "asia-southeast1");
@@ -51,6 +62,10 @@ function Header() {
     });
   }, []);
   const signOut = () => {
+    const washingtonRef = doc(db, "users", currentUser.uid);
+    updateDoc(washingtonRef, {
+      isLogin: false,
+    });
     logout();
     CMbtnClose();
     <Navigate to="/" />;
@@ -190,7 +205,7 @@ function Header() {
     }
 
     updateUsers(data).then(() => {
-      setManageModalShow(false)
+      setManageModalShow(false);
       return Swal.fire({
         position: "center",
         icon: "success",
@@ -199,6 +214,280 @@ function Header() {
         timer: 1500,
       });
     });
+  };
+
+  /* Notification */
+
+  // let data = JSON.parse(localStorage.getItem("notif")) || []
+  // data.push({name:"Cooling Fan", switch: false})
+  // localStorage.setItem("notif", JSON.stringify(data))
+  const q = query(
+    collection(db, "scheduler"),
+    where("name", "==", "Cooling Fan")
+  );
+  const b = query(
+    collection(db, "scheduler"),
+    where("name", "==", "Grow Light")
+  );
+  const a = query(collection(db, "scheduler"), where("name", "==", "Air Pump"));
+  const c = query(
+    collection(db, "scheduler"),
+    where("name", "==", "Water Pump")
+  );
+
+  // let data = JSON.parse(localStorage.getItem("notif")) || [];
+  const [newNotif, setNewNotif] = useState(false);
+  const [notif, setNotif] = useState([]);
+  useEffect(() => {
+    onSnapshot(q, (snapshot) => {
+      snapshot.docChanges().forEach((change) => {
+        if (change.type === "modified") {
+          let data = {
+            name: change.doc.data().name,
+            switch: change.doc.data().switch,
+            date: new Date().toLocaleString(),
+          };
+          setNotif([data, ...notif]);
+          setNewNotif(true);
+        }
+      });
+    });
+
+    onSnapshot(b, (snapshot) => {
+      snapshot.docChanges().forEach((change) => {
+        if (change.type === "modified") {
+          let data = {
+            name: change.doc.data().name,
+            switch: change.doc.data().switch,
+            date: new Date().toLocaleString(),
+          };
+          setNotif([data, ...notif]);
+          setNewNotif(true);
+        }
+      });
+    });
+    onSnapshot(a, (snapshot) => {
+      snapshot.docChanges().forEach((change) => {
+        if (change.type === "modified") {
+          let data = {
+            name: change.doc.data().name,
+            switch: change.doc.data().switch,
+            date: new Date().toLocaleString(),
+          };
+          setNotif([data, ...notif]);
+          setNewNotif(true);
+        }
+      });
+    });
+    onSnapshot(c, (snapshot) => {
+      snapshot.docChanges().forEach((change) => {
+        if (change.type === "modified") {
+          let data = {
+            name: change.doc.data().name,
+            switch: change.doc.data().switch,
+            date: new Date().toLocaleString(),
+          };
+          setNotif([data, ...notif]);
+          setNewNotif(true);
+        }
+      });
+    });
+
+    onSnapshot(
+      query(collection(db, "combo_box"), where("name", "==", "Slot 1")),
+      (snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+          if (change.type === "modified") {
+            let data = {
+              name: change.doc.data().name,
+              switch: change.doc.data().value,
+              date: new Date().toLocaleString(),
+            };
+            setNotif([data, ...notif]);
+            setNewNotif(true);
+          }
+        });
+      }
+    );
+    onSnapshot(
+      query(collection(db, "combo_box"), where("name", "==", "Slot 2")),
+      (snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+          if (change.type === "modified") {
+            let data = {
+              name: change.doc.data().name,
+              switch: change.doc.data().value,
+              date: new Date().toLocaleString(),
+            };
+            setNotif([data, ...notif]);
+            setNewNotif(true);
+          }
+        });
+      }
+    );
+    onSnapshot(
+      query(collection(db, "combo_box"), where("name", "==", "Slot 3")),
+      (snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+          if (change.type === "modified") {
+            let data = {
+              name: change.doc.data().name,
+              switch: change.doc.data().value,
+              date: new Date().toLocaleString(),
+            };
+            setNotif([data, ...notif]);
+            setNewNotif(true);
+          }
+        });
+      }
+    );
+    onSnapshot(
+      query(collection(db, "combo_box"), where("name", "==", "Slot 4")),
+      (snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+          if (change.type === "modified") {
+            let data = {
+              name: change.doc.data().name,
+              switch: change.doc.data().value,
+              date: new Date().toLocaleString(),
+            };
+            setNotif([data, ...notif]);
+            setNewNotif(true);
+          }
+        });
+      }
+    );
+    onSnapshot(
+      query(collection(db, "combo_box"), where("name", "==", "Slot 5")),
+      (snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+          if (change.type === "modified") {
+            let data = {
+              name: change.doc.data().name,
+              switch: change.doc.data().value,
+              date: new Date().toLocaleString(),
+            };
+            setNotif([data, ...notif]);
+            setNewNotif(true);
+          }
+        });
+      }
+    );
+    onSnapshot(
+      query(collection(db, "combo_box"), where("name", "==", "Slot 6")),
+      (snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+          if (change.type === "modified") {
+            let data = {
+              name: change.doc.data().name,
+              switch: change.doc.data().value,
+              date: new Date().toLocaleString(),
+            };
+            setNotif([data, ...notif]);
+            setNewNotif(true);
+          }
+        });
+      }
+    );
+    onSnapshot(
+      query(collection(db, "combo_box"), where("name", "==", "Slot 7")),
+      (snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+          if (change.type === "modified") {
+            let data = {
+              name: change.doc.data().name,
+              switch: change.doc.data().value,
+              date: new Date().toLocaleString(),
+            };
+            setNotif([data, ...notif]);
+            setNewNotif(true);
+          }
+        });
+      }
+    );
+    onSnapshot(
+      query(collection(db, "combo_box"), where("name", "==", "Slot 8")),
+      (snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+          if (change.type === "modified") {
+            let data = {
+              name: change.doc.data().name,
+              switch: change.doc.data().value,
+              date: new Date().toLocaleString(),
+            };
+            setNotif([data, ...notif]);
+            setNewNotif(true);
+          }
+        });
+      }
+    );
+    onSnapshot(
+      query(collection(db, "combo_box"), where("name", "==", "Slot 9")),
+      (snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+          if (change.type === "modified") {
+            let data = {
+              name: change.doc.data().name,
+              switch: change.doc.data().value,
+              date: new Date().toLocaleString(),
+            };
+            setNotif([data, ...notif]);
+            setNewNotif(true);
+          }
+        });
+      }
+    );
+    onSnapshot(
+      query(collection(db, "combo_box"), where("name", "==", "Slot 10")),
+      (snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+          if (change.type === "modified") {
+            let data = {
+              name: change.doc.data().name,
+              switch: change.doc.data().value,
+              date: new Date().toLocaleString(),
+            };
+            setNotif([data, ...notif]);
+            setNewNotif(true);
+          }
+        });
+      }
+    );
+    onSnapshot(
+      query(collection(db, "combo_box"), where("name", "==", "Slot 1")),
+      (snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+          if (change.type === "modified") {
+            let data = {
+              name: change.doc.data().name,
+              switch: change.doc.data().value,
+              date: new Date().toLocaleString(),
+            };
+            setNotif([data, ...notif]);
+            setNewNotif(true);
+          }
+        });
+      }
+    );
+  }, [notif]);
+
+  const showtext = (name, switchs) => {
+    if (
+      name == "Cooling Fan" ||
+      name == "Grow Light" ||
+      name == "Air Pump" ||
+      name == "Water Pump"
+    ) {
+      let status = switchs ? "ON" : "OFF"
+      return name + " is Now " + status;
+    } else {
+      if (switchs) {
+        return "The plant in "+ name + " is Removed";
+      }
+    }
+  };
+  const closeNotif = () => {
+    setNewNotif(false);
   };
 
   /* PROFILE MODAL -------------------------> */
@@ -373,8 +662,6 @@ function Header() {
 
   const [EditProfileModalShow, setEditProfileModalShow] = React.useState(false);
 
-
-
   // SIGN OUT USESTATE
 
   const [closeModal, CMsetShow] = useState(false);
@@ -488,7 +775,6 @@ function Header() {
 
   return (
     <>
-  
       <ProfileModal
         show={ProfileModalShow}
         onHide={() => setProfileModalShow(false)}
@@ -505,11 +791,7 @@ function Header() {
         editUser={editUser}
         updateUser={updateUser}
       />
-      <AddMember 
-        show={AddMemberShow} 
-        onHide={() => setAddMemberShow(false)} 
-        
-        />
+      <AddMember show={AddMemberShow} onHide={() => setAddMemberShow(false)} />
 
       <>
         <Modal
@@ -763,29 +1045,54 @@ function Header() {
         </ul>
         <div className="d-flex">
           <Dropdown className="notif mx-2">
-          <Dropdown.Toggle
+            <Dropdown.Toggle
               id="dropdown-basic"
               variant="light"
               className="notif-btn"
             >
-              {<Icon icon="clarity:notification-solid" width="30" height="30" style={{position:"relative"}}/>}
-              <div className="notif-color"/>    
-          </Dropdown.Toggle> 
-            
-            <Dropdown.Menu className="notif-container scrollable-menu" style={{ maxHeight: '400px'}}>
-                <div className="notif-title p-4">
-                  <h5>Notification </h5>
-                  <a style={{color:"blue",cursor:"pointer"}}> Mark All as read </a>
-                </div>
-                    <Dropdown.Item className="notif-item px-4 py-2">
-                      <div className="notif-header d-flex">
-                        <p style={{fontWeight:'600'}}>Switch Notice</p>       
-                        <p className="time">2 mins ago...</p>
-                      </div>
-                        <p >Turn ON the Cooling Fan Switch</p>
-                    </Dropdown.Item>
+              {
+                <Icon
+                  icon="clarity:notification-solid"
+                  width="30"
+                  height="30"
+                  style={{ position: "relative" }}
+                  onClick={closeNotif}
+                />
+              }
+              {newNotif ? <div className="notif-color" /> : ""}
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu
+              className="notif-container scrollable-menu"
+              style={{ maxHeight: "400px" }}
+            >
+              <div className="notif-title p-4">
+                <h5>Notification </h5>
+                <a style={{ color: "blue", cursor: "pointer" }}>
+                  {" "}
+                  Mark All as read{" "}
+                </a>
+              </div>
+
+              <Dropdown.Item className="notif-item px-4 py-2">
+                {notif != "" ? notif.map((result) => (
+                  <>
+                    <div className="notif-header d-flex">
+                      <p style={{ fontWeight: "600" }}>Switch Notice</p>
+                      <p className="time">{moment(result.date).fromNow()}</p>
+                    </div>
+                    <div style={{ borderBottom: "solid 2px" }}>
+                      <p>{showtext(result.name, result.switch)}</p>
+                    </div>
+                  </>
+                )):
+                <div style={{ borderBottom: "solid 2px", display:"flex", justifyContent:"center",marginTop:"10px" }}>
+                  <p>No Notification Yet!</p>
+                  </div>
+                }
+              </Dropdown.Item>
             </Dropdown.Menu>
-          </Dropdown>                
+          </Dropdown>
           <Dropdown className="nav-buttons">
             <Dropdown.ItemText className="name px-2">
               <>{userInfo.name ? userInfo.name.toUpperCase() : ""}</>
@@ -853,7 +1160,7 @@ function Header() {
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
-          </div>
+        </div>
       </div>
 
       {open && (

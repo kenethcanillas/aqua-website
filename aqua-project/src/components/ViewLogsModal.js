@@ -10,7 +10,7 @@ import { isEqual, result } from "lodash";
 
 function ViewLogsModal(props) {
   const functions = getFunctions(app, "asia-southeast1");
-  const getSensorLogs = httpsCallable(functions, "getAllUserLogs");
+  // const getSensorLogs = httpsCallable(functions, "getAllUserLogs");
   const [selectedSensor, setSelectedSensor] = useState("Select Device or Pump");
   const [logList, setLogList] = useState([]);
   const [searchLogs, setSearchLogs] = useState();
@@ -33,7 +33,7 @@ function ViewLogsModal(props) {
   };
 
   useEffect(() => {
-    getSensorLogs(objec).then((result) => setLogList(result.data));
+    // getSensorLogs(objec).then((result) => setLogList(result.data));
   }, [objec]);
 
 

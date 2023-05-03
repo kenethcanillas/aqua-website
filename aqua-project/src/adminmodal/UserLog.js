@@ -18,13 +18,13 @@ function UserLog(props) {
   const [searchLogs, setSearchLogs] = useState({});
 
   useEffect(() => {
-    getSensorLogs().then((result) => setLogList(result.data));
+    // getSensorLogs().then((result) => setLogList(result.data));
   }, []);
-  useEffect(() => {
-    getSensorLogs({ keyword: searchLogs }).then((result) =>
-      setLogList(result.data)
-    );
-  }, [searchLogs]);
+  // useEffect(() => {
+  //   // getSensorLogs({ keyword: searchLogs }).then((result) =>
+  //     setLogList(result.data)
+  //   );
+  // }, [searchLogs]);
 
   const searchFunc = (event) => {
     setSearchLogs(capitalize(event.target.value));

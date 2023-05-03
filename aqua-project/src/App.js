@@ -23,12 +23,15 @@ import SideView from "./components/SideView";
 import LoginHeader from "./Homepage/LoginHeader";
 import Login from "./Homepage/Login";
 import { useAuth } from "./context/AuthContext";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 
 import RoutesHome from "./Homepage/RoutesHome";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "./firebase";
 
 function App() {
   const { currentUser } = useAuth();
+
   return (
     <>
       {currentUser ? (
@@ -42,8 +45,12 @@ function App() {
                 </Col>
                 <Col xxl={9} xl={9} lg={9} md={9} sm={12} xs={12}>
                   <Routes>
+                    <Route path="*" element={<GreenHousePages />} />
                     <Route path="/" element={<GreenHousePages />} />
-                    <Route path="/waterconditionpage" Component={WaterConditionPages}/>
+                    <Route
+                      path="/waterconditionpage"
+                      Component={WaterConditionPages}
+                    />
                     <Route path="/waterlevelpage" Component={WaterLevelPage} />
                     <Route path="/devicespage" Component={DevicesPage} />
                     <Route path="/plants" Component={Plants} />
@@ -55,7 +62,7 @@ function App() {
         </Router>
       ) : (
         <Router>
-          <RoutesHome  />
+          <RoutesHome />
         </Router>
       )}
     </>
