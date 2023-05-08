@@ -23,27 +23,27 @@ function SideView() {
 
   const [openMeteo, setOpenMeteoState] = useState({});
 
-  const [latitude, setLatitude] = useState(null);
-  const [longitude, setLongitude] = useState(null);
+  // const [latitude, setLatitude] = useState(null);
+  // const [longitude, setLongitude] = useState(null);
 
-  const [cordinatesName, setCordinatesName] = useState({});
+  // const [cordinatesName, setCordinatesName] = useState({});
+
+  // useEffect(() => {
+  //   if ("geolocation" in navigator) {
+  //     navigator.geolocation.getCurrentPosition(function (position) {
+  //       const { latitude, longitude } = position.coords;
+  //       setLatitude(latitude);
+  //       setLongitude(longitude);
+  //     });
+  //   } else {
+  //     console.log("Geolocation is not supported by your browser");
+  //   }
+  // }, []);
 
   useEffect(() => {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(function (position) {
-        const { latitude, longitude } = position.coords;
-        setLatitude(latitude);
-        setLongitude(longitude);
-      });
-    } else {
-      console.log("Geolocation is not supported by your browser");
-    }
-  }, []);
-
-  useEffect(() => {
-    if (latitude && longitude) {
+    // if (latitude && longitude) {
       fetch(
-        `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,weathercode&current_weather=true`
+        `https://api.open-meteo.com/v1/forecast?latitude=14.70&longitude=121.03&hourly=temperature_2m,weathercode&current_weather=true`
       )
         .then((response) => response.json())
         .then((data) => {
@@ -54,25 +54,27 @@ function SideView() {
           });
         })
         .catch((error) => console.error(error));
-    }
-  }, [latitude, longitude]);
+    },[]);
+  // }, [latitude, longitude]);
 
-  useEffect(() => {
-    if (latitude && longitude) {
-      fetch(
-        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          // console.log(data);
-          setCordinatesName({
-            cityname: data.address.city,
-            countryname: data.address.country,
-          });
-        })
-        .catch((error) => console.error(error));
-    }
-  }, [latitude, longitude]);
+  // useEffect(() => {
+  //   if (latitude && longitude) {
+  //     fetch(
+  //       // `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+  //       // `https://nominatim.openstreetmap.org/reverse?format=json&lat=14.70&lon=121.03`
+
+  //     )
+  //       .then((response) => response.json())
+  //       .then((data) => {
+  //         // console.log(data);
+  //         setCordinatesName({
+  //           cityname: data.address.city,
+  //           countryname: data.address.country,
+  //         });
+  //       })
+  //       .catch((error) => console.error(error));
+  //   }
+  // }, [latitude, longitude]);
 
   // const weatherCategory = getWeatherCategory(openMeteo.code);
 
@@ -153,8 +155,9 @@ return (
               <span className="output">{weatherCategory}</span>
             </div>
             <p className="place">
-              {cordinatesName.cityname},{" "}
-              <span>{cordinatesName.countryname}</span>
+              {/* {cordinatesName.cityname},{" "}
+              <span>{cordinatesName.countryname}</span> */}
+              Quezon City,<span>  Philippines</span>
             </p>
           </div>
         </div>

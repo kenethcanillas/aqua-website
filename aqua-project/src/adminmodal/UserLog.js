@@ -1,9 +1,8 @@
 // import Header from "../components/Header";
 
-// import { Icon } from "@iconify/react";
-// import { Table } from "react-bootstrap";
+import { Icon } from "@iconify/react";
+import { Table } from "react-bootstrap";
 
-<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import { Modal, Button, InputGroup, FormControl } from "react-bootstrap";
 import { getFunctions, httpsCallable } from "firebase/functions";
@@ -15,24 +14,25 @@ function UserLog(props) {
   const getSensorLogs = httpsCallable(functions, "getAllUserLogs");
 
   const [logList, setLogList] = useState([]);
-  const [searchLogs, setSearchLogs] = useState({});
+  const [searchLogs, setSearchLogs] = useState("");
 
   useEffect(() => {
-    // getSensorLogs().then((result) => setLogList(result.data));
+    getSensorLogs().then((result) => setLogList(result.data));
   }, []);
-  // useEffect(() => {
-  //   // getSensorLogs({ keyword: searchLogs }).then((result) =>
-  //     setLogList(result.data)
-  //   );
-  // }, [searchLogs]);
+
+  useEffect(() => {
+    getSensorLogs({ keyword: searchLogs }).then((result) =>
+      setLogList(result.data)
+    );
+  }, [searchLogs]);
 
   const searchFunc = (event) => {
     setSearchLogs(capitalize(event.target.value));
   };
-
+console.log(props)
   return (
     <>
-      <Modal show={props.show} onHide={props.onHideBtn} size="lg" centered>
+      <Modal show={props.show} onHide={props.onHide} size="lg" centered>
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
             <span className="px-2">
@@ -86,13 +86,3 @@ function UserLog(props) {
   );
 }
 export default UserLog;
-=======
-// import React, { useState, useEffect } from "react";
-// import { Modal, Button, InputGroup, FormControl } from "react-bootstrap";
-
-// function UserLog(props){
-//     return(
-   
-//     )    
-// }export default UserLog;
->>>>>>> f3e1d78409b76cf66c6acfb3532f29391019d884

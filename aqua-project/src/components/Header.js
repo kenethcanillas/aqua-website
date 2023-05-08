@@ -35,6 +35,7 @@ import {
   where,
 } from "firebase/firestore";
 import moment from "moment/moment";
+import UserLog from "../adminmodal/UserLog";
 
 function Header() {
   const { logout, verifyEmail, resetPassword, currentUser } = useAuth();
@@ -503,6 +504,26 @@ function Header() {
   
   }
 
+  // userlogs
+  const getSensorLogs = httpsCallable(functions, "getAllUserLogs");
+
+  const [logList, setLogList] = useState([]);
+  const [searchLogs, setSearchLogs] = useState("");
+
+  useEffect(() => {
+    getSensorLogs().then((result) => setLogList(result.data));
+  }, []);
+
+  useEffect(() => {
+    getSensorLogs({ keyword: searchLogs }).then((result) =>
+      setLogList(result.data)
+    );
+  }, [searchLogs]);
+
+  const searchFunc = (event) => {
+    setSearchLogs(capitalize(event.target.value));
+  };
+
   /* PROFILE MODAL -------------------------> */
 
   function ProfileModal(props) {
@@ -773,9 +794,9 @@ function Header() {
             onClick={userLogShow}
           >
             {/* <UserLog
-              show={userLog}
-              onHideBtn={() => setUserLog(false)}
-            ></UserLog> */}
+              show={userLogModal}
+              onHide={userLogClose}
+            /> */}
 
             <span className="px-2">
               {<Icon icon="octicon:log-16" width="24" height="24" />} User Log
@@ -914,7 +935,7 @@ function Header() {
           </Modal.Header>
           <Modal.Body>
             <div className="search-con">
-              <input type="text" placeholder="Search" />
+              <input type="text" placeholder="Search" onChange={searchFunc}/>
               <Button type="submit" className="btn">
                 <Icon
                   icon="material-symbols:search-rounded"
@@ -930,20 +951,20 @@ function Header() {
             >
               <Table bordered hover className="userlog-tbl">
                 <thead className="p-2">
-                  <tr>
-                    <th>Email</th>
-                    <th>Date</th>
-                    <th>Date</th>
-                    <th>Activity</th>
-                  </tr>
+                <tr>
+                  <th>Email</th>
+                  <th>Date</th>
+                  <th>Activity</th>
+                </tr>
                 </thead>
                 <tbody>
+                {logList.map((data) => (
                   <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>{data.email}</td>
+                    <td>{data.datetime}</td>
+                    <td>{data.activity}</td>
                   </tr>
+                ))}
                 </tbody>
               </Table>
             </div>

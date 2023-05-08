@@ -248,16 +248,16 @@ function Devices() {
               <Table bordered>
                 <thead>
                   <tr>
-                    <th className="title-column" colSpan="2">
+                    <th className="title-column">
                       Devices Controls
                     </th>
-                    <th className="title-status">Status</th>
+                    <th className="title-status" colSpan="2">Status</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td colSpan="2">Glow Light</td>
-                    <td className="devices-control">
+                    <td >Glow Light</td>
+                    <td colSpan="2" className="devices-control">
                       <label class="switch">
                         <input
                           type="checkbox"
@@ -266,15 +266,16 @@ function Devices() {
                         />
                         <span class="slider round" />
                       </label>
-                        {/* <a style={{cursor:"pointer"}}>
+                      <span>Allow User: <Icon icon="mdi:user-block" width="32" height="32" /> </span>
+                                           {/* <a style={{cursor:"pointer"}}>
                           <Icon icon="material-symbols:video-camera-back-rounded" className="mx-2" width="24px" height="24px" /> 
                           Camera
                           </a> */}
                       </td>
                   </tr>
                   <tr>
-                    <td colSpan="2">Cooling Fan</td>
-                    <td className="devices-control">
+                    <td>Cooling Fan</td>
+                    <td className="devices-control" colSpan="2">
                       <label class="switch">
                         <input
                           type="checkbox"
@@ -283,6 +284,8 @@ function Devices() {
                         />
                         <span class="slider round" />
                       </label>
+                      <span>Allow User: <Icon icon="mdi:user-block" width="32" height="32" /> </span>
+
                       {/* <a style={{cursor:"pointer"}}>
                           <Icon icon="material-symbols:video-camera-back-rounded" className="mx-2" width="24px" height="24px" /> 
                           Camera
@@ -346,6 +349,8 @@ function Devices() {
                         />
                         <span class="slider round" />
                       </label>
+                      <span>Allow User: <Icon icon="mdi:user-check" width="32" height="32" /> </span>
+
                       {/* <a style={{cursor:"pointer"}}>
                           <Icon icon="material-symbols:video-camera-back-rounded" className="mx-2" width="24px" height="24px" /> 
                           Camera
@@ -363,6 +368,8 @@ function Devices() {
                         />
                         <span class="slider round" />
                       </label>
+                      <span>Allow User: <Icon icon="mdi:user-check" width="32" height="32" /> </span>
+
                       {/* <a style={{cursor:"pointer"}}>
                           <Icon icon="material-symbols:video-camera-back-rounded" className="mx-2" width="24px" height="24px" /> 
                            Camera
