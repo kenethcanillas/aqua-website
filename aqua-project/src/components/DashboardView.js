@@ -91,7 +91,7 @@ function DashboardView() {
   //   });
   // };
   const getTemp = (pageIndex = 0) => {
-    setLoading(true)
+    setLoading(true);
     getAllSensorData({
       collectionName: "temperature",
       pageIndex,
@@ -104,12 +104,12 @@ function DashboardView() {
           datetime: toDateTime(temperature.datetime._seconds),
         }))
       );
-      setLoading(false)
+      setLoading(false);
       setPageCount(result.data.count / limitData);
     });
   };
   const getHum = (pageIndex = 0) => {
-    setLightLoad(true)
+    setLightLoad(true);
     getAllSensorData({
       collectionName: "humidity",
       pageIndex,
@@ -121,7 +121,7 @@ function DashboardView() {
           datetime: toDateTime(humidity.datetime._seconds),
         }))
       );
-      setLightLoad(false)
+      setLightLoad(false);
       setHumPageCounts(result.data.count / limitData);
     });
   };
@@ -210,16 +210,10 @@ function DashboardView() {
           <td>{data.datetime}</td>
           <td>
             {data.value}{" "}
-            {
-              <Icon
-                icon="tabler:temperature-celsius"
-                width="16"
-                height="16"
-              />
-            }
+            {<Icon icon="tabler:temperature-celsius" width="16" height="16" />}
           </td>
         </tr>
-      ))
+      ));
     }
   };
   const checkLoadLight = () => {
@@ -241,10 +235,10 @@ function DashboardView() {
           <td>
             {data.value}{" "}
             <Icon
-                  icon="material-symbols:percent-rounded"
-                  width="16"
-                  height="16"
-                />  
+              icon="material-symbols:percent-rounded"
+              width="16"
+              height="16"
+            />
           </td>
         </tr>
       ));
@@ -345,6 +339,13 @@ function DashboardView() {
   /**REPORT MODAL*/
 
   const [ReportModalShow, setReportModalShow] = useState(false);
+  const changecolor = (data) => {
+    if (data < 20 || data > 80) {
+      return "#ff0000";
+    } else {
+      return "#059142";
+    }
+  };
 
   return (
     <>
@@ -373,7 +374,7 @@ function DashboardView() {
           <div class="temperature-container">
             <div class="temperature-display">
               <h3>Temperature</h3>
-              <h2>
+              <h2 style={{ color: changecolor(tempData.value) }}>
                 {Object.keys(tempData).length !== 0 ? tempData.value + "" : ""}{" "}
                 <Icon
                   icon="tabler:temperature-celsius"
@@ -433,7 +434,7 @@ function DashboardView() {
           <div class="humidity-container">
             <div class="humidity-display">
               <h3>Humidity</h3>
-              <h2>
+              <h2 style={{ color: changecolor(humData.value)}}>
                 {Object.keys(humData).length !== 0 ? humData.value + "" : ""}
                 <Icon
                   icon="material-symbols:humidity-percentage-outline-rounded"

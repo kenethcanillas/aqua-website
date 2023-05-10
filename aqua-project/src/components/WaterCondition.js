@@ -17,7 +17,6 @@ import AllReport from "./Report/AllReport";
 import { CircularProgress } from "@mui/material";
 
 function WaterCondition() {
-  
   const [loading, setLoading] = useState(false);
   const [lightLoad, setLightLoad] = useState(false);
   const functions = getFunctions(app, "asia-southeast1");
@@ -53,7 +52,7 @@ function WaterCondition() {
     });
   }, []);
   const getPh = (pageIndex = 0) => {
-    setLoading(true)
+    setLoading(true);
     getAllSensorData({
       collectionName: "ph_level",
       pageIndex,
@@ -65,7 +64,7 @@ function WaterCondition() {
           datetime: toDateTime(phLevel.datetime._seconds),
         }))
       );
-      setLoading(false)
+      setLoading(false);
       setPageCount(result.data.count / limitData);
     });
   };
@@ -86,7 +85,7 @@ function WaterCondition() {
     }
   };
   const getEc = (pageIndex = 0) => {
-    setLightLoad(true)
+    setLightLoad(true);
     getAllSensorData({
       collectionName: "ec_level",
       pageIndex,
@@ -98,7 +97,7 @@ function WaterCondition() {
           datetime: toDateTime(ecLevel.datetime._seconds),
         }))
       );
-      setLightLoad(false)
+      setLightLoad(false);
       setEcPageCounts(result.data.count / limitData);
     });
   };
@@ -125,15 +124,12 @@ function WaterCondition() {
     item.id = i + 1;
   });
 
-
-
   /*ECL PAGINATION*/
 
   ecListData.forEach((item, i) => {
     item.id = i + 1;
   });
 
- 
   const [ReportModalShow, setReportModalShow] = useState(false);
   const [searchReport, setSearchReport] = useState("");
   const [selectedSensor, setSelectedSensor] = useState("All");
@@ -164,37 +160,65 @@ function WaterCondition() {
 
   const checkLoad = () => {
     if (loading) {
-      return <tr><td colSpan={3} ><div style={{display:"flex", justifyContent:"center"}}><CircularProgress /></div></td></tr>;
+      return (
+        <tr>
+          <td colSpan={3}>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <CircularProgress />
+            </div>
+          </td>
+        </tr>
+      );
     } else {
       return phListData.map((data) => (
         <tr>
           <td>{data.id}</td>
           <td>{data.datetime}</td>
-          <td>
-            {data.value}{" "}
-          </td>
+          <td>{data.value} </td>
         </tr>
       ));
     }
   };
   const checkLoadLight = () => {
     if (lightLoad) {
-      return <tr><td colSpan={3} ><div style={{display:"flex", justifyContent:"center"}}><CircularProgress /></div></td></tr>;
+      return (
+        <tr>
+          <td colSpan={3}>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <CircularProgress />
+            </div>
+          </td>
+        </tr>
+      );
     } else {
       return ecListData.map((data) => (
         <tr>
           <td>{data.id}</td>
           <td>{data.datetime}</td>
-          <td>
-            {data.value}{" "}
-          </td>
+          <td>{data.value} </td>
         </tr>
       ));
     }
   };
+
+  const changecolorph = (data) => {
+    if (data < 7.0 || data > 7.0) {
+      return "#ff0000";
+    } else {
+      return "#059142";
+    }
+  };
+
+  const changecolorec = (data) => {
+    if (data < 1.0 || data > 2.0) {
+      return "#ff0000";
+    } else {
+      return "#059142";
+    }
+  };
   return (
     <>
-     <ReportModal
+      <ReportModal
         show={ReportModalShow}
         onHide={() => setReportModalShow(false)}
         searchReport={searchReport}
@@ -210,8 +234,10 @@ function WaterCondition() {
             {<Icon icon="icon-park-outline:eyes" width="16" height="16" />} View
             All Data
           </a> */}
-          <a onClick={() => setReportModalShow(true)}
-          style={{cursor: "pointer"}}>
+          <a
+            onClick={() => setReportModalShow(true)}
+            style={{ cursor: "pointer" }}
+          >
             {<Icon icon="fluent-mdl2:report-document" width="16" height="16" />}{" "}
             Reports
           </a>
@@ -220,7 +246,7 @@ function WaterCondition() {
           <div class="temperature-container">
             <div class="temperature-display">
               <h3>PH Level</h3>
-              <h2>
+              <h2 style={{ color: changecolorph(phData.value) }}>
                 {Object.keys(phData).length !== 0 ? phData.value : ""}{" "}
               </h2>
             </div>
@@ -260,7 +286,7 @@ function WaterCondition() {
                         >
                           Next
                         </Pagination.Next>
-{/* 
+                        {/* 
                         <Pagination.Last
                           disabled={PHcurrentPage === PHtotalPages}
                           onClick={() => PHhandlePageChange(PHtotalPages)}
@@ -275,7 +301,7 @@ function WaterCondition() {
           <div class="humidity-container">
             <div class="humidity-display">
               <h3 className="title">Electrical Conductivity Level</h3>
-              <h2>
+              <h2 style={{ color: changecolorec(ecData.value) }}>
                 {Object.keys(ecData).length !== 0 ? ecData.value : ""}
                 <span
                   class="iconify"

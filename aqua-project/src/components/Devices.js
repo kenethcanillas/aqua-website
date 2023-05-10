@@ -6,15 +6,26 @@ import Modal from "react-bootstrap/Modal";
 import Dropdown from "react-bootstrap/Dropdown";
 import { Icon } from "@iconify/react";
 import React, { useEffect, useState } from "react";
-import { collection, query, where, onSnapshot, doc } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  onSnapshot,
+  doc,
+  getDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { app, db } from "../firebase";
 import { getFunctions, httpsCallable } from "firebase/functions";
 import Swal from "sweetalert2";
 
 import ViewLogsModal from "./ViewLogsModal";
 import { Button } from "react-bootstrap";
+import { useAuth } from "../context/AuthContext";
+import { CircularProgress } from "@mui/material";
 
 function Devices() {
+  const { currentUser } = useAuth();
   const functions = getFunctions(app, "asia-southeast1");
   const scheduler = httpsCallable(functions, "scheduler");
   const g = query(collection(db, "scheduler"));
@@ -22,10 +33,10 @@ function Devices() {
   const [coolingFanCheck, setIsChecked2] = useState();
   const [waterCheck, setIsChecked3] = useState(false);
   const [airCheck, setIsChecked4] = useState(false);
-
+  const [glowLoad, setGlowLoad] = useState(false);
   const glowLightBtn = (event) => {
     event.preventDefault();
-
+    setGlowLoad(true);
     if (glowLightCheck) {
       const data = {
         switch: false,
@@ -35,13 +46,16 @@ function Devices() {
         data: data,
       };
       scheduler(objec).then(() => {
-        return Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Glow Light is OFF",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        setTimeout(() => {
+          setGlowLoad(false);
+          return Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Glow Light is OFF",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }, 10000);
       });
     } else {
       const data = {
@@ -52,19 +66,24 @@ function Devices() {
         data: data,
       };
       scheduler(objec).then(() => {
-        return Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Glow Light is ON",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        setTimeout(() => {
+          setGlowLoad(false);
+          return Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Glow Light is ON",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }, 10000);
       });
     }
   };
   //   colling fan on cloick
+  const [coolLoad, setCoolLoad] = useState(false);
   const coolingFanBtn = (event) => {
     event.preventDefault();
+    setCoolLoad(true);
     if (coolingFanCheck) {
       const data = {
         switch: false,
@@ -74,13 +93,16 @@ function Devices() {
         data: data,
       };
       scheduler(objec).then(() => {
-        return Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Cooling Fan is OFF",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        setTimeout(() => {
+          setCoolLoad(false);
+          return Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Cooling Fan is OFF",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }, 10000);
       });
     } else {
       const data = {
@@ -91,21 +113,23 @@ function Devices() {
         data: data,
       };
       scheduler(objec).then(() => {
-        return Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Cooling Fan is ON",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        setTimeout(() => {
+          setCoolLoad(false);
+          return Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Cooling Fan is ON",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }, 10000);
       });
     }
   };
-  
+
   useEffect(() => {
     onSnapshot(doc(db, "scheduler", "grow_light"), (data) => {
       setIsChecked1(data.data().switch);
-      let text = data.data().switch ? "ON" : "OFF";
     });
     onSnapshot(doc(db, "scheduler", "cooling_fan"), (data) => {
       setIsChecked2(data.data().switch);
@@ -116,10 +140,12 @@ function Devices() {
     onSnapshot(doc(db, "scheduler", "air_pump"), (data) => {
       setIsChecked4(data.data().switch);
     });
-  });
+  }, []);
 
+  const [waterLoad, setWaterLoad] = useState(false);
   const waterPumpBtn = (event) => {
     event.preventDefault();
+    setWaterLoad(true);
     if (waterCheck) {
       const data = {
         switch: false,
@@ -129,13 +155,16 @@ function Devices() {
         data: data,
       };
       scheduler(objec).then(() => {
-        return Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Water Pump is OFF",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        setTimeout(() => {
+          setWaterLoad(false);
+          return Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Water Pump is OFF",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }, 10000);
       });
     } else {
       const data = {
@@ -146,18 +175,23 @@ function Devices() {
         data: data,
       };
       scheduler(objec).then(() => {
-        return Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Water Pump is ON",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        setTimeout(() => {
+          setWaterLoad(false);
+          return Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Water Pump is ON",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }, 10000);
       });
     }
   };
+  const [airLoad, setAirLoad] = useState(false);
   const airPumpBtn = (event) => {
     event.preventDefault();
+    setAirLoad(true);
     if (airCheck) {
       const data = {
         switch: false,
@@ -167,13 +201,16 @@ function Devices() {
         data: data,
       };
       scheduler(objec).then(() => {
-        return Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Water Pump is OFF",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        setTimeout(() => {
+          setAirLoad(false);
+          return Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Water Pump is OFF",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }, 10000);
       });
     } else {
       const data = {
@@ -184,18 +221,66 @@ function Devices() {
         data: data,
       };
       scheduler(objec).then(() => {
-        return Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Air Pump is ON",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        setTimeout(() => {
+          setAirLoad(false);
+          return Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Air Pump is ON",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }, 10000);
       });
     }
   };
 
   const [ViewLogShow, setViewLogShow] = React.useState(false);
+  const [userLevel, setUserLevel] = useState();
+  const [deviceStatus, setDeviceStatus] = useState();
+
+  const docRef = doc(db, "users", currentUser.uid);
+  const docSnap = getDoc(docRef);
+  const updateSensorStatus = doc(db, "scheduler", "userLevel");
+
+  useEffect(() => {
+    docSnap.then((data) => {
+      setUserLevel(data.data().userLevel);
+    });
+
+    onSnapshot(doc(db, "scheduler", "userLevel"), (doc) => {
+      setDeviceStatus(doc.data());
+    });
+  }, []);
+  const updateSensorRef = doc(db, "scheduler", "userLevel");
+  useEffect(() => {}, []);
+
+  const allowUserBtn = async (event, sensor, status) => {
+    event.preventDefault();
+    switch (sensor) {
+      case "grow_light":
+        await updateDoc(updateSensorRef, {
+          grow_light: !status,
+        });
+        break;
+      case "cooling_fan":
+        await updateDoc(updateSensorRef, {
+          cooling_fan: !status,
+        });
+        break;
+
+      case "air_pump":
+        await updateDoc(updateSensorRef, {
+          air_pump: !status,
+        });
+        break;
+      case "water_pump":
+        await updateDoc(updateSensorRef, {
+          water_pump: !status,
+        });
+        break;
+    }
+  };
 
   return (
     <>
@@ -248,43 +333,140 @@ function Devices() {
               <Table bordered>
                 <thead>
                   <tr>
-                    <th className="title-column">
-                      Devices Controls
+                    <th className="title-column">Devices Controls</th>
+                    <th className="title-status" colSpan="2">
+                      Status
                     </th>
-                    <th className="title-status" colSpan="2">Status</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td >Glow Light</td>
+                    <td>Glow Light</td>
                     <td colSpan="2" className="devices-control">
-                      <label class="switch">
-                        <input
-                          type="checkbox"
-                          checked={glowLightCheck}
-                          onClick={glowLightBtn}
-                        />
-                        <span class="slider round" />
-                      </label>
-                      <span>Allow User: <Icon icon="mdi:user-block" width="32" height="32" /> </span>
-                                           {/* <a style={{cursor:"pointer"}}>
+                      {glowLoad ? (
+                        <CircularProgress style={{ color: "#1C7A6A" }} />
+                      ) : (
+                        <label class="switch">
+                          <input
+                            type="checkbox"
+                            disabled={
+                              userLevel == "member"
+                                ? !deviceStatus.grow_light
+                                : false
+                            }
+                            checked={glowLightCheck}
+                            onClick={glowLightBtn}
+                          />
+                          <span
+                            class="slider round"
+                            style={{
+                              cursor:
+                                userLevel == "member"
+                                  ? !deviceStatus.grow_light
+                                    ? "not-allowed"
+                                    : "pointer"
+                                  : "pointer",
+                            }}
+                          />
+                        </label>
+                      )}
+
+                      {userLevel == "admin" ? (
+                        <span
+                          style={{ cursor: "pointer" }}
+                          onClick={(event) =>
+                            allowUserBtn(
+                              event,
+                              "grow_light",
+                              deviceStatus.grow_light
+                            )
+                          }
+                        >
+                          Allow User:{" "}
+                          {deviceStatus.grow_light ? (
+                            <Icon
+                              icon="mdi:user-check"
+                              width="32"
+                              height="32"
+                            />
+                          ) : (
+                            <Icon
+                              icon="mdi:user-block"
+                              width="32"
+                              height="32"
+                            />
+                          )}
+                        </span>
+                      ) : (
+                        ""
+                      )}
+
+                      {/* <a style={{cursor:"pointer"}}>
                           <Icon icon="material-symbols:video-camera-back-rounded" className="mx-2" width="24px" height="24px" /> 
                           Camera
                           </a> */}
-                      </td>
+                    </td>
                   </tr>
                   <tr>
                     <td>Cooling Fan</td>
-                    <td className="devices-control" colSpan="2">
-                      <label class="switch">
-                        <input
-                          type="checkbox"
-                          checked={coolingFanCheck}
-                          onClick={coolingFanBtn}
-                        />
-                        <span class="slider round" />
-                      </label>
-                      <span>Allow User: <Icon icon="mdi:user-block" width="32" height="32" /> </span>
+                    <td className="devices-control" colSpan="1">
+                      {coolLoad ? (
+                        <CircularProgress style={{ color: "#1C7A6A" }} />
+                      ) : (
+                        <label class="switch">
+                          <input
+                            type="checkbox"
+                            disabled={
+                              userLevel == "member"
+                                ? !deviceStatus.cooling_fan
+                                : false
+                            }
+                            checked={coolingFanCheck}
+                            onClick={coolingFanBtn}
+                          />
+                          <span
+                            class="slider round"
+                            style={{
+                              cursor:
+                                userLevel == "member"
+                                  ? !deviceStatus.cooling_fan
+                                    ? "not-allowed"
+                                    : "pointer"
+                                  : "pointer",
+                            }}
+                          />
+                        </label>
+                      )}
+
+                      {userLevel == "admin" ? (
+                        <span
+                          onClick={(event) =>
+                            allowUserBtn(
+                              event,
+                              "cooling_fan",
+                              deviceStatus.cooling_fan
+                            )
+                          }
+                          style={{ cursor: "pointer" }}
+                        >
+                          Allow User:{" "}
+                          {deviceStatus.cooling_fan ? (
+                            <Icon
+                              icon="mdi:user-check"
+                              width="32"
+                              height="32"
+                            />
+                          ) : (
+                            <Icon
+                              icon="mdi:user-block"
+                              width="32"
+                              height="32"
+                            />
+                          )}
+                        </span>
+                      ) : (
+                        ""
+                      )}
 
                       {/* <a style={{cursor:"pointer"}}>
                           <Icon icon="material-symbols:video-camera-back-rounded" className="mx-2" width="24px" height="24px" /> 
@@ -341,15 +523,63 @@ function Devices() {
                   <tr>
                     <td colSpan="2">Water Pumps</td>
                     <td className="devices-control">
-                      <label class="switch">
-                        <input
-                          type="checkbox"
-                          checked={waterCheck}
-                          onClick={waterPumpBtn}
-                        />
-                        <span class="slider round" />
-                      </label>
-                      <span>Allow User: <Icon icon="mdi:user-check" width="32" height="32" /> </span>
+                      {waterLoad ? (
+                        <CircularProgress style={{ color: "#1C7A6A" }} />
+                      ) : (
+                        <label class="switch">
+                          <input
+                            type="checkbox"
+                            disabled={
+                              userLevel == "member"
+                                ? !deviceStatus.water_pump
+                                : false
+                            }
+                            checked={waterCheck}
+                            onClick={waterPumpBtn}
+                          />
+                          <span
+                            class="slider round"
+                            style={{
+                              cursor:
+                                userLevel == "member"
+                                  ? !deviceStatus.water_pump
+                                    ? "not-allowed"
+                                    : "pointer"
+                                  : "pointer",
+                            }}
+                          />
+                        </label>
+                      )}
+
+                      {userLevel == "admin" ? (
+                        <span
+                          onClick={(event) =>
+                            allowUserBtn(
+                              event,
+                              "water_pump",
+                              deviceStatus.water_pump
+                            )
+                          }
+                          style={{ cursor: "pointer" }}
+                        >
+                          Allow User:{" "}
+                          {deviceStatus.water_pump ? (
+                            <Icon
+                              icon="mdi:user-check"
+                              width="32"
+                              height="32"
+                            />
+                          ) : (
+                            <Icon
+                              icon="mdi:user-block"
+                              width="32"
+                              height="32"
+                            />
+                          )}
+                        </span>
+                      ) : (
+                        ""
+                      )}
 
                       {/* <a style={{cursor:"pointer"}}>
                           <Icon icon="material-symbols:video-camera-back-rounded" className="mx-2" width="24px" height="24px" /> 
@@ -360,15 +590,63 @@ function Devices() {
                   <tr>
                     <td colSpan="2">Air Pump</td>
                     <td className="devices-control">
-                      <label class="switch">
-                        <input
-                          type="checkbox"
-                          checked={airCheck}
-                          onClick={airPumpBtn}
-                        />
-                        <span class="slider round" />
-                      </label>
-                      <span>Allow User: <Icon icon="mdi:user-check" width="32" height="32" /> </span>
+                      {airLoad ? (
+                        <CircularProgress style={{ color: "#1C7A6A" }} />
+                      ) : (
+                        <label class="switch">
+                          <input
+                            type="checkbox"
+                            disabled={
+                              userLevel == "member"
+                                ? !deviceStatus.air_pump
+                                : false
+                            }
+                            checked={airCheck}
+                            onClick={airPumpBtn}
+                          />
+                          <span
+                            class="slider round"
+                            style={{
+                              cursor:
+                                userLevel == "member"
+                                  ? !deviceStatus.air_pump
+                                    ? "not-allowed"
+                                    : "pointer"
+                                  : "pointer",
+                            }}
+                          />
+                        </label>
+                      )}
+
+                      {userLevel == "admin" ? (
+                        <span
+                          style={{ cursor: "pointer" }}
+                          onClick={(event) =>
+                            allowUserBtn(
+                              event,
+                              "air_pump",
+                              deviceStatus.water_pump
+                            )
+                          }
+                        >
+                          Allow User:{" "}
+                          {deviceStatus.air_pump ? (
+                            <Icon
+                              icon="mdi:user-check"
+                              width="32"
+                              height="32"
+                            />
+                          ) : (
+                            <Icon
+                              icon="mdi:user-block"
+                              width="32"
+                              height="32"
+                            />
+                          )}
+                        </span>
+                      ) : (
+                        ""
+                      )}
 
                       {/* <a style={{cursor:"pointer"}}>
                           <Icon icon="material-symbols:video-camera-back-rounded" className="mx-2" width="24px" height="24px" /> 
