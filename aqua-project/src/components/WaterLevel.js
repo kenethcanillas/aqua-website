@@ -248,7 +248,7 @@ function WaterLevel() {
         <div className="display-container">
           <div class="temperature-container">
             <div class="temperature-display">
-              <h3>Water</h3>
+              <h3>Water Leak 1</h3>
               <h2>
                 {Object.keys(waterData).length !== 0
                   ? waterData.value + ""
@@ -303,7 +303,7 @@ function WaterLevel() {
 
           <div class="humidity-container">
             <div class="humidity-display">
-              <h3>Light Resistance</h3>
+              <h3>Water Leak 2</h3>
               <h2>
                 {Object.keys(lightData).length !== 0
                   ? lightData.value + ""
