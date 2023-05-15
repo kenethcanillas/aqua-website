@@ -66,6 +66,7 @@ function Login() {
           console.log(result.data())
           if(result.data().isLogin){
             console.log(result.data().isLogin);
+              alert('The account is already in use');
             return logout();
           }else{
             console.log(result.data().isLogin);
@@ -76,10 +77,10 @@ function Login() {
          
         });
       });
-      // await login(emailRef.current.value, passwordRef.current.value);
+      await login(emailRef.current.value, passwordRef.current.value);
     } catch (e) {
+        setError("Failed to log in");
       // console.log(e)
-      setError("Failed to log in");
     }
 
     setLoading(false);
@@ -98,6 +99,7 @@ function Login() {
   }
   return (
     <>
+   
       <Container>
         <Row>
           <Col lg={7} md={6} sm={6} xs={12} className="img-system">
