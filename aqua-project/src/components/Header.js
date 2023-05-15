@@ -46,6 +46,7 @@ function Header() {
   const updateInfo = httpsCallable(functions, "updateUserInfo");
   const updateUsers = httpsCallable(functions, "updateUser");
   const getMemberList = httpsCallable(functions, "listUsers");
+  const signUpMember = httpsCallable(functions, "signUp");
 
   const [memberList, setMemberList] = useState([]);
   const [editUser, setEditUser] = useState({});
@@ -479,30 +480,29 @@ function Header() {
       name == "Air Pump" ||
       name == "Water Pump"
     ) {
-      let status = switchs ? "ON" : "OFF"
+      let status = switchs ? "ON" : "OFF";
       return name + " is Now " + status;
     } else {
       if (switchs) {
-        return "The plant in "+ name + " is Removed";
+        return "The plant in " + name + " is Removed";
       }
     }
   };
   const closeNotif = () => {
     setNewNotif(false);
   };
-  const showTitle = (name)=>{
+  const showTitle = (name) => {
     if (
       name == "Cooling Fan" ||
       name == "Grow Light" ||
       name == "Air Pump" ||
       name == "Water Pump"
     ) {
-      return "Switch Notice!"
-    }else{
-      return "Plant Slots Notice!"
+      return "Switch Notice!";
+    } else {
+      return "Plant Slots Notice!";
     }
-  
-  }
+  };
 
   // userlogs
   const getSensorLogs = httpsCallable(functions, "getAllUserLogs");
@@ -524,6 +524,42 @@ function Header() {
     setSearchLogs(capitalize(event.target.value));
   };
 
+  const addMember = (e) => {
+    if (
+      e.target.form[0].value != "" &&
+      e.target.form[1].value != "" &&
+      e.target.form[2].value != "" && 
+      e.target.form[3].value != ""
+    ) 
+    {
+const data = {
+  email: e.target.form[1].value,
+  name: e.target.form[0].value,
+  password: e.target.form[2].value,
+  userLevel: e.target.form[3].value,
+  push: true
+
+}
+      signUpMember(data).then(()=>{
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Member Add Succesfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setAddMemberShow(false)
+      })
+    } else {
+      Swal.fire({
+        position: "center",
+        icon: "warning",
+        title: "Enter Valid Inputs",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  };
   /* PROFILE MODAL -------------------------> */
 
   function ProfileModal(props) {
@@ -825,7 +861,11 @@ function Header() {
         editUser={editUser}
         updateUser={updateUser}
       />
-      <AddMember show={AddMemberShow} onHide={() => setAddMemberShow(false)} />
+      <AddMember
+        show={AddMemberShow}
+        onHide={() => setAddMemberShow(false)}
+        addMember={addMember}
+      />
 
       <>
         <Modal
@@ -935,7 +975,7 @@ function Header() {
           </Modal.Header>
           <Modal.Body>
             <div className="search-con">
-              <input type="text" placeholder="Search" onChange={searchFunc}/>
+              <input type="text" placeholder="Search" onChange={searchFunc} />
               <Button type="submit" className="btn">
                 <Icon
                   icon="material-symbols:search-rounded"
@@ -951,20 +991,20 @@ function Header() {
             >
               <Table bordered hover className="userlog-tbl">
                 <thead className="p-2">
-                <tr>
-                  <th>Email</th>
-                  <th>Date</th>
-                  <th>Activity</th>
-                </tr>
+                  <tr>
+                    <th>Email</th>
+                    <th>Date</th>
+                    <th>Activity</th>
+                  </tr>
                 </thead>
                 <tbody>
-                {logList.map((data) => (
-                  <tr>
-                    <td>{data.email}</td>
-                    <td>{data.datetime}</td>
-                    <td>{data.activity}</td>
-                  </tr>
-                ))}
+                  {logList.map((data) => (
+                    <tr>
+                      <td>{data.email}</td>
+                      <td>{data.datetime}</td>
+                      <td>{data.activity}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </Table>
             </div>
@@ -1109,21 +1149,32 @@ function Header() {
               </div>
 
               <Dropdown.Item className="notif-item px-4 py-2">
-                {notif != "" ? notif.map((result) => (
-                  <>
-                    <div className="notif-header d-flex">
-                      <p style={{ fontWeight: "600" }}>{showTitle(result.name)}</p>
-                      <p className="time">{moment(result.date).fromNow()}</p>
-                    </div>
-                    <div style={{ borderBottom: "solid 2px" }}>
-                      <p>{showtext(result.name, result.switch)}</p>
-                    </div>
-                  </>
-                )):
-                <div style={{ borderBottom: "solid 2px", display:"flex", justifyContent:"center",marginTop:"10px" }}>
-                  <p>No Notification Yet!</p>
+                {notif != "" ? (
+                  notif.map((result) => (
+                    <>
+                      <div className="notif-header d-flex">
+                        <p style={{ fontWeight: "600" }}>
+                          {showTitle(result.name)}
+                        </p>
+                        <p className="time">{moment(result.date).fromNow()}</p>
+                      </div>
+                      <div style={{ borderBottom: "solid 2px" }}>
+                        <p>{showtext(result.name, result.switch)}</p>
+                      </div>
+                    </>
+                  ))
+                ) : (
+                  <div
+                    style={{
+                      borderBottom: "solid 2px",
+                      display: "flex",
+                      justifyContent: "center",
+                      marginTop: "10px",
+                    }}
+                  >
+                    <p>No Notification Yet!</p>
                   </div>
-                }
+                )}
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
@@ -1330,33 +1381,53 @@ function AddMember(props) {
       </Modal.Header>
       <Modal.Body>
         <Container>
-          <Row className="MngRow p-2">
-            <Col md={8} sm={12}>
-              <label>Name</label>
-              <input type="text" placeholder="Enter Name" required="required" />
-              <label>Email</label>
-              <input
-                type="email"
-                placeholder="Enter Email"
-                required="required"
-              />
-              <label>User Level</label>
-              <Form.Select aria-label="Default select example">
-                <option value="User">User</option>
-                <option value="Admin">Admin</option>
-              </Form.Select>
-            </Col>
-            <Col md={4} sm={12} className="col2">
-              <Button variant="success" className="btn  " onClick="">
-                {" "}
-                Add Member{" "}
-              </Button>
-              <Button variant="light" className="btn  " onClick={props.onHide}>
-                {" "}
-                Cancel{" "}
-              </Button>
-            </Col>
-          </Row>
+          <form>
+            <Row className="MngRow p-2">
+              <Col md={8} sm={12}>
+                <label>Name</label>
+                <input
+                  type="text"
+                  placeholder="Enter Name"
+                  required="required"
+                />
+                <label>Email</label>
+                <input
+                  type="email"
+                  placeholder="Enter Email"
+                  required="required"
+                />
+                <label>Password</label>
+                <input
+                  type="password"
+                  placeholder="Enter Password"
+                  required="required"
+                />
+                <label>User Level</label>
+                <Form.Select aria-label="Default select example">
+                  <option value="user">User</option>
+                  <option value="admin">Admin</option>
+                </Form.Select>
+              </Col>
+              <Col md={4} sm={12} className="col2">
+                <Button
+                  variant="success"
+                  className="btn"
+                  onClick={(e) => props.addMember(e)}
+                >
+                  {" "}
+                  Add Member{" "}
+                </Button>
+                <Button
+                  variant="light"
+                  className="btn  "
+                  onClick={props.onHide}
+                >
+                  {" "}
+                  Cancel{" "}
+                </Button>
+              </Col>
+            </Row>
+          </form>
         </Container>
       </Modal.Body>
     </Modal>

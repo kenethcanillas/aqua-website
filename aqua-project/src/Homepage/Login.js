@@ -14,6 +14,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Box, CircularProgress } from "@mui/material";
+import Swal from "sweetalert2";
 function Login() {
   // const email = useRef()
   // const password = useRef()
@@ -63,13 +64,17 @@ function Login() {
         const docRef = doc(db, "users", userCredentials.user.uid);
         const docSnap = getDoc(docRef);
        await docSnap.then((result) => {
-          console.log(result.data())
           if(result.data().isLogin){
-            console.log(result.data().isLogin);
-              alert('The account is already in use');
-            return logout();
+           logout();
+           Swal.fire({
+            position: "center",
+            icon: "warning",
+            title: "Account Already Signed in",
+            showConfirmButton: false,
+            timer: 2000,
+          });
           }else{
-            console.log(result.data().isLogin);
+            // login(emailRef.current.value, passwordRef.current.value);
            return  updateDoc(docRef,{
               isLogin: true
             })
@@ -85,18 +90,18 @@ function Login() {
 
     setLoading(false);
   });
-  if (loading) {
-    return (
-      <>
-        {" "}
-        <Box  height="100vh" sx={{ display: "flex", justifyContent:"center", flexDirection: "column", alignItems:"center"}}>
-          <img src={Logo} width={200} />
-          <br></br>
-          <CircularProgress/>
-        </Box>
-      </>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <>
+  //       {" "}
+  //       <Box  height="100vh" sx={{ display: "flex", justifyContent:"center", flexDirection: "column", alignItems:"center"}}>
+  //         <img src={Logo} width={200} />
+  //         <br></br>
+  //         <CircularProgress/>
+  //       </Box>
+  //     </>
+  //   );
+  // }
   return (
     <>
    

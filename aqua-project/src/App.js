@@ -30,11 +30,20 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "./firebase";
 
 function App() {
+  // const [isLogin, setIsLogin] = useState(true)
+  let isLogin;
   const { currentUser } = useAuth();
+  if (currentUser != null) {
+    const docRef = doc(db, "users", currentUser.uid);
+    const docSnap = getDoc(docRef);
+    docSnap.then((result) => {
+      isLogin = result.data().isLogin;
+    });
+  }
 
   return (
     <>
-      {currentUser ? (
+      {currentUser && !isLogin ? (
         <Router>
           <Fragment>
             <Header />
