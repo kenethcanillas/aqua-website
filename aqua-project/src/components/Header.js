@@ -1058,7 +1058,7 @@ function Header() {
           </li>
           <li>
             <NavLink to="/waterlevelpage" ClassName="active-link">
-              Water Level
+              Water Leak
             </NavLink>
           </li>
           <li>
@@ -1207,7 +1207,7 @@ function Header() {
             </li>
             <li>
               <NavLink to="/waterlevelpage" ClassName="active-link">
-                Water Level
+                Water Leak
               </NavLink>
             </li>
             <li>
