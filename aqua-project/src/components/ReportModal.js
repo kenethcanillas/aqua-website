@@ -28,16 +28,15 @@ function ReportModal(props) {
               >
                 {props.selectedSensor}  
                 <Icon icon="gridicons:dropdown" width="24" height="24" />
-
               </Dropdown.Toggle>
               <Dropdown.Menu>
-              <Dropdown.Item 
+              {/* <Dropdown.Item 
                   onClick={() => {
                   props.setSelectedSensor("All");
                   }}
                 >
                   All
-                </Dropdown.Item>
+                </Dropdown.Item> */}
                 <Dropdown.Item 
                   onClick={() => {
                   props.setSelectedSensor("Temperature");

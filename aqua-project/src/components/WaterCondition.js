@@ -132,7 +132,7 @@ function WaterCondition() {
 
   const [ReportModalShow, setReportModalShow] = useState(false);
   const [searchReport, setSearchReport] = useState("");
-  const [selectedSensor, setSelectedSensor] = useState("All");
+  const [selectedSensor, setSelectedSensor] = useState("Temperature");
 
   const searchReportFunc = (event) => {
     event.preventDefault();

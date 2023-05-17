@@ -8,14 +8,13 @@ import { getAuth } from "@firebase/auth";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyDUhgOat1FWBHFj1Hl1GqYLFkuDxFPW-hY",
-  authDomain: "aqua-monitoring-system.firebaseapp.com",
-  databaseURL: "https://aqua-monitoring-system-default-rtdb.firebaseio.com",
-  projectId: "aqua-monitoring-system",
-  storageBucket: "aqua-monitoring-system.appspot.com",
-  messagingSenderId: "549079427797",
-  appId: "1:549079427797:web:c86c8c78bbfa0f6319d05c",
-  measurementId: "G-EVZEG3V7T3",
+  apiKey: "AIzaSyAXIYk1apQQ0M1a57TWNsx2_nVqRvXD3rw",
+  authDomain: "aqua-monitoring-system-c7b63.firebaseapp.com",
+  projectId: "aqua-monitoring-system-c7b63",
+  storageBucket: "aqua-monitoring-system-c7b63.appspot.com",
+  messagingSenderId: "680691801753",
+  appId: "1:680691801753:web:c56db3e72f04db2fb1e208",
+  measurementId: "G-DDSQZ3L3YV"
 };
 
 // Initialize Firebase

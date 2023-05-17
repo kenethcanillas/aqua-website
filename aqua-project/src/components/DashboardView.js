@@ -32,7 +32,7 @@ function DashboardView() {
   const t = query(collection(db, "temperature"), orderBy("datetime", "asc"));
   const h = query(collection(db, "humidity"), orderBy("datetime", "asc"));
 
-  const [selectedSensor, setSelectedSensor] = useState("All");
+  const [selectedSensor, setSelectedSensor] = useState("Temperature");
   const [reports, setRerpots] = useState([]);
 
   const storage = getStorage();
@@ -147,7 +147,7 @@ function DashboardView() {
     } else if (selectedSensor === "pH Level") {
       return <PhReport data={searchReport} />;
     } else {
-      return <AllReport data={searchReport} />;
+      return <TempReport data={searchReport} />;
     }
   }
 
